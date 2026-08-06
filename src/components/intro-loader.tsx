@@ -1,0 +1,171 @@
+"use client";
+
+import gsap from "gsap";
+import { useLayoutEffect, useRef, useState } from "react";
+
+const introSessionKey = "nm-portfolio-intro-played";
+
+export function IntroLoader() {
+  const [isVisible, setIsVisible] = useState(true);
+  const overlay = useRef<HTMLDivElement>(null);
+  const name = useRef<HTMLDivElement>(null);
+
+  useLayoutEffect(() => {
+      if (!isVisible) {
+        return;
+      }
+
+      if (window.sessionStorage.getItem(introSessionKey) === "true") {
+        const frame = requestAnimationFrame(() => setIsVisible(false));
+        return () => cancelAnimationFrame(frame);
+      }
+
+      const overlayElement = overlay.current;
+      const nameElement = name.current;
+      const heroName = document.querySelector<HTMLElement>("[data-hero-name]");
+
+      if (!overlayElement || !nameElement || !heroName) {
+        setIsVisible(false);
+        return;
+      }
+
+      const previousBodyOverflow = document.body.style.overflow;
+      const previousHtmlOverflow = document.documentElement.style.overflow;
+      let cancelled = false;
+      let introStarted = false;
+      let timeline: gsap.core.Timeline | null = null;
+      let fontFallbackTimer: number | null = null;
+      let finishTimer: number | null = null;
+
+      document.body.style.overflow = "hidden";
+      document.documentElement.style.overflow = "hidden";
+      gsap.set(heroName, { autoAlpha: 0 });
+
+      const finish = () => {
+        if (cancelled) {
+          return;
+        }
+
+        if (fontFallbackTimer !== null) {
+          window.clearTimeout(fontFallbackTimer);
+        }
+        if (finishTimer !== null) {
+          window.clearTimeout(finishTimer);
+        }
+        window.sessionStorage.setItem(introSessionKey, "true");
+        document.body.style.overflow = previousBodyOverflow;
+        document.documentElement.style.overflow = previousHtmlOverflow;
+        gsap.set(heroName, { clearProps: "opacity,visibility" });
+        setIsVisible(false);
+      };
+
+      const runIntro = () => {
+        if (cancelled || introStarted) {
+          return;
+        }
+
+        introStarted = true;
+        const reduceMotion = window.matchMedia(
+          "(prefers-reduced-motion: reduce)",
+        ).matches;
+
+        if (reduceMotion) {
+          gsap.set(heroName, { autoAlpha: 1 });
+          gsap.to(overlayElement, {
+            autoAlpha: 0,
+            duration: 0.25,
+            onComplete: finish,
+          });
+          return;
+        }
+
+        const sourceRect = nameElement.getBoundingClientRect();
+        const targetRect = heroName.getBoundingClientRect();
+        const targetScale = targetRect.width / sourceRect.width;
+
+        gsap.set(nameElement, {
+          x: window.innerWidth / 2 - sourceRect.width / 2,
+          y: window.innerHeight / 2 - sourceRect.height / 2,
+          transformOrigin: "top left",
+        });
+
+        timeline = gsap
+          .timeline({ onComplete: finish })
+          .fromTo(
+            nameElement,
+            { autoAlpha: 0, scale: 0.94 },
+            {
+              autoAlpha: 1,
+              scale: 1,
+              duration: 0.65,
+              ease: "power3.out",
+            },
+          )
+          .to(nameElement, {
+            x: targetRect.left,
+            y: targetRect.top,
+            scale: targetScale,
+            color: "#191919",
+            duration: 1.15,
+            ease: "power4.inOut",
+          }, "+=0.45")
+          .to(
+            overlayElement,
+            {
+              backgroundColor: "rgba(0, 0, 0, 0)",
+              duration: 0.78,
+              ease: "power2.inOut",
+            },
+            "-=0.78",
+          )
+          .set(heroName, { autoAlpha: 1 }, "-=0.1")
+          .to(nameElement, { autoAlpha: 0, duration: 0.12 }, "<")
+          .to(overlayElement, { autoAlpha: 0, duration: 0.12 }, "<");
+      };
+
+      const scheduleIntro = () => {
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            runIntro();
+          });
+        });
+      };
+
+      document.fonts.ready.then(scheduleIntro);
+      fontFallbackTimer = window.setTimeout(scheduleIntro, 1200);
+      finishTimer = window.setTimeout(finish, 5500);
+
+      return () => {
+        cancelled = true;
+        if (fontFallbackTimer !== null) {
+          window.clearTimeout(fontFallbackTimer);
+        }
+        if (finishTimer !== null) {
+          window.clearTimeout(finishTimer);
+        }
+        timeline?.kill();
+        document.body.style.overflow = previousBodyOverflow;
+        document.documentElement.style.overflow = previousHtmlOverflow;
+        gsap.set(heroName, { clearProps: "opacity,visibility" });
+      };
+  }, [isVisible]);
+
+  if (!isVisible) {
+    return null;
+  }
+
+  return (
+    <div
+      ref={overlay}
+      aria-hidden="true"
+      className="fixed inset-0 z-[150] overflow-hidden bg-black"
+    >
+      <div
+        ref={name}
+        className="font-display fixed left-0 top-0 whitespace-nowrap text-[clamp(3.1rem,7.5vw,8.5rem)] font-semibold uppercase leading-[0.72] tracking-normal text-[#f7f3ea] opacity-0"
+      >
+        Nagarjun Mallesh
+      </div>
+    </div>
+  );
+}

@@ -1,0 +1,461 @@
+[
+  {
+    "title": "New York",
+    "slug": "new-york",
+    "location": "New York",
+    "year": "Field Notes",
+    "note": "A field study from New York, gathered as a quiet sequence of images and memory.",
+    "sourceFolderId": "17sFhhUTnrPpNa8QL90tlkk3aeRfw4_M4",
+    "coverImages": [
+      {
+        "id": "1Nby1muC2vQlxrR75JUthxvK-F2PZJUzT",
+        "fileName": "01-brooklyn-bridge-1Nby1muC.webp",
+        "alt": "Brooklyn Bridge",
+        "src": "/photography/new-york/01-brooklyn-bridge-1Nby1muC.webp",
+        "width": 3840,
+        "height": 2152,
+        "orientation": "landscape"
+      },
+      {
+        "id": "1dISCTMThpuYHIKvd6DO4ZVvZnt3-9zdW",
+        "fileName": "02-cathedral-1dISCTMT.webp",
+        "alt": "Cathedral",
+        "src": "/photography/new-york/02-cathedral-1dISCTMT.webp",
+        "width": 2877,
+        "height": 3840,
+        "orientation": "portrait"
+      }
+    ],
+    "images": [
+      {
+        "id": "1Nby1muC2vQlxrR75JUthxvK-F2PZJUzT",
+        "fileName": "01-brooklyn-bridge-1Nby1muC.webp",
+        "alt": "Brooklyn Bridge",
+        "src": "/photography/new-york/01-brooklyn-bridge-1Nby1muC.webp",
+        "width": 3840,
+        "height": 2152,
+        "orientation": "landscape"
+      },
+      {
+        "id": "1dISCTMThpuYHIKvd6DO4ZVvZnt3-9zdW",
+        "fileName": "02-cathedral-1dISCTMT.webp",
+        "alt": "Cathedral",
+        "src": "/photography/new-york/02-cathedral-1dISCTMT.webp",
+        "width": 2877,
+        "height": 3840,
+        "orientation": "portrait"
+      },
+      {
+        "id": "1qBr_y8BRSCxScUU-8-jPuGdMDSTOCi2J",
+        "fileName": "03-city-overlook-1qBr_y8B.webp",
+        "alt": "city overlook",
+        "src": "/photography/new-york/03-city-overlook-1qBr_y8B.webp",
+        "width": 3840,
+        "height": 2160,
+        "orientation": "landscape"
+      },
+      {
+        "id": "1ynCegex_UbAwBI0LrQWzcBJX17Jo69AY",
+        "fileName": "04-downtown-overlook-1ynCegex.webp",
+        "alt": "Downtown overlook",
+        "src": "/photography/new-york/04-downtown-overlook-1ynCegex.webp",
+        "width": 3840,
+        "height": 2152,
+        "orientation": "landscape"
+      },
+      {
+        "id": "1teYHBVgVmZ75IZDShQL61P5A6gTmlrSc",
+        "fileName": "05-financial-district-1teYHBVg.webp",
+        "alt": "Financial District",
+        "src": "/photography/new-york/05-financial-district-1teYHBVg.webp",
+        "width": 2154,
+        "height": 3840,
+        "orientation": "portrait"
+      },
+      {
+        "id": "1QIL9QnJcMOwALnPRNnyk8Yh7uCkEoKUo",
+        "fileName": "06-grand-central-terminal-1QIL9QnJ.webp",
+        "alt": "Grand Central Terminal",
+        "src": "/photography/new-york/06-grand-central-terminal-1QIL9QnJ.webp",
+        "width": 2877,
+        "height": 3840,
+        "orientation": "portrait"
+      },
+      {
+        "id": "1Ewy_QFAnzIOKhC6uboieXS_d9MCJfBO4",
+        "fileName": "07-img13-1Ewy_QFA.webp",
+        "alt": "img 13",
+        "src": "/photography/new-york/07-img13-1Ewy_QFA.webp",
+        "width": 3840,
+        "height": 2154,
+        "orientation": "landscape"
+      },
+      {
+        "id": "1Zq0fabYCm4kjv2YjUuu4l2MVAXBHp6Kz",
+        "fileName": "09-manhattan-bridge-1Zq0fabY.webp",
+        "alt": "Manhattan bridge",
+        "src": "/photography/new-york/09-manhattan-bridge-1Zq0fabY.webp",
+        "width": 3840,
+        "height": 2152,
+        "orientation": "landscape"
+      },
+      {
+        "id": "1SI2eppMrc4BBIoSHJcZ6rA8Hlt-qme0H",
+        "fileName": "11-rochester-building-1SI2eppM.webp",
+        "alt": "Rochester Building",
+        "src": "/photography/new-york/11-rochester-building-1SI2eppM.webp",
+        "width": 2877,
+        "height": 3840,
+        "orientation": "portrait"
+      },
+      {
+        "id": "17CQkufGNLxwdkp7XCx-vh6pFGtjQh-lv",
+        "fileName": "12-times-square-17CQkufG.webp",
+        "alt": "Times Square",
+        "src": "/photography/new-york/12-times-square-17CQkufG.webp",
+        "width": 3840,
+        "height": 2154,
+        "orientation": "landscape"
+      }
+    ]
+  },
+  {
+    "title": "Santa Cruz",
+    "slug": "santa-cruz",
+    "location": "Santa Cruz",
+    "year": "Field Notes",
+    "note": "A field study from Santa Cruz, gathered as a quiet sequence of images and memory.",
+    "sourceFolderId": "1vbylDPPQbuB6P394-iQN4hwMGeUboTkC",
+    "coverImages": [
+      {
+        "id": "1q5hrWIJOOZxjEeKxUIRzGD0me-5E-yEZ",
+        "fileName": "01-img8390-2-1q5hrWIJ.webp",
+        "alt": "IMG 8390 2",
+        "src": "/photography/santa-cruz/01-img8390-2-1q5hrWIJ.webp",
+        "width": 3840,
+        "height": 2154,
+        "orientation": "landscape"
+      },
+      {
+        "id": "1nwN2q6fkwh5Za8RKJ8ucv-u52vbFbbn_",
+        "fileName": "02-img8402-2-1nwN2q6f.webp",
+        "alt": "IMG 8402 2",
+        "src": "/photography/santa-cruz/02-img8402-2-1nwN2q6f.webp",
+        "width": 3840,
+        "height": 2154,
+        "orientation": "landscape"
+      }
+    ],
+    "images": [
+      {
+        "id": "1q5hrWIJOOZxjEeKxUIRzGD0me-5E-yEZ",
+        "fileName": "01-img8390-2-1q5hrWIJ.webp",
+        "alt": "IMG 8390 2",
+        "src": "/photography/santa-cruz/01-img8390-2-1q5hrWIJ.webp",
+        "width": 3840,
+        "height": 2154,
+        "orientation": "landscape"
+      },
+      {
+        "id": "1nwN2q6fkwh5Za8RKJ8ucv-u52vbFbbn_",
+        "fileName": "02-img8402-2-1nwN2q6f.webp",
+        "alt": "IMG 8402 2",
+        "src": "/photography/santa-cruz/02-img8402-2-1nwN2q6f.webp",
+        "width": 3840,
+        "height": 2154,
+        "orientation": "landscape"
+      },
+      {
+        "id": "1SMGRqDKJ4gGFoJX7r9pGy14xyRpnZBPi",
+        "fileName": "03-img8405-2-1SMGRqDK.webp",
+        "alt": "IMG 8405 2",
+        "src": "/photography/santa-cruz/03-img8405-2-1SMGRqDK.webp",
+        "width": 3840,
+        "height": 2154,
+        "orientation": "landscape"
+      },
+      {
+        "id": "13zARn-JWCpte0_aMwdbwXeVClOMmhTfF",
+        "fileName": "04-img8407-2-13zARn-J.webp",
+        "alt": "IMG 8407 2",
+        "src": "/photography/santa-cruz/04-img8407-2-13zARn-J.webp",
+        "width": 3840,
+        "height": 2154,
+        "orientation": "landscape"
+      },
+      {
+        "id": "11_5pkcCNCA1h6Amdi2uosBN_Fm1ikpUQ",
+        "fileName": "05-img8421-11_5pkcC.webp",
+        "alt": "IMG 8421",
+        "src": "/photography/santa-cruz/05-img8421-11_5pkcC.webp",
+        "width": 3840,
+        "height": 2154,
+        "orientation": "landscape"
+      },
+      {
+        "id": "17xlUmcImlUFif5qHP_lGe1PiB-t_Abv7",
+        "fileName": "06-img8423-17xlUmcI.webp",
+        "alt": "IMG 8423",
+        "src": "/photography/santa-cruz/06-img8423-17xlUmcI.webp",
+        "width": 3840,
+        "height": 2152,
+        "orientation": "landscape"
+      },
+      {
+        "id": "1QOk9XlCPB0c0mr_NMtEIj_4fwW29GA0U",
+        "fileName": "07-img8425-1QOk9XlC.webp",
+        "alt": "IMG 8425",
+        "src": "/photography/santa-cruz/07-img8425-1QOk9XlC.webp",
+        "width": 3840,
+        "height": 2154,
+        "orientation": "landscape"
+      },
+      {
+        "id": "1LnUZB75cfkrjzOtio8neS5ufDDq3RUax",
+        "fileName": "08-img8427-1LnUZB75.webp",
+        "alt": "IMG 8427",
+        "src": "/photography/santa-cruz/08-img8427-1LnUZB75.webp",
+        "width": 3840,
+        "height": 2154,
+        "orientation": "landscape"
+      },
+      {
+        "id": "1Zf-sGF0BiLFVriBImH9NLBGwCp6mEPHQ",
+        "fileName": "09-img8433-1Zf-sGF0.webp",
+        "alt": "IMG 8433",
+        "src": "/photography/santa-cruz/09-img8433-1Zf-sGF0.webp",
+        "width": 3840,
+        "height": 2154,
+        "orientation": "landscape"
+      },
+      {
+        "id": "1BzsSuACaDcz_xN5xKl2XgGkPDb_gmToZ",
+        "fileName": "10-img8444-1BzsSuAC.webp",
+        "alt": "IMG 8444",
+        "src": "/photography/santa-cruz/10-img8444-1BzsSuAC.webp",
+        "width": 3840,
+        "height": 2154,
+        "orientation": "landscape"
+      },
+      {
+        "id": "1gfjwpAvFZslhUCwLkBtUpRLJjLXAD_Rh",
+        "fileName": "11-img8467-1gfjwpAv.webp",
+        "alt": "IMG 8467",
+        "src": "/photography/santa-cruz/11-img8467-1gfjwpAv.webp",
+        "width": 3840,
+        "height": 2154,
+        "orientation": "landscape"
+      },
+      {
+        "id": "1lrqjia8xaqGQweGQBKhRmP9VIJq2d1xR",
+        "fileName": "12-img8474-1lrqjia8.webp",
+        "alt": "IMG 8474",
+        "src": "/photography/santa-cruz/12-img8474-1lrqjia8.webp",
+        "width": 3840,
+        "height": 2154,
+        "orientation": "landscape"
+      }
+    ]
+  },
+  {
+    "title": "Washington",
+    "slug": "washington",
+    "location": "Washington",
+    "year": "Field Notes",
+    "note": "A field study from Washington, gathered as a quiet sequence of images and memory.",
+    "sourceFolderId": "1nSNRJDPWxHDbFxKBsxuNKD8Jg-PJEaSk",
+    "coverImages": [
+      {
+        "id": "1qYFlj889f6Ed8wRnXtzrc7qibBlVwH6e",
+        "fileName": "01-italian-renaissance-and-beaux-arts-inspired-1qYFlj88.webp",
+        "alt": "Italian Renaissance and Beaux Arts Inspired",
+        "src": "/photography/washington/01-italian-renaissance-and-beaux-arts-inspired-1qYFlj88.webp",
+        "width": 2875,
+        "height": 3840,
+        "orientation": "portrait"
+      },
+      {
+        "id": "1BGB_5Xk6U6y6AE4hSwTfryXEBEHy0xOR",
+        "fileName": "02-capitol-hill-1BGB_5Xk.webp",
+        "alt": "Capitol Hill",
+        "src": "/photography/washington/02-capitol-hill-1BGB_5Xk.webp",
+        "width": 2875,
+        "height": 3840,
+        "orientation": "portrait"
+      }
+    ],
+    "images": [
+      {
+        "id": "1qYFlj889f6Ed8wRnXtzrc7qibBlVwH6e",
+        "fileName": "01-italian-renaissance-and-beaux-arts-inspired-1qYFlj88.webp",
+        "alt": "Italian Renaissance and Beaux Arts Inspired",
+        "src": "/photography/washington/01-italian-renaissance-and-beaux-arts-inspired-1qYFlj88.webp",
+        "width": 2875,
+        "height": 3840,
+        "orientation": "portrait"
+      },
+      {
+        "id": "1BGB_5Xk6U6y6AE4hSwTfryXEBEHy0xOR",
+        "fileName": "02-capitol-hill-1BGB_5Xk.webp",
+        "alt": "Capitol Hill",
+        "src": "/photography/washington/02-capitol-hill-1BGB_5Xk.webp",
+        "width": 2875,
+        "height": 3840,
+        "orientation": "portrait"
+      },
+      {
+        "id": "1JWv_OZ2FHn3Bo1KagCCNqHSwr5w8eEfg",
+        "fileName": "03-capitol-hill-view-1JWv_OZ2.webp",
+        "alt": "Capitol Hill View",
+        "src": "/photography/washington/03-capitol-hill-view-1JWv_OZ2.webp",
+        "width": 2152,
+        "height": 3840,
+        "orientation": "portrait"
+      },
+      {
+        "id": "1n4oCQmDOnQzehOFi1gbBCmB4wQu4mw3I",
+        "fileName": "04-court-of-neptune-fountain-1n4oCQmD.webp",
+        "alt": "Court of Neptune Fountain",
+        "src": "/photography/washington/04-court-of-neptune-fountain-1n4oCQmD.webp",
+        "width": 3840,
+        "height": 2877,
+        "orientation": "landscape"
+      },
+      {
+        "id": "1GVDYm_Vt-_490pNF_iXjNNUGLe3cmXjC",
+        "fileName": "05-img5589-1GVDYm_V.webp",
+        "alt": "IMG 5589",
+        "src": "/photography/washington/05-img5589-1GVDYm_V.webp",
+        "width": 3840,
+        "height": 2877,
+        "orientation": "landscape"
+      },
+      {
+        "id": "1d7-uNRPitTkZ5_twZGdhx18sAnc4g_MW",
+        "fileName": "06-img5602-1d7-uNRP.webp",
+        "alt": "IMG 5602",
+        "src": "/photography/washington/06-img5602-1d7-uNRP.webp",
+        "width": 3840,
+        "height": 1611,
+        "orientation": "landscape"
+      },
+      {
+        "id": "1Vvtt3LfCZIJFn4GPTK3htRhDqziONOBg",
+        "fileName": "07-jefferson-memorial-1Vvtt3Lf.webp",
+        "alt": "Jefferson Memorial",
+        "src": "/photography/washington/07-jefferson-memorial-1Vvtt3Lf.webp",
+        "width": 3840,
+        "height": 2152,
+        "orientation": "landscape"
+      },
+      {
+        "id": "1BbNNDyHgWI6fZJZxMUtjSHiQ9MLzhrQ5",
+        "fileName": "08-library-of-congress-1BbNNDyH.webp",
+        "alt": "Library of Congress",
+        "src": "/photography/washington/08-library-of-congress-1BbNNDyH.webp",
+        "width": 3840,
+        "height": 2877,
+        "orientation": "landscape"
+      },
+      {
+        "id": "11k21VNQtZdppIn-pKRy5HWwVQ4VzJCVc",
+        "fileName": "09-library-of-congress-11k21VNQ.webp",
+        "alt": "Library of Congress",
+        "src": "/photography/washington/09-library-of-congress-11k21VNQ.webp",
+        "width": 3840,
+        "height": 2877,
+        "orientation": "landscape"
+      },
+      {
+        "id": "1ri2I_MOy-zeME0ESpdd9I6xE5P2iT7md",
+        "fileName": "10-library-of-congress-1ri2I_MO.webp",
+        "alt": "Library of Congress",
+        "src": "/photography/washington/10-library-of-congress-1ri2I_MO.webp",
+        "width": 2875,
+        "height": 3840,
+        "orientation": "portrait"
+      },
+      {
+        "id": "11uMOU9uADw6rLhAvGi7xZHTtX1gA3qUp",
+        "fileName": "11-library-of-congress-interior-11uMOU9u.webp",
+        "alt": "Library of Congress Interior",
+        "src": "/photography/washington/11-library-of-congress-interior-11uMOU9u.webp",
+        "width": 3840,
+        "height": 2154,
+        "orientation": "landscape"
+      },
+      {
+        "id": "1i_Nj6G9P5lFpYSuJ29rX7WWY0y2gVKZH",
+        "fileName": "12-national-monument-1i_Nj6G9.webp",
+        "alt": "National Monument",
+        "src": "/photography/washington/12-national-monument-1i_Nj6G9.webp",
+        "width": 2875,
+        "height": 3840,
+        "orientation": "portrait"
+      },
+      {
+        "id": "16k_yGRo26kCUWdn8lVRbR8BVNkYHO71m",
+        "fileName": "13-national-monument-16k_yGRo.webp",
+        "alt": "National monument",
+        "src": "/photography/washington/13-national-monument-16k_yGRo.webp",
+        "width": 2875,
+        "height": 3840,
+        "orientation": "portrait"
+      },
+      {
+        "id": "1KGqRgDZkammKvixgbkYBC8TRnAheBuLY",
+        "fileName": "14-reading-room-1KGqRgDZ.webp",
+        "alt": "Reading room",
+        "src": "/photography/washington/14-reading-room-1KGqRgDZ.webp",
+        "width": 2875,
+        "height": 3840,
+        "orientation": "portrait"
+      },
+      {
+        "id": "150ltz9m1_cM--_ous_jPpOX9KLKXy_rO",
+        "fileName": "15-reading-room-panoramic-150ltz9m.webp",
+        "alt": "Reading Room Panoramic",
+        "src": "/photography/washington/15-reading-room-panoramic-150ltz9m.webp",
+        "width": 3840,
+        "height": 2154,
+        "orientation": "landscape"
+      },
+      {
+        "id": "1u8pWec7rqu9x-FmkB0Sd28AVzsGO5M3B",
+        "fileName": "16-statue-of-freedom-1u8pWec7.webp",
+        "alt": "Statue of Freedom",
+        "src": "/photography/washington/16-statue-of-freedom-1u8pWec7.webp",
+        "width": 2875,
+        "height": 3840,
+        "orientation": "portrait"
+      },
+      {
+        "id": "1m_8bBIaBJFW-uYceot8kcg3T7-Q7iwgz",
+        "fileName": "17-streets-of-washington-1m_8bBIa.webp",
+        "alt": "streets of washington",
+        "src": "/photography/washington/17-streets-of-washington-1m_8bBIa.webp",
+        "width": 2152,
+        "height": 3840,
+        "orientation": "portrait"
+      },
+      {
+        "id": "1NXJbUhzCBBYEF2POm-KSCYPbyPt-E5bA",
+        "fileName": "18-union-square-station-1NXJbUhz.webp",
+        "alt": "Union Square Station",
+        "src": "/photography/washington/18-union-square-station-1NXJbUhz.webp",
+        "width": 3840,
+        "height": 2877,
+        "orientation": "landscape"
+      },
+      {
+        "id": "1vq35p8QHtA-WYO9yJsK0sakvFtW3dp59",
+        "fileName": "19-world-war-memorial-1vq35p8Q.webp",
+        "alt": "World war memorial",
+        "src": "/photography/washington/19-world-war-memorial-1vq35p8Q.webp",
+        "width": 3840,
+        "height": 2154,
+        "orientation": "landscape"
+      }
+    ]
+  }
+]
