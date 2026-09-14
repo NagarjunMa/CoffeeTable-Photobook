@@ -1,0 +1,260 @@
+{
+  "version": 1,
+  "collections": {
+    "1hZuKzQ2PNLCNo5Jdn_CHPwsRjDBUmDN5": {
+      "reviewStatus": "draft",
+      "title": "Maine",
+      "location": "Maine",
+      "category": "Region",
+      "year": null,
+      "images": {
+        "1KU2iKrKF9KGH7XgWVvGPufhe-l1k6vz2": { "reviewStatus": "blocked", "reason": "Local source unavailable; visual review required." },
+        "1v_6IR0dojwB1jPgDJsvKk1Io9rQ-YPRm": { "reviewStatus": "blocked", "reason": "Local source unavailable; visual review required." },
+        "1j5Jp3RTLZpTFAKakPEW6Eoq7YSMlzpmf": { "reviewStatus": "blocked", "reason": "Local source unavailable; visual review required." },
+        "1BCx7F4j6d6OZTrevwmElY3nEbgvKychy": { "reviewStatus": "blocked", "reason": "Local source unavailable; visual review required." },
+        "1Rtj0rhC7i8GhET4waWJ51D_2BUN6lhQA": { "reviewStatus": "blocked", "reason": "Local source unavailable; visual review required." },
+        "1VrIPwTKBxDyDPzPnAA2Zkf026AmUcX-g": { "reviewStatus": "blocked", "reason": "Local source unavailable; visual review required." },
+        "1rj-d5odC1AkXPS3R8dAjY2mPEraipey9": { "reviewStatus": "blocked", "reason": "Local source unavailable; visual review required." },
+        "1n4i1q6y1DPyakyYApTNDMr3K5bOi2xcM": { "reviewStatus": "blocked", "reason": "Local source unavailable; visual review required." },
+        "12VJ8KLJwSxKZnyAPOFtRqhhLXea8X2Dn": { "reviewStatus": "blocked", "reason": "Local source unavailable; visual review required." }
+      }
+    },
+    "17sFhhUTnrPpNa8QL90tlkk3aeRfw4_M4": {
+      "reviewStatus": "draft",
+      "title": "New York",
+      "location": "New York City",
+      "category": "City",
+      "year": null,
+      "note": "Bridges and waterfront skylines under low clouds, a crowded terminal, and streets lit by signs. Views of the city from across the water and from within its buildings.",
+      "images": {
+        "1Nby1muC2vQlxrR75JUthxvK-F2PZJUzT": {
+          "reviewStatus": "draft",
+          "alt": "An illuminated suspension bridge crosses in front of a waterfront skyline beneath dark blue clouds.",
+          "caption": "Bridge and waterfront skyline"
+        },
+        "1dISCTMThpuYHIKvd6DO4ZVvZnt3-9zdW": {
+          "reviewStatus": "draft",
+          "alt": "Twin stone cathedral spires rise between tall city buildings, with flags, cars, and pedestrians in the foreground.",
+          "caption": "Cathedral spires above the street"
+        },
+        "1qBr_y8BRSCxScUU-8-jPuGdMDSTOCi2J": {
+          "reviewStatus": "draft",
+          "alt": "Warm sunlight falls across the Manhattan skyline beyond a strip of waterfront trees under layered clouds.",
+          "caption": "Sunlight across the skyline"
+        },
+        "1ynCegex_UbAwBI0LrQWzcBJX17Jo69AY": {
+          "reviewStatus": "draft",
+          "alt": "A boat passes a dense waterfront skyline with illuminated windows and a bright red building beneath low clouds.",
+          "caption": "Waterfront lights beneath low clouds"
+        },
+        "1teYHBVgVmZ75IZDShQL61P5A6gTmlrSc": {
+          "reviewStatus": "draft",
+          "alt": "Looking upward past angular glass facades toward the top of a skyscraper disappearing into cloud.",
+          "caption": "Glass facades in cloud"
+        },
+        "1QIL9QnJcMOwALnPRNnyk8Yh7uCkEoKUo": {
+          "reviewStatus": "draft",
+          "alt": "Travelers cross Grand Central Terminal's main concourse beneath tall arched windows and a blue-green constellation ceiling.",
+          "caption": "Grand Central Terminal"
+        },
+        "1Ewy_QFAnzIOKhC6uboieXS_d9MCJfBO4": {
+          "reviewStatus": "draft",
+          "alt": "A suspension bridge cuts diagonally across a dark waterfront skyline, its stone tower illuminated against blue clouds.",
+          "caption": "Beneath the bridge"
+        },
+        "1o8kRKLehlkzIZGFXQYHmJWaMfdmalHLl": { "reviewStatus": "blocked", "reason": "Local source unavailable; visual review required." },
+        "1Zq0fabYCm4kjv2YjUuu4l2MVAXBHp6Kz": {
+          "reviewStatus": "draft",
+          "alt": "The Manhattan Bridge spans the river in front of city buildings beneath a deep blue, overcast sky.",
+          "caption": "Manhattan Bridge"
+        },
+        "1cjyMmhZz83bDG3VwgYdUUE8D9YDvoXLo": { "reviewStatus": "blocked", "reason": "Local source unavailable; visual review required." },
+        "1SI2eppMrc4BBIoSHJcZ6rA8Hlt-qme0H": {
+          "reviewStatus": "draft",
+          "alt": "A stepped skyscraper rises above a plaza lined with flags, a gold statue, and cafe umbrellas under gray skies.",
+          "caption": "Tower above a flag-lined plaza"
+        },
+        "17CQkufGNLxwdkp7XCx-vh6pFGtjQh-lv": {
+          "reviewStatus": "draft",
+          "alt": "Large illuminated billboards line Times Square above traffic, yellow taxis, and pedestrians on a hazy day.",
+          "caption": "Times Square"
+        }
+      }
+    },
+    "1vbylDPPQbuB6P394-iQN4hwMGeUboTkC": {
+      "reviewStatus": "draft",
+      "title": "Santa Cruz",
+      "location": "Santa Cruz",
+      "category": "City",
+      "year": null,
+      "note": "Ferris wheels, food stands, and people on the boardwalk beneath a changing sky. Orange and pink clouds give way to the lights of the rides.",
+      "images": {
+        "1q5hrWIJOOZxjEeKxUIRzGD0me-5E-yEZ": {
+          "reviewStatus": "draft",
+          "alt": "A close upward view of a Ferris wheel's spokes and gondolas against orange sunset clouds.",
+          "caption": "Ferris wheel against orange clouds"
+        },
+        "1nwN2q6fkwh5Za8RKJ8ucv-u52vbFbbn_": {
+          "reviewStatus": "draft",
+          "alt": "An illuminated swing ride stands beside a Ferris wheel against a softly colored evening sky.",
+          "caption": "Swing ride and Ferris wheel"
+        },
+        "1SMGRqDKJ4gGFoJX7r9pGy14xyRpnZBPi": {
+          "reviewStatus": "draft",
+          "alt": "A Hot Dog on a Stick stand sits below a wooden roller coaster, with palm trees silhouetted against pink clouds.",
+          "caption": "Food stand beneath the roller coaster"
+        },
+        "13zARn-JWCpte0_aMwdbwXeVClOMmhTfF": {
+          "reviewStatus": "draft",
+          "alt": "People walk between boardwalk food stands, with a Ferris wheel, wooden coaster, and palm trees beneath a blue and pink sky.",
+          "caption": "Evening on the boardwalk"
+        },
+        "11_5pkcCNCA1h6Amdi2uosBN_Fm1ikpUQ": {
+          "reviewStatus": "draft",
+          "alt": "Visitors stand outside a ticket booth under vivid orange-red clouds, with palm trees and ride tracks behind it.",
+          "caption": "Ticket booth at sunset"
+        },
+        "17xlUmcImlUFif5qHP_lGe1PiB-t_Abv7": {
+          "reviewStatus": "draft",
+          "alt": "A Ferris wheel glows with purple lights beside a dark churro stand as the evening sky fades from orange to blue.",
+          "caption": "Ferris wheel lights at dusk"
+        },
+        "1QOk9XlCPB0c0mr_NMtEIj_4fwW29GA0U": {
+          "reviewStatus": "draft",
+          "alt": "People pass colorful food stands and illuminated signs beneath orange and pink sunset clouds.",
+          "caption": "Food stands beneath the sunset"
+        },
+        "1LnUZB75cfkrjzOtio8neS5ufDDq3RUax": {
+          "reviewStatus": "draft",
+          "alt": "A star-shaped amusement ride with colorful enclosed cars is silhouetted against a pink and lavender sky.",
+          "caption": "Ride against a pink sky"
+        },
+        "1Zf-sGF0BiLFVriBImH9NLBGwCp6mEPHQ": {
+          "reviewStatus": "draft",
+          "alt": "Visitors walk along a boardwalk between food stands and picnic tables, with a Ferris wheel and wooden coaster beneath glowing clouds.",
+          "caption": "Boardwalk toward the rides"
+        },
+        "1BzsSuACaDcz_xN5xKl2XgGkPDb_gmToZ": {
+          "reviewStatus": "draft",
+          "alt": "People gather around picnic tables and striped umbrellas beneath a vivid red-orange sky, with palms and rides beyond.",
+          "caption": "Picnic tables under red clouds"
+        },
+        "1gfjwpAvFZslhUCwLkBtUpRLJjLXAD_Rh": {
+          "reviewStatus": "draft",
+          "alt": "A crowded boardwalk runs between illuminated stalls while colored chairlift seats pass overhead at dusk.",
+          "caption": "Chairlift above the boardwalk"
+        },
+        "1lrqjia8xaqGQweGQBKhRmP9VIJq2d1xR": {
+          "reviewStatus": "draft",
+          "alt": "Riders sit on carousel horses inside a brightly lit pavilion decorated with colored lights and a 115 years banner.",
+          "caption": "Carousel pavilion"
+        }
+      }
+    },
+    "1nSNRJDPWxHDbFxKBsxuNKD8Jg-PJEaSk": {
+      "reviewStatus": "draft",
+      "title": "Washington",
+      "location": "Washington, DC",
+      "category": "City",
+      "year": null,
+      "note": "Decorated ceilings and reading rooms, monuments across the water, and streets between them. Architectural detail sits alongside the movement of everyday city life.",
+      "images": {
+        "1qYFlj889f6Ed8wRnXtzrc7qibBlVwH6e": {
+          "reviewStatus": "draft",
+          "alt": "Painted vaulted ceilings in red, green, and gold meet carved stone arches and columns inside an ornate hall.",
+          "caption": "Painted vaults and carved stone"
+        },
+        "1BGB_5Xk6U6y6AE4hSwTfryXEBEHy0xOR": {
+          "reviewStatus": "draft",
+          "alt": "The white dome and columns of the US Capitol rise behind leafy trees against a clear blue sky.",
+          "caption": "US Capitol"
+        },
+        "1JWv_OZ2FHn3Bo1KagCCNqHSwr5w8eEfg": {
+          "reviewStatus": "draft",
+          "alt": "The US Capitol dome appears at the far end of a city street lined with trees, buildings, and traffic.",
+          "caption": "Capitol at the end of the street"
+        },
+        "1n4oCQmDOnQzehOFi1gbBCmB4wQu4mw3I": {
+          "reviewStatus": "draft",
+          "alt": "Water flows around dark sculpted figures in a fountain below an ornate pale stone building.",
+          "caption": "Fountain and stone facade"
+        },
+        "1GVDYm_Vt-_490pNF_iXjNNUGLe3cmXjC": {
+          "reviewStatus": "draft",
+          "alt": "People sit in a courtyard beneath a curved glass-grid roof that casts geometric shadows across the stone walls and floor.",
+          "caption": "Courtyard beneath a glass roof"
+        },
+        "1d7-uNRPitTkZ5_twZGdhx18sAnc4g_MW": {
+          "reviewStatus": "draft",
+          "alt": "Two red vintage cars are parked beside a building entrance while people stand on the sidewalk.",
+          "caption": "Vintage cars at the curb"
+        },
+        "1Vvtt3LfCZIJFn4GPTK3htRhDqziONOBg": {
+          "reviewStatus": "draft",
+          "alt": "The domed Jefferson Memorial stands across a broad expanse of water, framed by trees and an overhanging branch.",
+          "caption": "Jefferson Memorial across the water"
+        },
+        "1BbNNDyHgWI6fZJZxMUtjSHiQ9MLzhrQ5": {
+          "reviewStatus": "draft",
+          "alt": "An elevated view of a circular reading room shows curved rows of illuminated desks beneath a richly decorated dome and arched windows.",
+          "caption": "Reading room beneath the dome"
+        },
+        "11k21VNQtZdppIn-pKRy5HWwVQ4VzJCVc": {
+          "reviewStatus": "draft",
+          "alt": "A symmetrical marble hall has balconies, staircases, sculpted figures, and an ornate painted ceiling above rows of arches.",
+          "caption": "Marble balconies and painted arches"
+        },
+        "1ri2I_MOy-zeME0ESpdd9I6xE5P2iT7md": {
+          "reviewStatus": "draft",
+          "alt": "Warm desk lamps illuminate readers below tall arched bookshelves framed by marble columns.",
+          "caption": "Desks beneath arched bookshelves"
+        },
+        "11uMOU9uADw6rLhAvGi7xZHTtX1gA3qUp": {
+          "reviewStatus": "draft",
+          "alt": "A dark statue with one arm raised stands in front of marble arches and an elaborate painted ceiling.",
+          "caption": "Statue beneath the painted ceiling"
+        },
+        "1i_Nj6G9P5lFpYSuJ29rX7WWY0y2gVKZH": {
+          "reviewStatus": "draft",
+          "alt": "The Washington Monument rises above a green lawn against a clear blue sky, with trees along the right edge.",
+          "caption": "Washington Monument"
+        },
+        "16k_yGRo26kCUWdn8lVRbR8BVNkYHO71m": {
+          "reviewStatus": "draft",
+          "alt": "A close view of the Washington Monument's stone base shows a line of American flags across the lawn to its left.",
+          "caption": "Flags beside the monument"
+        },
+        "1KGqRgDZkammKvixgbkYBC8TRnAheBuLY": {
+          "reviewStatus": "draft",
+          "alt": "Readers work at glowing desks beneath two arched bookcases and carved marble details, seen from above.",
+          "caption": "Readers and lamplight"
+        },
+        "150ltz9m1_cM--_ous_jPpOX9KLKXy_rO": {
+          "reviewStatus": "draft",
+          "alt": "A wide elevated view looks across a circular reading room with concentric desks, warm lamps, marble columns, and tall bookshelves.",
+          "caption": "Circular reading room"
+        },
+        "1u8pWec7rqu9x-FmkB0Sd28AVzsGO5M3B": {
+          "reviewStatus": "draft",
+          "alt": "A close upward view of the US Capitol dome and its crowning statue against a deep blue sky.",
+          "caption": "Statue above the Capitol dome"
+        },
+        "1m_8bBIaBJFW-uYceot8kcg3T7-Q7iwgz": {
+          "reviewStatus": "draft",
+          "alt": "Cars wait along a city street beneath a green traffic light, with tall buildings and warm evening light in the distance.",
+          "caption": "Evening traffic"
+        },
+        "1NXJbUhzCBBYEF2POm-KSCYPbyPt-E5bA": {
+          "reviewStatus": "draft",
+          "alt": "A motion-blurred subway train passes a platform beneath a long coffered concrete vault.",
+          "caption": "Train beneath a vaulted station ceiling"
+        },
+        "1vq35p8QHtA-WYO9yJsK0sakvFtW3dp59": {
+          "reviewStatus": "draft",
+          "alt": "A large fountain sends jets of water into a circular pool surrounded by stone memorial pillars and trees.",
+          "caption": "Fountain and memorial pillars"
+        }
+      }
+    }
+  }
+}
