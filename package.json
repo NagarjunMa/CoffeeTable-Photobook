@@ -8,6 +8,8 @@
     "start": "next start",
     "lint": "eslint",
     "test:images": "tsx --test tests/image-delivery.test.ts",
+    "test:browser": "playwright test",
+    "test:browser:build": "NEXT_DIST_DIR=.next-test next build",
     "sync:cloudflare": "tsx scripts/sync-drive.ts --cloudflare",
     "verify:images": "tsx scripts/verify-images.ts",
     "images:retire-local": "npm run verify:images && tsx scripts/retire-local-photos.ts",
@@ -29,6 +31,8 @@
     "zod": "4.4.3"
   },
   "devDependencies": {
+    "@axe-core/playwright": "4.13.0",
+    "@playwright/test": "1.63.0",
     "@tailwindcss/postcss": "4.3.1",
     "@types/node": "latest",
     "@types/react": "latest",
