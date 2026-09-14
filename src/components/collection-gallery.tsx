@@ -8,6 +8,7 @@ import Link from "next/link";
 import { useCallback, useRef, useState } from "react";
 import type { CSSProperties } from "react";
 import { PhotoLightbox } from "@/components/photo-lightbox";
+import { DestinationTitle } from "@/components/destination-title";
 import { collections } from "@/data/collections";
 import type {
   Collection,
@@ -177,48 +178,35 @@ export function CollectionGallery({ collection }: { collection: Collection }) {
     <>
       <section
         ref={scope}
-        className="city-book-texture relative overflow-x-clip bg-[#090908] text-[#f1efe9]"
+        className="city-book-texture relative text-[var(--gallery-ink)]"
       >
         <article
           data-book-spread
-          className="site-gutter grid min-h-svh items-center gap-12 pb-16 pt-28 md:grid-cols-[minmax(8rem,0.3fr)_minmax(24rem,0.95fr)_minmax(18rem,0.55fr)] md:gap-10 md:pb-20"
+          className="collection-opening site-gutter"
         >
-          <div className="self-start pt-3 md:pt-[14vh]">
+          <div className="collection-index">
             <Link
               href="/#work"
-              className="editorial-link font-mono-custom text-[11px] uppercase tracking-[0.18em] text-white/50"
+              className="editorial-link font-mono-custom text-[13px] uppercase text-[var(--gallery-secondary)]"
             >
               Index
             </Link>
           </div>
 
-          <div className="max-w-4xl self-center">
+          <div className="min-w-0 max-w-4xl self-center">
             <p className="font-mono-custom mb-4 text-[10px] uppercase tracking-[0.18em] text-white/45 md:text-[11px]">
               {collection.location} / {collection.year}
             </p>
-            <h1
-              className={`font-display max-w-[7ch] font-medium leading-[0.78] text-[#f5f2eb] md:text-[clamp(5rem,11vw,11rem)] ${
-                collection.title.length > 9
-                  ? "text-[3.35rem] sm:text-[4rem]"
-                  : "text-[5rem]"
-              }`}
-            >
-              {collection.title}
-            </h1>
-            <p className="mt-8 max-w-2xl text-balance text-[clamp(1.15rem,2vw,1.75rem)] leading-[1.3] text-white/68">
+            <DestinationTitle title={collection.title} as="h1" />
+            <p className="mt-8 max-w-2xl text-balance text-lg leading-relaxed text-[var(--gallery-secondary)] md:text-xl">
               {collection.note}
             </p>
           </div>
 
           {previewImage ? (
-            <figure className="self-center">
-              <button
-                type="button"
-                aria-label={`Open ${previewImage.alt} full screen`}
-                onClick={(event) =>
-                  openLightbox(previewIndex, event.currentTarget)
-                }
-                className="group ml-auto block w-[min(72vw,25rem)] cursor-zoom-in border-0 bg-transparent p-0 text-left"
+            <figure className="min-w-0 self-center">
+              <div
+                className="group relative ml-auto block w-fit max-w-full"
               >
                 <PortfolioPhoto
                   photo={previewImage}
@@ -226,7 +214,8 @@ export function CollectionGallery({ collection }: { collection: Collection }) {
                   className="h-auto max-h-[60vh] w-auto max-w-full object-contain shadow-[0_1.4rem_4rem_rgb(0_0_0_/_0.4)] transition-transform duration-500 ease-out group-hover:scale-[1.01]"
                   loading="eager"
                 />
-              </button>
+                <button type="button" className="photo-open" data-open-photo aria-label={`Open ${previewImage.alt} full screen`} onClick={(event) => openLightbox(previewIndex, event.currentTarget)} />
+              </div>
               <figcaption className="font-mono-custom mt-4 text-right text-[10px] uppercase tracking-[0.16em] text-white/40">
                 Preview / {String(collection.images.length).padStart(2, "0")} frames
               </figcaption>
@@ -267,12 +256,7 @@ export function CollectionGallery({ collection }: { collection: Collection }) {
                     <div
                       className="exhibition-frame-group mx-auto max-w-full"
                     >
-                      <button
-                        type="button"
-                        aria-label={`Open ${photo.alt} full screen`}
-                        onClick={(event) =>
-                          openLightbox(index, event.currentTarget)
-                        }
+                      <div
                         className="exhibition-frame flex w-full cursor-zoom-in items-center justify-center border-0"
                       >
                         <PortfolioPhoto
@@ -287,7 +271,8 @@ export function CollectionGallery({ collection }: { collection: Collection }) {
                           className="exhibition-photo h-auto max-h-[78svh] w-auto max-w-full select-none object-contain transition-[filter,transform] duration-500 ease-out group-hover:scale-[1.003] group-hover:brightness-[1.025]"
                           loading={index < 2 ? "eager" : "lazy"}
                         />
-                      </button>
+                        <button type="button" className="photo-open" data-open-photo aria-label={`Open ${photo.alt} full screen`} onClick={(event) => openLightbox(index, event.currentTarget)} />
+                      </div>
                       <figcaption className="mt-4 flex items-start justify-between gap-4 border-t border-white/12 pt-2 text-white/70">
                         <span className="font-display text-[12px] leading-4">
                           Frame {String(index + 1).padStart(2, "0")}

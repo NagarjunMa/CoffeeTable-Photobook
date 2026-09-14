@@ -15,7 +15,9 @@ export function IntroLoader() {
         return;
       }
 
-      if (window.sessionStorage.getItem(introSessionKey) === "true") {
+      let played = false;
+      try { played = window.sessionStorage.getItem(introSessionKey) === "true"; } catch { /* Storage is optional. */ }
+      if (played || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
         const frame = requestAnimationFrame(() => setIsVisible(false));
         return () => cancelAnimationFrame(frame);
       }
@@ -30,6 +32,7 @@ export function IntroLoader() {
       }
 
       const previousBodyOverflow = document.body.style.overflow;
+      overlayElement.style.display = "block";
       const previousHtmlOverflow = document.documentElement.style.overflow;
       let cancelled = false;
       let introStarted = false;
@@ -52,7 +55,7 @@ export function IntroLoader() {
         if (finishTimer !== null) {
           window.clearTimeout(finishTimer);
         }
-        window.sessionStorage.setItem(introSessionKey, "true");
+        try { window.sessionStorage.setItem(introSessionKey, "true"); } catch { /* Storage must not interrupt teardown. */ }
         document.body.style.overflow = previousBodyOverflow;
         document.documentElement.style.overflow = previousHtmlOverflow;
         gsap.set(heroName, { clearProps: "opacity,visibility" });
@@ -126,7 +129,7 @@ export function IntroLoader() {
       const scheduleIntro = () => {
         requestAnimationFrame(() => {
           requestAnimationFrame(() => {
-            runIntro();
+            try { runIntro(); } catch { finish(); }
           });
         });
       };
@@ -158,6 +161,7 @@ export function IntroLoader() {
     <div
       ref={overlay}
       aria-hidden="true"
+      style={{ display: "none" }}
       className="fixed inset-0 z-[150] overflow-hidden bg-black"
     >
       <div

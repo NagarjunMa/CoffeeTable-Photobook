@@ -6,7 +6,7 @@ import path from "node:path";
 import collections from "../../src/data/generated/collections.json";
 
 export const test = base.extend({
-  page: async ({ page }, use) => {
+  page: async ({ page }, provide) => {
     await page.addInitScript(() => {
       try { sessionStorage.setItem("nm-portfolio-intro-played", "true"); } catch {}
     });
@@ -35,7 +35,7 @@ export const test = base.extend({
       }
       await route.fulfill({ status: 200, contentType: sourceType(body), body });
     });
-    await use(page);
+    await provide(page);
   },
 });
 
