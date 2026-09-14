@@ -1,5 +1,14 @@
 # Photography Portfolio Implementation Plan
 
+## Image Delivery Update - September 13, 2026
+
+Cloudflare hosted Images is the selected delivery provider. Google Drive remains
+private source storage and publishing runs manually on the local machine. The
+site uses responsive, uncropped variants through on-demand signed delivery.
+See [CLOUDFLARE_IMAGES.md](CLOUDFLARE_IMAGES.md) for setup, verification, rollback,
+security limits, and the later deployment requirements. This supersedes the
+public-photo publishing flow described in the original implementation history.
+
 ## Vision
 
 Build a personal travel and wildlife photography portfolio that feels like a quiet coffee-table book: minimal, editorial, spacious, and image-first. The portfolio should showcase long-term photographic work organized by places, cities, forests, states, or countries.

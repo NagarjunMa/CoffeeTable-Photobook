@@ -2,6 +2,11 @@
 
 The portfolio can now use Google Drive as the source of truth for photo collections.
 
+Cloudflare delivery is now supported. When Cloudflare credentials are configured,
+the sync uploads private web masters instead of public local photographs. See
+[CLOUDFLARE_IMAGES.md](CLOUDFLARE_IMAGES.md) for the current local workflow and
+verification commands. The local WebP flow below applies only without Cloudflare.
+
 ## Drive Folder Structure
 
 Create or use a Drive folder named `Photography`.

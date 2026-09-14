@@ -3,7 +3,7 @@
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import Image from "next/image";
+import { PortfolioPhoto } from "@/components/portfolio-photo";
 import Link from "next/link";
 import { useCallback, useRef, useState } from "react";
 import type { CSSProperties } from "react";
@@ -220,15 +220,11 @@ export function CollectionGallery({ collection }: { collection: Collection }) {
                 }
                 className="group ml-auto block w-[min(72vw,25rem)] cursor-zoom-in border-0 bg-transparent p-0 text-left"
               >
-                <Image
-                  src={previewImage.src}
-                  alt={previewImage.alt}
-                  width={previewImage.width}
-                  height={previewImage.height}
+                <PortfolioPhoto
+                  photo={previewImage}
                   sizes="25rem"
                   className="h-auto max-h-[60vh] w-auto max-w-full object-contain shadow-[0_1.4rem_4rem_rgb(0_0_0_/_0.4)] transition-transform duration-500 ease-out group-hover:scale-[1.01]"
                   loading="eager"
-                  unoptimized
                 />
               </button>
               <figcaption className="font-mono-custom mt-4 text-right text-[10px] uppercase tracking-[0.16em] text-white/40">
@@ -279,11 +275,8 @@ export function CollectionGallery({ collection }: { collection: Collection }) {
                         }
                         className="exhibition-frame flex w-full cursor-zoom-in items-center justify-center border-0"
                       >
-                        <Image
-                          src={photo.src}
-                          alt={photo.alt}
-                          width={photo.width}
-                          height={photo.height}
+                        <PortfolioPhoto
+                          photo={photo}
                           sizes={
                             row.length === 3
                               ? "(min-width: 768px) 34vw, 100vw"
@@ -292,8 +285,7 @@ export function CollectionGallery({ collection }: { collection: Collection }) {
                                 : "100vw"
                           }
                           className="exhibition-photo h-auto max-h-[78svh] w-auto max-w-full select-none object-contain transition-[filter,transform] duration-500 ease-out group-hover:scale-[1.003] group-hover:brightness-[1.025]"
-                          priority={index < 2}
-                          unoptimized
+                          loading={index < 2 ? "eager" : "lazy"}
                         />
                       </button>
                       <figcaption className="mt-4 flex items-start justify-between gap-4 border-t border-white/12 pt-2 text-white/70">

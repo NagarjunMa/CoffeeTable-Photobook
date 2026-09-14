@@ -1,11 +1,12 @@
 import { createServer } from "node:http";
+import { randomBytes } from "node:crypto";
 import {
-  createWriteStream,
   existsSync,
   mkdirSync,
-  readFileSync,
+  openSync,
+  closeSync,
   rmSync,
-  writeFileSync,
+  readFileSync,
 } from "node:fs";
 import { basename, dirname, extname, join, resolve } from "node:path";
 import { spawn } from "node:child_process";
@@ -14,6 +15,9 @@ import { google } from "googleapis";
 import sharp from "sharp";
 import slugify from "slugify";
 import { z } from "zod";
+import { loadLocalEnv } from "./lib/local-env";
+import { createCloudflarePublisher, writeJsonAtomic } from "./lib/cloudflare-images";
+import { imagePath } from "../src/lib/image-variants";
 import type { Collection, PortfolioImage } from "../src/data/types";
 
 type DriveFile = {
@@ -67,41 +71,6 @@ const desktopMapPosterNamePattern =
 const mobileMapPosterNamePattern =
   /^(?:.+[-_\s])?map[-_\s]?mobile\.(png|jpe?g|webp|heic|heif)$/i;
 
-function loadEnvFile(filePath: string) {
-  if (!existsSync(filePath)) {
-    return;
-  }
-
-  const lines = readFileSync(filePath, "utf8").split(/\r?\n/);
-
-  for (const line of lines) {
-    const trimmed = line.trim();
-
-    if (!trimmed || trimmed.startsWith("#")) {
-      continue;
-    }
-
-    const match = trimmed.match(/^([A-Za-z_][A-Za-z0-9_]*)=(.*)$/);
-
-    if (!match) {
-      continue;
-    }
-
-    const [, key, rawValue] = match;
-
-    if (process.env[key] !== undefined) {
-      continue;
-    }
-
-    const value = rawValue
-      .trim()
-      .replace(/^['"]|['"]$/g, "")
-      .replace(/\\n/g, "\n");
-
-    process.env[key] = value;
-  }
-}
-
 function escapeDriveQueryValue(value: string) {
   return `'${value.replace(/\\/g, "\\\\").replace(/'/g, "\\'")}'`;
 }
@@ -136,8 +105,7 @@ function orientation(width: number, height: number): PortfolioImage["orientation
 }
 
 function writeJson(filePath: string, value: unknown) {
-  mkdirSync(dirname(filePath), { recursive: true });
-  writeFileSync(filePath, `${JSON.stringify(value, null, 2)}\n`);
+  writeJsonAtomic(filePath, value);
 }
 
 function openAuthUrl(url: string) {
@@ -155,13 +123,19 @@ function openAuthUrl(url: string) {
   }).unref();
 }
 
-async function waitForOAuthCode(port: number) {
+async function waitForOAuthCode(port: number, state: string) {
   return new Promise<string>((resolveCode, reject) => {
     const server = createServer((req, res) => {
       try {
         const url = new URL(req.url ?? "/", `http://127.0.0.1:${port}`);
         const code = url.searchParams.get("code");
         const error = url.searchParams.get("error");
+
+        if (url.pathname !== "/oauth2callback" || url.searchParams.get("state") !== state) {
+          res.writeHead(400, { "content-type": "text/plain" });
+          res.end("Invalid authorization callback.");
+          return;
+        }
 
         if (error) {
           res.writeHead(400, { "content-type": "text/plain" });
@@ -186,7 +160,12 @@ async function waitForOAuthCode(port: number) {
         server.close();
       }
     });
-
+    const timeout = setTimeout(() => {
+      reject(new Error("Google authorization timed out. Run npm run sync:drive to retry."));
+      server.close();
+    }, 300_000);
+    server.on("close", () => clearTimeout(timeout));
+    server.on("error", (error) => { clearTimeout(timeout); reject(error); });
     server.listen(port, "127.0.0.1");
   });
 }
@@ -205,19 +184,27 @@ async function getAuthClient(env: z.infer<typeof envSchema>) {
 
   if (existsSync(tokenPath)) {
     auth.setCredentials(JSON.parse(readFileSync(tokenPath, "utf8")));
-    return auth;
+    try {
+      await auth.getAccessToken();
+      return auth;
+    } catch (error) {
+      const reason = (error as { response?: { data?: { error?: string } } }).response?.data?.error;
+      if (reason !== "invalid_grant") throw new Error("Could not refresh Google Drive login. Check connectivity and retry.");
+      console.log("Google Drive login expired; reconnect in the browser.");
+    }
   }
 
+  const state = randomBytes(24).toString("hex");
   const authUrl = auth.generateAuthUrl({
+    state,
     access_type: "offline",
     prompt: "consent",
     scope: ["https://www.googleapis.com/auth/drive.readonly"],
   });
 
   console.log("Opening Google Drive authorization in your browser...");
-  console.log(authUrl);
 
-  const codePromise = waitForOAuthCode(env.GOOGLE_DRIVE_OAUTH_PORT);
+  const codePromise = waitForOAuthCode(env.GOOGLE_DRIVE_OAUTH_PORT, state);
   openAuthUrl(authUrl);
 
   const code = await codePromise;
@@ -433,8 +420,10 @@ async function writeOptimizedMapPoster(
 }
 
 async function syncDrive() {
-  loadEnvFile(join(projectRoot, ".env"));
-  loadEnvFile(join(projectRoot, ".env.local"));
+  loadLocalEnv(projectRoot);
+
+  const cloudflare = process.env.CLOUDFLARE_ACCOUNT_ID || process.argv.includes("--cloudflare")
+    ? await createCloudflarePublisher(projectRoot) : null;
 
   const env = envSchema.parse(process.env);
   const auth = await getAuthClient(env);
@@ -442,6 +431,7 @@ async function syncDrive() {
   mkdirSync(generatedDir, { recursive: true });
 
   if (!auth) {
+    if (cloudflare) throw new Error("Google Drive OAuth credentials are required for Cloudflare publishing.");
     writeJson(syncOutputPath, {
       status: "skipped",
       reason:
@@ -470,10 +460,10 @@ async function syncDrive() {
     ].join(" and "),
   );
 
-  rmSync(publicPhotoDir, { recursive: true, force: true });
   mkdirSync(publicPhotoDir, { recursive: true });
 
   const collections: Collection[] = [];
+  const failures: string[] = [];
 
   for (const folder of cityFolders) {
     const folderTitle = cleanFolderName(folder.name);
@@ -561,10 +551,26 @@ async function syncDrive() {
 
     for (const [index, imageFile] of sortedImages.entries()) {
       try {
-        optimizedImages.push(
-          await writeOptimizedImage(drive, folderSlug, imageFile, index),
-        );
+        if (cloudflare) {
+          const remote = await cloudflare.upload(imageFile, () => downloadFileBuffer(drive, imageFile.id));
+          optimizedImages.push({
+            id: imageFile.id, fileName: imageFile.name,
+            alt: imageAltFromName(imageFile.name) || folderTitle,
+            src: imagePath(remote.imageId, "gallery"), cloudflareImageId: remote.imageId,
+            width: remote.width, height: remote.height,
+            orientation: orientation(remote.width, remote.height),
+            sourceFileName: imageFile.name, sourceModifiedTime: imageFile.modifiedTime,
+          });
+        } else {
+          optimizedImages.push(await writeOptimizedImage(drive, folderSlug, imageFile, index));
+        }
+        console.log(`  ${index + 1}/${sortedImages.length}: ${imageFile.name}`);
       } catch (error) {
+        if (cloudflare && error instanceof TypeError && error.message === "fetch failed") {
+          const cause = error.cause as { code?: string } | undefined;
+          throw new Error(`Cloudflare connection failed (${cause?.code ?? "network error"}). The gallery is unchanged; rerun sync to resume.`);
+        }
+        failures.push(`${folderTitle}/${imageFile.name}`);
         console.warn(
           `Skipping ${folderTitle}/${imageFile.name}: ${
             error instanceof Error ? error.message : String(error)
@@ -608,9 +614,29 @@ async function syncDrive() {
     });
   }
 
+  if (failures.length) {
+    writeJson(syncOutputPath, { status: "failed", failures, updatedAt: new Date().toISOString() });
+    throw new Error(`${failures.length} photographs failed. The existing collection manifest was preserved. Fix these files and rerun sync; successful Cloudflare uploads will be reused.`);
+  }
+  if (cloudflare) {
+    for (const collection of collections) {
+      const first = collection.images[0];
+      if (first?.cloudflareImageId) await cloudflare.verify(first.cloudflareImageId);
+    }
+  }
+  if (existsSync(collectionsOutputPath)) {
+    const previous: Collection[] = JSON.parse(readFileSync(collectionsOutputPath, "utf8"));
+    writeJson(join(projectRoot, ".cache", "collections-before-sync.json"), previous);
+    const migrationBackup = join(projectRoot, ".cache", "collections-before-cloudflare.json");
+    if (cloudflare && !existsSync(migrationBackup) && previous.some(c => c.images.some(p => !p.cloudflareImageId))) {
+      writeJson(migrationBackup, previous);
+    }
+  }
   writeJson(collectionsOutputPath, collections);
   writeJson(syncOutputPath, {
     status: "synced",
+    delivery: cloudflare ? "cloudflare" : "local",
+    cloudflare: cloudflare?.stats(),
     rootFolderId: rootFolder.id,
     rootFolderName: rootFolder.name,
     collectionCount: collections.length,
@@ -629,7 +655,19 @@ async function syncDrive() {
   );
 }
 
+const lockPath = join(projectRoot, ".cache", "drive-sync.lock");
+mkdirSync(dirname(lockPath), { recursive: true });
+try {
+  closeSync(openSync(lockPath, "wx", 0o600));
+} catch {
+  console.error("Another sync may be running. If a previous process crashed, remove .cache/drive-sync.lock before retrying.");
+  process.exit(1);
+}
+process.on("exit", () => rmSync(lockPath, { force: true }));
+process.on("SIGINT", () => process.exit(130));
+process.on("SIGTERM", () => process.exit(143));
+
 syncDrive().catch((error) => {
-  console.error(error);
+  console.error(error instanceof Error ? error.message : "Drive sync failed.");
   process.exit(1);
 });
