@@ -3,6 +3,7 @@ export type PortfolioImage = {
   fileName: string;
   alt: string;
   src: string;
+  cloudflareImageId?: string;
   width: number;
   height: number;
   orientation: "portrait" | "landscape" | "square";

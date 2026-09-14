@@ -2,7 +2,7 @@
 
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import Image from "next/image";
+import { PortfolioPhoto } from "@/components/portfolio-photo";
 import { createPortal } from "react-dom";
 import { useEffect, useRef } from "react";
 import type { LightboxOrigin } from "@/components/collection-gallery";
@@ -206,18 +206,16 @@ export function PhotoLightbox({
           }
         }}
       >
-        <Image
+        <PortfolioPhoto
           key={photo.id}
           data-lightbox-image
-          src={photo.src}
-          alt={photo.alt}
-          width={photo.width}
-          height={photo.height}
+          photo={photo}
+          enlarged
           sizes="88vw"
           className="h-auto max-h-[88dvh] w-auto max-w-[88vw] select-none object-contain opacity-0 shadow-[0_1.5rem_5rem_rgb(0_0_0_/_0.24)]"
           draggable={false}
-          priority
-          unoptimized
+          loading="eager"
+          fetchPriority="high"
           onContextMenu={(event) => event.preventDefault()}
         />
       </div>

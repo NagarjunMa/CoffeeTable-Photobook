@@ -7,6 +7,10 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
+    "test:images": "tsx --test tests/image-delivery.test.ts",
+    "sync:cloudflare": "tsx scripts/sync-drive.ts --cloudflare",
+    "verify:images": "tsx scripts/verify-images.ts",
+    "images:retire-local": "npm run verify:images && tsx scripts/retire-local-photos.ts",
     "sync:drive": "tsx scripts/sync-drive.ts",
     "sync:drive:reset": "rm -f .google-drive-token.json && npm run sync:drive",
     "publish": "npm run sync:drive && npm run build && npx vercel@54.15.1 deploy --prod"
