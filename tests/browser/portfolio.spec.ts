@@ -12,7 +12,8 @@ test("city map surface opens the destination", async ({ page }) => {
 
 test("lightbox retains keyboard focus and restores its opener", async ({ page }) => {
   await page.goto("/series/santa-cruz");
-  const opener = page.locator(".exhibition-frame").first();
+  const opener = page.locator(".exhibition-frame [data-open-photo]").first();
+  await opener.scrollIntoViewIfNeeded();
   await opener.click();
   const dialog = page.getByRole("dialog");
   await expect(dialog).toBeVisible();

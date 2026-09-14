@@ -2,19 +2,46 @@
 
 :root {
   --background: #faf8f2;
-  --foreground: #111111;
-  --muted: #77736a;
+  --foreground: #25211d;
+  --muted: #686258;
   --line: #ddd6c8;
   --accent: #4e563d;
   --paper: #f7f3ea;
   --gallery-wall: #090908;
   --gallery-mat: #f5f3ed;
   --gallery-ink: #f1efe9;
+  --gallery-secondary: #bdbab3;
 }
 
 * {
   box-sizing: border-box;
+  letter-spacing: 0;
 }
+
+:focus-visible { outline: 2px solid currentColor; outline-offset: 5px; }
+main:focus { outline: none; }
+.site-header a { min-height: 44px; display: inline-flex; align-items: center; padding-inline: 8px; }
+.skip-link { position: fixed; top: 8px; left: 8px; z-index: 200; padding: 12px; background: var(--foreground); color: var(--background); transform: translateY(-160%); }
+.skip-link:focus { transform: none; }
+.destination-title { width: 100%; max-width: 100%; font-size: 56px; font-weight: 500; line-height: 0.9; }
+.destination-title span { max-width: 100%; overflow-wrap: anywhere; }
+.collection-opening { display: grid; grid-template-columns: minmax(0, 1fr); min-height: 100svh; align-items: center; gap: 32px; padding-block: 100px 64px; }
+.collection-index { align-self: start; }
+.city-copy { padding-block: 20px; }
+.city-book-texture [class*="text-white/"] { color: var(--gallery-secondary); }
+.city-book-texture figcaption, .city-book-texture [class*="text-[8px]"], .city-book-texture [class*="text-[9px]"], .city-book-texture [class*="text-[10px]"] { font-size: 12px; }
+@media (max-width: 767px) { .city-copy { background: rgb(250 248 242 / 0.94); } }
+@media (min-width: 768px) {
+  .destination-title { font-size: 80px; }
+  .collection-opening { grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr); gap: 32px; }
+  .collection-index { grid-column: 1 / -1; }
+}
+@media (min-width: 1280px) {
+  .destination-title { font-size: 128px; }
+  .collection-opening { grid-template-columns: minmax(70px, 0.22fr) minmax(0, 1fr) minmax(0, 0.65fr); gap: 40px; }
+  .collection-index { grid-column: auto; padding-top: 14vh; }
+}
+@media (min-width: 1600px) { .destination-title { font-size: 152px; } }
 
 html {
   background: var(--background);
@@ -104,6 +131,22 @@ img {
 .no-scrollbar {
   scrollbar-width: none;
 }
+
+.photo-open { position: absolute; inset: 0; z-index: 2; border: 0; background: transparent; cursor: zoom-in; }
+.photo-error { position: absolute; inset: 0; z-index: 3; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1rem; background: var(--gallery-wall); color: var(--gallery-ink); font-size: 14px; }
+.photo-error button, .lightbox-status button { padding: 12px; border: 1px solid currentColor; background: transparent; color: inherit; cursor: pointer; }
+.photo-dialog { position: fixed; inset: 0; width: 100%; height: 100dvh; max-width: none; max-height: none; margin: 0; padding: 64px 6vw; border: 0; background: rgb(10 10 10 / 0.84); color: var(--gallery-ink); }
+.photo-dialog[open] { display: flex; align-items: center; justify-content: center; }
+.photo-dialog::backdrop { background: transparent; backdrop-filter: blur(10px); }
+.lightbox-stage { position: relative; display: flex; align-items: center; justify-content: center; max-width: 88vw; max-height: calc(100dvh - 160px); touch-action: pan-y; }
+.lightbox-photo { width: auto; height: auto; max-width: 88vw; max-height: calc(100dvh - 160px); object-fit: contain; }
+.lightbox-close, .lightbox-previous, .lightbox-next { position: absolute; padding: 14px; border: 0; color: inherit; background: transparent; font-family: var(--font-mono); font-size: 12px; cursor: pointer; }
+.lightbox-close { top: 12px; right: 12px; }
+.lightbox-previous { bottom: 12px; left: 12px; }
+.lightbox-next { bottom: 12px; right: 12px; }
+.lightbox-count { position: absolute; bottom: 26px; left: 50%; transform: translateX(-50%); font-size: 12px; }
+.lightbox-status { position: absolute; bottom: 64px; font-size: 14px; padding: 8px; background: var(--gallery-wall); }
+@media (prefers-reduced-motion: reduce) { .photo-dialog::backdrop { backdrop-filter: none; } }
 
 .no-scrollbar::-webkit-scrollbar {
   display: none;

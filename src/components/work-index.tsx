@@ -8,6 +8,7 @@ import Link from "next/link";
 import { useRef } from "react";
 import { collections } from "@/data/collections";
 import type { Collection } from "@/data/collections";
+import { DestinationTitle } from "@/components/destination-title";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
@@ -85,37 +86,25 @@ function CityPanel({
       <div className="pointer-events-none absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-[var(--background)] to-transparent" />
       <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[var(--background)] to-transparent" />
 
-      <Link
-        href={href}
-        aria-label={`Open ${collection.title} city book`}
-        className="absolute inset-0 z-10"
-      />
-
-      <div className="relative z-20 grid h-full grid-cols-1 items-center px-[clamp(1.4rem,4vw,5rem)] pb-16 pt-24 md:grid-cols-[minmax(21rem,0.8fr)_minmax(20rem,1.2fr)] md:gap-12 md:pb-12">
-        <div data-city-copy className="pointer-events-none max-w-xl">
+      <Link href={href} aria-label={`Open ${collection.title} city book`} className="city-panel-link relative z-20 flex h-full items-center px-[clamp(1.4rem,4vw,5rem)] pb-16 pt-24">
+        <div data-city-copy className="city-copy pointer-events-none min-w-0 w-full max-w-xl">
           <p className="font-mono-custom text-[10px] uppercase tracking-[0.18em] text-[var(--muted)] md:text-[11px]">
             {String(index + 1).padStart(2, "0")} / {collection.location}
           </p>
-          <Link
-            href={href}
-            className="pointer-events-auto mt-5 block w-fit"
-          >
-            <h3 className="font-display max-w-[7ch] text-[clamp(4.5rem,9vw,10rem)] font-medium leading-[0.78]">
-              {collection.title}
-            </h3>
-          </Link>
+          <div className="mt-5 block">
+            <DestinationTitle title={collection.title} />
+          </div>
           <p className="mt-7 max-w-md text-[clamp(1rem,1.35vw,1.2rem)] leading-[1.45] text-[#36332d]">
             {collection.note}
           </p>
-          <Link
-            href={href}
+          <span
             className="editorial-link pointer-events-auto mt-8 font-mono-custom text-[10px] uppercase tracking-[0.18em] md:text-[11px]"
           >
             Open Book
-          </Link>
+          </span>
         </div>
 
-      </div>
+      </Link>
 
       <p className="font-mono-custom pointer-events-none absolute bottom-4 right-5 z-20 text-[8px] tracking-[0.08em] text-[#656158] md:bottom-5 md:right-7">
         Map data (c) OpenStreetMap contributors
