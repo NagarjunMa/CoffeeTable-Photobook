@@ -137,6 +137,32 @@ img {
   scrollbar-width: none;
 }
 
+.destination-scroller { position: relative; height: 100svh; overflow-x: auto; overflow-y: hidden; scroll-snap-type: x mandatory; container-type: inline-size; }
+.destination-track { display: flex; width: max-content; height: 100%; }
+.destination-contents { position: sticky; top: 64px; left: 0; z-index: 30; display: flex; align-items: center; justify-content: space-between; gap: 12px; width: 100cqw; min-height: 64px; margin-bottom: -64px; padding: 8px 24px; background: var(--background); border-bottom: 1px solid var(--line); }
+.destination-links { display: flex; flex-wrap: wrap; gap: 4px 16px; }
+.destination-links a { display: inline-flex; min-height: 44px; align-items: center; font-size: 13px; color: var(--muted); }
+.destination-links a[aria-current] { color: var(--foreground); text-decoration: underline; text-underline-offset: 6px; }
+.destination-controls { display: flex; align-items: center; gap: 4px; }
+.destination-controls button { display: grid; place-items: center; width: 44px; height: 44px; border: none; background: transparent; color: var(--foreground); cursor: pointer; }
+.destination-controls button:disabled { opacity: 0.35; cursor: default; }
+.destination-position { white-space: nowrap; font-size: 12px; margin-right: 8px; }
+.city-panel-link { padding-top: 180px; }
+@media (max-width: 600px) {
+  .destination-contents { align-items: start; padding: 8px 16px; gap: 4px; }
+  .destination-links { gap: 0 12px; }
+  .destination-links a { font-size: 12px; }
+  .destination-controls { flex-wrap: wrap; justify-content: flex-end; min-width: 88px; }
+  .destination-position { display: none; }
+}
+@media (min-width: 768px) and (min-height: 640px) { .destination-scroller { overflow: hidden; scroll-snap-type: none; } }
+@media (prefers-reduced-motion: reduce), (max-height: 639px) {
+  .destination-scroller { height: auto; overflow: visible; }
+  .destination-track { width: 100%; height: auto; display: block; transform: none !important; }
+  .destination-track article { width: 100%; height: auto; min-height: 640px; }
+  .destination-track .city-panel-link { min-height: 640px; }
+}
+
 .photo-open { position: absolute; inset: 0; z-index: 2; border: 0; background: transparent; cursor: zoom-in; }
 .photo-error { position: absolute; inset: 0; z-index: 3; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1rem; background: var(--gallery-wall); color: var(--gallery-ink); font-size: 14px; }
 .photo-error button, .lightbox-status button { padding: 12px; border: 1px solid currentColor; background: transparent; color: inherit; cursor: pointer; }

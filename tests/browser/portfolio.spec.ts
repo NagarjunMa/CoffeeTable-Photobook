@@ -69,3 +69,35 @@ test("capture review surfaces", async ({ page }, info) => {
   await page.locator(".exhibition-row").first().scrollIntoViewIfNeeded();
   await page.screenshot({ path: info.outputPath("gallery.png") });
 });
+
+test("contents, history and reduced motion keep destinations reachable", async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto("/#work");
+  const contents = page.getByRole("navigation", { name: "Destination contents" });
+  await contents.getByRole("link", { name: "Washington", exact: true }).click();
+  await expect(page).toHaveURL(/#city-washington$/);
+  await expect(contents.getByRole("link", { name: "Washington", exact: true })).toHaveAttribute("aria-current", "location");
+  await page.getByRole("link", { name: "Open Washington city book" }).click();
+  await expect(page).toHaveURL(/\/series\/washington$/);
+  await page.getByRole("link", { name: "Index", exact: true }).click();
+  await expect(page).toHaveURL(/#city-washington$/);
+  await expect(contents.getByRole("link", { name: "Washington", exact: true })).toHaveAttribute("aria-current", "location");
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await expect.poll(() => page.locator(".destination-track").evaluate((element) => getComputedStyle(element).display)).toBe("block");
+  await expect(page.locator(".pin-spacer")).toHaveCount(0);
+});
+
+test("intro cannot obscure server content when JavaScript is disabled", async ({ browser }) => {
+  const context = await browser.newContext({ javaScriptEnabled: false });
+  const page = await context.newPage();
+  await page.goto("http://127.0.0.1:3100/");
+  await expect(page.getByRole("heading", { name: "Nagarjun Mallesh" })).toBeVisible();
+  await expect(page.locator('[aria-hidden="true"].fixed')).not.toBeVisible();
+  await context.close();
+});
+
+test("mobile snap belongs to the scroll container", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/#work");
+  await expect.poll(() => page.locator(".destination-scroller").evaluate((element) => getComputedStyle(element).scrollSnapType)).toBe("x mandatory");
+});
