@@ -3,9 +3,10 @@
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import Image from "next/image";
 import Link from "next/link";
 import { useRef, useState } from "react";
+import type { CSSProperties } from "react";
+import mapManifest from "@/data/map-derivatives.json";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { collections } from "@/data/collections";
 import type { Collection } from "@/data/collections";
@@ -13,57 +14,38 @@ import { DestinationTitle } from "@/components/destination-title";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
-function posterSources(collection: Collection) {
-  return {
-    desktop: collection.mapPosterDesktop ?? collection.mapPoster,
-    mobile: collection.mapPosterMobile ?? collection.mapPoster,
+type MapCandidate = { src: string; width: number; height: number };
+type MapVariant = { fallback: MapCandidate | null; candidates: MapCandidate[]; objectPosition: string; source: { path: string; kind: string } | null };
+const preparedMaps = mapManifest.collections as Record<string, { desktop: MapVariant; mobile: MapVariant }>;
+
+function mapSource(collection: Collection, device: "desktop" | "mobile") {
+  const poster = (device === "desktop" ? collection.mapPosterDesktop : collection.mapPosterMobile) ?? collection.mapPoster;
+  const prepared = preparedMaps[collection.slug]?.[device];
+  // A newly supplied source must never silently display an older derivative.
+  const matches = !poster || prepared?.source?.path === "public" + poster.src;
+  if (prepared?.fallback && matches) return {
+    ...prepared.fallback,
+    srcSet: prepared.candidates.map((candidate) => candidate.src + " " + candidate.width + "w").join(", "),
+    focalPosition: collection.mapPresentation?.[device]?.focalPosition ?? poster?.focalPosition ?? prepared.objectPosition,
   };
+  return poster ? { src: poster.src, width: undefined, height: undefined, srcSet: poster.sources?.map((item) => item.src + " " + item.width + "w").join(", "), focalPosition: poster.focalPosition ?? "50% 50%" } : null;
 }
 
-function MapBackdrop({
-  collection,
-  eager = false,
-}: {
-  collection: Collection;
-  eager?: boolean;
-}) {
-  const { desktop, mobile } = posterSources(collection);
-
-  if (!desktop && !mobile) {
-    return (
-      <div className="absolute inset-0 bg-[linear-gradient(125deg,#f5f0e7,#e6e0d5)]" />
-    );
-  }
-
-  const isSantaCruz = collection.slug === "santa-cruz";
-
+function MapBackdrop({ collection, eager = false }: { collection: Collection; eager?: boolean }) {
+  const desktop = mapSource(collection, "desktop");
+  const mobile = mapSource(collection, "mobile") ?? desktop;
+  if (!mobile) return null;
+  const style = {
+    "--map-position-mobile": mobile.focalPosition,
+    "--map-position-desktop": desktop?.focalPosition ?? mobile.focalPosition,
+  } as CSSProperties;
   return (
-    <div
-      data-city-map
-      className={`absolute inset-0 will-change-transform ${isSantaCruz ? "md:-bottom-[8%] md:-right-[18%] md:-top-[8%] md:left-[16%]" : ""}`}
-    >
-      {mobile ? (
-        <Image
-          src={mobile.src}
-          alt=""
-          fill
-          sizes="100vw"
-          className={`object-cover opacity-[0.76] mix-blend-multiply md:hidden ${isSantaCruz ? "object-[center_38%]" : ""}`}
-          loading={eager ? "eager" : "lazy"}
-          unoptimized
-        />
-      ) : null}
-      {desktop ? (
-        <Image
-          src={desktop.src}
-          alt=""
-          fill
-          sizes="100vw"
-          className={`hidden object-cover opacity-[0.78] mix-blend-multiply md:block ${isSantaCruz ? "object-[center_38%]" : ""}`}
-          loading={eager ? "eager" : "lazy"}
-          unoptimized
-        />
-      ) : null}
+    <div data-city-map className={"absolute inset-0 " + (collection.slug === "santa-cruz" ? "md:-bottom-[8%] md:-right-[18%] md:-top-[8%] md:left-[16%]" : "")} style={style}>
+      <picture>
+        {desktop && <source media="(min-width: 768px)" srcSet={desktop.srcSet ?? desktop.src} sizes="100vw" />}
+        {/* Prepared map derivatives are already optimized; only one responsive image is mounted. */}
+        <img src={mobile.src} srcSet={mobile.srcSet} sizes="100vw" width={mobile.width} height={mobile.height} alt="" className="city-map-image" loading={eager ? "eager" : "lazy"} decoding="async" />
+      </picture>
     </div>
   );
 }
@@ -81,11 +63,12 @@ function CityPanel({
   return (
     <article
       id={`city-${collection.slug}`}
+      style={{ "--copy-scrim-mobile": collection.mapPresentation?.mobile?.scrim ?? 0.94, "--copy-scrim-desktop": collection.mapPresentation?.desktop?.scrim ?? 0.96 } as CSSProperties}
       data-city-panel
       className="relative h-full w-[100cqw] shrink-0 snap-start overflow-hidden bg-[var(--background)]"
     >
       <MapBackdrop collection={collection} eager={index === 0} />
-      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,var(--background)_0%,rgb(250_248_242_/_0.97)_21%,rgb(250_248_242_/_0.68)_42%,rgb(250_248_242_/_0.06)_70%)] md:bg-[linear-gradient(90deg,var(--background)_0%,rgb(250_248_242_/_0.96)_16%,rgb(250_248_242_/_0.62)_34%,transparent_61%)]" />
+      <div className="city-map-scrim pointer-events-none absolute inset-0" />
       <div className="pointer-events-none absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-[var(--background)] to-transparent" />
       <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[var(--background)] to-transparent" />
 
@@ -101,9 +84,9 @@ function CityPanel({
           <div className="mt-5 block">
             <DestinationTitle title={collection.title} />
           </div>
-          <p className="mt-7 max-w-md text-[clamp(1rem,1.35vw,1.2rem)] leading-[1.45] text-[#36332d]">
+          {!collection.note.startsWith("A field study from ") && <p className="mt-7 max-w-md text-base md:text-lg leading-[1.45] text-[var(--foreground)]">
             {collection.note}
-          </p>
+          </p>}
           <span
             className="editorial-link pointer-events-auto mt-8 font-mono-custom text-[10px] uppercase tracking-[0.18em] md:text-[11px]"
           >
@@ -113,9 +96,9 @@ function CityPanel({
 
       </Link>
 
-      <p className="font-mono-custom pointer-events-none absolute bottom-4 right-5 z-20 text-[8px] tracking-[0.08em] text-[#656158] md:bottom-5 md:right-7">
+      {(mapSource(collection, "desktop") || mapSource(collection, "mobile")) && <p className="font-mono-custom pointer-events-none absolute bottom-4 right-5 z-20 text-[10px] text-[var(--foreground)] bg-[var(--background)] px-2 py-1 md:bottom-5 md:right-7">
         Map data (c) OpenStreetMap contributors
-      </p>
+      </p>}
     </article>
   );
 }

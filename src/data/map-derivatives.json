@@ -1,0 +1,477 @@
+{
+  "version": 1,
+  "format": "webp",
+  "quality": 95,
+  "requestedLongEdges": [
+    960,
+    1920,
+    2560,
+    3840
+  ],
+  "collections": {
+    "maine": {
+      "desktop": {
+        "status": "transitional",
+        "mapOnlyMasterStatus": "blocked",
+        "note": "Supplied atlas map; place labels, coordinates and journey footer retained. Label-free master not found.",
+        "objectPosition": "50% 50%",
+        "focalPoint": {
+          "x": 50,
+          "y": 50
+        },
+        "focalPointBasis": "center-default-needs-integration-review",
+        "source": {
+          "kind": "supplied-local",
+          "path": "maine_visited_places_desktop_6000x3375.png",
+          "width": 6000,
+          "height": 3375,
+          "bytes": 1874375,
+          "sha256": "ea7e1eaa014ee80e2908cb94a42b4fb41b5d1331cac4e968f1dd6273b74990d7",
+          "artwork": "annotated-atlas"
+        },
+        "fallback": {
+          "src": "/map-posters/optimized/maine-desktop-1920x1080-7ac3c2d0d53d2f93.webp",
+          "width": 1920,
+          "height": 1080,
+          "bytes": 136066,
+          "requestedLongEdge": 1920
+        },
+        "candidates": [
+          {
+            "src": "/map-posters/optimized/maine-desktop-960x540-c634082a98c61a48.webp",
+            "width": 960,
+            "height": 540,
+            "bytes": 43638,
+            "requestedLongEdge": 960
+          },
+          {
+            "src": "/map-posters/optimized/maine-desktop-1920x1080-7ac3c2d0d53d2f93.webp",
+            "width": 1920,
+            "height": 1080,
+            "bytes": 136066,
+            "requestedLongEdge": 1920
+          },
+          {
+            "src": "/map-posters/optimized/maine-desktop-2560x1440-7ea4a85ea43bd625.webp",
+            "width": 2560,
+            "height": 1440,
+            "bytes": 208820,
+            "requestedLongEdge": 2560
+          },
+          {
+            "src": "/map-posters/optimized/maine-desktop-3840x2160-0015b440739fcbbb.webp",
+            "width": 3840,
+            "height": 2160,
+            "bytes": 371036,
+            "requestedLongEdge": 3840
+          }
+        ]
+      },
+      "mobile": {
+        "status": "transitional",
+        "mapOnlyMasterStatus": "blocked",
+        "note": "Supplied atlas map; place labels, coordinates and journey footer retained. Label-free master not found.",
+        "objectPosition": "50% 50%",
+        "focalPoint": {
+          "x": 50,
+          "y": 50
+        },
+        "focalPointBasis": "center-default-needs-integration-review",
+        "source": {
+          "kind": "supplied-local",
+          "path": "maine_visited_places_mobile_3375x6000.png",
+          "width": 3375,
+          "height": 6000,
+          "bytes": 2139200,
+          "sha256": "b003585ab2770b09f86118f8c350629d44a6aae8258ae148e2150822b2c6e6e1",
+          "artwork": "annotated-atlas"
+        },
+        "fallback": {
+          "src": "/map-posters/optimized/maine-mobile-1080x1920-ab855b7b95d5e0aa.webp",
+          "width": 1080,
+          "height": 1920,
+          "bytes": 159100,
+          "requestedLongEdge": 1920
+        },
+        "candidates": [
+          {
+            "src": "/map-posters/optimized/maine-mobile-540x960-491cc257c090805d.webp",
+            "width": 540,
+            "height": 960,
+            "bytes": 50686,
+            "requestedLongEdge": 960
+          },
+          {
+            "src": "/map-posters/optimized/maine-mobile-1080x1920-ab855b7b95d5e0aa.webp",
+            "width": 1080,
+            "height": 1920,
+            "bytes": 159100,
+            "requestedLongEdge": 1920
+          },
+          {
+            "src": "/map-posters/optimized/maine-mobile-1440x2560-6610287537d49335.webp",
+            "width": 1440,
+            "height": 2560,
+            "bytes": 242688,
+            "requestedLongEdge": 2560
+          },
+          {
+            "src": "/map-posters/optimized/maine-mobile-2160x3840-c15b5886d5b4a2bc.webp",
+            "width": 2160,
+            "height": 3840,
+            "bytes": 431052,
+            "requestedLongEdge": 3840
+          }
+        ]
+      }
+    },
+    "new-york": {
+      "desktop": {
+        "status": "transitional",
+        "mapOnlyMasterStatus": "blocked",
+        "note": "Incumbent poster; baked title, coordinates and attribution retained. Map-only master not found.",
+        "objectPosition": "50% 50%",
+        "focalPoint": {
+          "x": 50,
+          "y": 50
+        },
+        "focalPointBasis": "existing-workflow",
+        "source": {
+          "kind": "incumbent-public",
+          "path": "public/map-posters/new-york-city.png",
+          "width": 3630,
+          "height": 4830,
+          "bytes": 7467853,
+          "sha256": "9b8fcede0585e532fc4e0aa886af89e783233eb55151ed954dfb76cdda0817b2",
+          "artwork": "labeled-poster"
+        },
+        "fallback": {
+          "src": "/map-posters/optimized/new-york-desktop-1443x1920-fe68086e1cab4adf.webp",
+          "width": 1443,
+          "height": 1920,
+          "bytes": 798848,
+          "requestedLongEdge": 1920
+        },
+        "candidates": [
+          {
+            "src": "/map-posters/optimized/new-york-desktop-721x960-adc0b5b1fd6b0127.webp",
+            "width": 721,
+            "height": 960,
+            "bytes": 248302,
+            "requestedLongEdge": 960
+          },
+          {
+            "src": "/map-posters/optimized/new-york-desktop-1443x1920-fe68086e1cab4adf.webp",
+            "width": 1443,
+            "height": 1920,
+            "bytes": 798848,
+            "requestedLongEdge": 1920
+          },
+          {
+            "src": "/map-posters/optimized/new-york-desktop-1924x2560-5268aee402c19d97.webp",
+            "width": 1924,
+            "height": 2560,
+            "bytes": 1295108,
+            "requestedLongEdge": 2560
+          },
+          {
+            "src": "/map-posters/optimized/new-york-desktop-2886x3840-d75560ff5789c149.webp",
+            "width": 2886,
+            "height": 3840,
+            "bytes": 2489898,
+            "requestedLongEdge": 3840
+          }
+        ]
+      },
+      "mobile": {
+        "status": "transitional",
+        "mapOnlyMasterStatus": "blocked",
+        "note": "Incumbent poster; baked title, coordinates and attribution retained. Map-only master not found.",
+        "objectPosition": "50% 50%",
+        "focalPoint": {
+          "x": 50,
+          "y": 50
+        },
+        "focalPointBasis": "existing-workflow",
+        "source": {
+          "kind": "incumbent-public",
+          "path": "public/map-posters/new-york-city.png",
+          "width": 3630,
+          "height": 4830,
+          "bytes": 7467853,
+          "sha256": "9b8fcede0585e532fc4e0aa886af89e783233eb55151ed954dfb76cdda0817b2",
+          "artwork": "labeled-poster"
+        },
+        "fallback": {
+          "src": "/map-posters/optimized/new-york-desktop-1443x1920-fe68086e1cab4adf.webp",
+          "width": 1443,
+          "height": 1920,
+          "bytes": 798848,
+          "requestedLongEdge": 1920
+        },
+        "candidates": [
+          {
+            "src": "/map-posters/optimized/new-york-desktop-721x960-adc0b5b1fd6b0127.webp",
+            "width": 721,
+            "height": 960,
+            "bytes": 248302,
+            "requestedLongEdge": 960
+          },
+          {
+            "src": "/map-posters/optimized/new-york-desktop-1443x1920-fe68086e1cab4adf.webp",
+            "width": 1443,
+            "height": 1920,
+            "bytes": 798848,
+            "requestedLongEdge": 1920
+          },
+          {
+            "src": "/map-posters/optimized/new-york-desktop-1924x2560-5268aee402c19d97.webp",
+            "width": 1924,
+            "height": 2560,
+            "bytes": 1295108,
+            "requestedLongEdge": 2560
+          },
+          {
+            "src": "/map-posters/optimized/new-york-desktop-2886x3840-d75560ff5789c149.webp",
+            "width": 2886,
+            "height": 3840,
+            "bytes": 2489898,
+            "requestedLongEdge": 3840
+          }
+        ]
+      }
+    },
+    "santa-cruz": {
+      "desktop": {
+        "status": "transitional",
+        "mapOnlyMasterStatus": "blocked",
+        "note": "Incumbent poster; baked title, coordinates and attribution retained. Map-only master not found.",
+        "objectPosition": "50% 38%",
+        "focalPoint": {
+          "x": 50,
+          "y": 38
+        },
+        "focalPointBasis": "existing-workflow",
+        "source": {
+          "kind": "incumbent-public",
+          "path": "public/map-posters/santa-cruz.png",
+          "width": 3630,
+          "height": 4830,
+          "bytes": 3469601,
+          "sha256": "3e88d95416498e6871f16931eb9bb2d0bd67d101a40fe58b697754935a8d90a4",
+          "artwork": "labeled-poster"
+        },
+        "fallback": {
+          "src": "/map-posters/optimized/santa-cruz-desktop-1443x1920-24b2a667b7580079.webp",
+          "width": 1443,
+          "height": 1920,
+          "bytes": 390418,
+          "requestedLongEdge": 1920
+        },
+        "candidates": [
+          {
+            "src": "/map-posters/optimized/santa-cruz-desktop-721x960-71cbfc2bed75ab6c.webp",
+            "width": 721,
+            "height": 960,
+            "bytes": 124256,
+            "requestedLongEdge": 960
+          },
+          {
+            "src": "/map-posters/optimized/santa-cruz-desktop-1443x1920-24b2a667b7580079.webp",
+            "width": 1443,
+            "height": 1920,
+            "bytes": 390418,
+            "requestedLongEdge": 1920
+          },
+          {
+            "src": "/map-posters/optimized/santa-cruz-desktop-1924x2560-fda5a88911aed3fc.webp",
+            "width": 1924,
+            "height": 2560,
+            "bytes": 592212,
+            "requestedLongEdge": 2560
+          },
+          {
+            "src": "/map-posters/optimized/santa-cruz-desktop-2886x3840-73395007120bc2d2.webp",
+            "width": 2886,
+            "height": 3840,
+            "bytes": 1006344,
+            "requestedLongEdge": 3840
+          }
+        ]
+      },
+      "mobile": {
+        "status": "transitional",
+        "mapOnlyMasterStatus": "blocked",
+        "note": "Incumbent poster; baked title, coordinates and attribution retained. Map-only master not found.",
+        "objectPosition": "50% 38%",
+        "focalPoint": {
+          "x": 50,
+          "y": 38
+        },
+        "focalPointBasis": "existing-workflow",
+        "source": {
+          "kind": "incumbent-public",
+          "path": "public/map-posters/santa-cruz.png",
+          "width": 3630,
+          "height": 4830,
+          "bytes": 3469601,
+          "sha256": "3e88d95416498e6871f16931eb9bb2d0bd67d101a40fe58b697754935a8d90a4",
+          "artwork": "labeled-poster"
+        },
+        "fallback": {
+          "src": "/map-posters/optimized/santa-cruz-desktop-1443x1920-24b2a667b7580079.webp",
+          "width": 1443,
+          "height": 1920,
+          "bytes": 390418,
+          "requestedLongEdge": 1920
+        },
+        "candidates": [
+          {
+            "src": "/map-posters/optimized/santa-cruz-desktop-721x960-71cbfc2bed75ab6c.webp",
+            "width": 721,
+            "height": 960,
+            "bytes": 124256,
+            "requestedLongEdge": 960
+          },
+          {
+            "src": "/map-posters/optimized/santa-cruz-desktop-1443x1920-24b2a667b7580079.webp",
+            "width": 1443,
+            "height": 1920,
+            "bytes": 390418,
+            "requestedLongEdge": 1920
+          },
+          {
+            "src": "/map-posters/optimized/santa-cruz-desktop-1924x2560-fda5a88911aed3fc.webp",
+            "width": 1924,
+            "height": 2560,
+            "bytes": 592212,
+            "requestedLongEdge": 2560
+          },
+          {
+            "src": "/map-posters/optimized/santa-cruz-desktop-2886x3840-73395007120bc2d2.webp",
+            "width": 2886,
+            "height": 3840,
+            "bytes": 1006344,
+            "requestedLongEdge": 3840
+          }
+        ]
+      }
+    },
+    "washington": {
+      "desktop": {
+        "status": "transitional",
+        "mapOnlyMasterStatus": "blocked",
+        "note": "Incumbent poster; baked title, coordinates and attribution retained. Map-only master not found.",
+        "objectPosition": "50% 50%",
+        "focalPoint": {
+          "x": 50,
+          "y": 50
+        },
+        "focalPointBasis": "existing-workflow",
+        "source": {
+          "kind": "incumbent-public",
+          "path": "public/map-posters/washington-dc-desktop.png",
+          "width": 6030,
+          "height": 3405,
+          "bytes": 9151641,
+          "sha256": "526d56b7ac8ea3e970b980959ad6f44a477e893ab5e030951e0260fa17a2ab02",
+          "artwork": "labeled-poster"
+        },
+        "fallback": {
+          "src": "/map-posters/optimized/washington-desktop-1920x1084-50c8994c6a3e3178.webp",
+          "width": 1920,
+          "height": 1084,
+          "bytes": 829352,
+          "requestedLongEdge": 1920
+        },
+        "candidates": [
+          {
+            "src": "/map-posters/optimized/washington-desktop-960x542-aeae22fe1c71051c.webp",
+            "width": 960,
+            "height": 542,
+            "bytes": 254980,
+            "requestedLongEdge": 960
+          },
+          {
+            "src": "/map-posters/optimized/washington-desktop-1920x1084-50c8994c6a3e3178.webp",
+            "width": 1920,
+            "height": 1084,
+            "bytes": 829352,
+            "requestedLongEdge": 1920
+          },
+          {
+            "src": "/map-posters/optimized/washington-desktop-2560x1446-08aedcd819b3ee41.webp",
+            "width": 2560,
+            "height": 1446,
+            "bytes": 1326602,
+            "requestedLongEdge": 2560
+          },
+          {
+            "src": "/map-posters/optimized/washington-desktop-3840x2168-a40951f70f095c1a.webp",
+            "width": 3840,
+            "height": 2168,
+            "bytes": 2415074,
+            "requestedLongEdge": 3840
+          }
+        ]
+      },
+      "mobile": {
+        "status": "transitional",
+        "mapOnlyMasterStatus": "blocked",
+        "note": "Incumbent poster; baked title, coordinates and attribution retained. Map-only master not found.",
+        "objectPosition": "50% 50%",
+        "focalPoint": {
+          "x": 50,
+          "y": 50
+        },
+        "focalPointBasis": "existing-workflow",
+        "source": {
+          "kind": "incumbent-public",
+          "path": "public/map-posters/washington-dc-mobile.png",
+          "width": 3405,
+          "height": 6030,
+          "bytes": 8905762,
+          "sha256": "a9f58245336ff66c500890833ef027e53d2d9a928638777806839cb57ca882a3",
+          "artwork": "labeled-poster"
+        },
+        "fallback": {
+          "src": "/map-posters/optimized/washington-mobile-1084x1920-595459d2402fae21.webp",
+          "width": 1084,
+          "height": 1920,
+          "bytes": 817018,
+          "requestedLongEdge": 1920
+        },
+        "candidates": [
+          {
+            "src": "/map-posters/optimized/washington-mobile-542x960-dd47b5195a728b07.webp",
+            "width": 542,
+            "height": 960,
+            "bytes": 248166,
+            "requestedLongEdge": 960
+          },
+          {
+            "src": "/map-posters/optimized/washington-mobile-1084x1920-595459d2402fae21.webp",
+            "width": 1084,
+            "height": 1920,
+            "bytes": 817018,
+            "requestedLongEdge": 1920
+          },
+          {
+            "src": "/map-posters/optimized/washington-mobile-1446x2560-83cfb9c0ffdebe85.webp",
+            "width": 1446,
+            "height": 2560,
+            "bytes": 1297748,
+            "requestedLongEdge": 2560
+          },
+          {
+            "src": "/map-posters/optimized/washington-mobile-2168x3840-0977f14515edb098.webp",
+            "width": 2168,
+            "height": 3840,
+            "bytes": 2387774,
+            "requestedLongEdge": 3840
+          }
+        ]
+      }
+    }
+  }
+}

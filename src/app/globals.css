@@ -33,9 +33,15 @@ main:focus { outline: none; }
 .collection-opening { display: grid; grid-template-columns: minmax(0, 1fr); min-height: 100svh; align-items: center; gap: 32px; padding-block: 100px 64px; }
 .collection-index { align-self: start; }
 .city-copy { padding-block: 20px; }
+.city-map-image { width: 100%; height: 100%; position: absolute; inset: 0; object-fit: cover; object-position: var(--map-position-mobile); opacity: 0.78; mix-blend-mode: multiply; }
+.city-map-scrim { background: linear-gradient(90deg, var(--background) 0%, rgb(250 248 242 / var(--copy-scrim-mobile)) 21%, rgb(250 248 242 / 0.4) 42%, transparent 70%); }
+@media (min-width: 768px) {
+  .city-map-image { object-position: var(--map-position-desktop); }
+  .city-map-scrim { background: linear-gradient(90deg, var(--background) 0%, rgb(250 248 242 / var(--copy-scrim-desktop)) 16%, rgb(250 248 242 / 0.5) 34%, transparent 61%); }
+}
 .city-book-texture [class*="text-white/"] { color: var(--gallery-secondary); }
 .city-book-texture figcaption, .city-book-texture [class*="text-[8px]"], .city-book-texture [class*="text-[9px]"], .city-book-texture [class*="text-[10px]"] { font-size: 12px; }
-@media (max-width: 767px) { .city-copy { background: rgb(250 248 242 / 0.94); } }
+@media (max-width: 767px) { .city-copy { background: rgb(250 248 242 / var(--copy-scrim-mobile)); } }
 @media (min-width: 768px) {
   .destination-title { font-size: 80px; }
   .collection-opening { grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr); gap: 32px; }
