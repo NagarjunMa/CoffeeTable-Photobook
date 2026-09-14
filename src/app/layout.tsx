@@ -20,6 +20,7 @@ export default function RootLayout({
       className={`${display.variable} ${sans.variable} ${mono.variable}`}
     >
       <body suppressHydrationWarning>
+        <a className="skip-link" href="#main-content">Skip to content</a>
         <SmoothScroll />
         {children}
       </body>

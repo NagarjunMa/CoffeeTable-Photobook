@@ -40,13 +40,13 @@ export function Hero() {
   return (
     <section
       ref={section}
-      className="relative z-10 flex min-h-svh flex-col justify-end overflow-visible bg-[#fbfbfa] px-[clamp(1.4rem,3.6vw,4.25rem)] pb-[clamp(1.5rem,3.2vh,2.5rem)] pt-24 text-[#191919]"
+      className="portfolio-hero relative z-10 flex flex-col justify-end overflow-visible bg-[var(--background)] px-[clamp(1.4rem,3.6vw,4.25rem)] pb-[clamp(1.5rem,3.2vh,2.5rem)] pt-24 text-[var(--foreground)]"
     >
       <div
         data-hero-copy
         className="mb-[clamp(1.35rem,3.2vh,2.6rem)] max-w-[40rem]"
       >
-        <p className="font-display text-balance text-[clamp(1rem,1.08vw,1.35rem)] font-medium leading-[1.25]">
+        <p className="font-display text-balance text-lg md:text-xl font-medium leading-[1.25]">
           Reexamining memory, place, and wilderness through still photographs.
           A quiet visual archive centered on travel and wildlife.
         </p>
@@ -60,7 +60,7 @@ export function Hero() {
         <h1
           ref={title}
           data-hero-name
-          className="font-display block w-full pb-[0.06em] text-[clamp(4.25rem,11.4vw,14.5rem)] font-semibold uppercase leading-[0.74] tracking-normal md:w-max md:whitespace-nowrap md:leading-[0.78]"
+          className="hero-title font-display block w-full pb-[0.06em] font-semibold uppercase leading-[0.8] md:w-max md:whitespace-nowrap"
         >
           <span className="block md:inline">Nagarjun</span>{" "}
           <span className="block md:inline">Mallesh</span>

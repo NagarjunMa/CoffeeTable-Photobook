@@ -24,6 +24,11 @@ main:focus { outline: none; }
 .skip-link { position: fixed; top: 8px; left: 8px; z-index: 200; padding: 12px; background: var(--foreground); color: var(--background); transform: translateY(-160%); }
 .skip-link:focus { transform: none; }
 .destination-title { width: 100%; max-width: 100%; font-size: 56px; font-weight: 500; line-height: 0.9; }
+.portfolio-hero { min-height: calc(100svh - 32px); }
+.hero-title { font-size: 80px; }
+@media (min-width: 768px) { .hero-title { font-size: 140px; } }
+@media (min-width: 1280px) { .hero-title { font-size: 220px; } }
+@media (min-width: 1600px) { .hero-title { font-size: 280px; } }
 .destination-title span { max-width: 100%; overflow-wrap: anywhere; }
 .collection-opening { display: grid; grid-template-columns: minmax(0, 1fr); min-height: 100svh; align-items: center; gap: 32px; padding-block: 100px 64px; }
 .collection-index { align-self: start; }
