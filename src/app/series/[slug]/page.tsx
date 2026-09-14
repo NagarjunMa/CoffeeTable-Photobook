@@ -42,7 +42,7 @@ export default async function SeriesPage({ params }: PageProps) {
   return (
     <>
       <SiteHeader theme="dark" position="absolute" />
-      <main className="page-shell overflow-x-hidden">
+      <main id="main-content" tabIndex={-1} className="page-shell">
         <CollectionGallery collection={collection} />
       </main>
     </>

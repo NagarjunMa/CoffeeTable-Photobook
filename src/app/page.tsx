@@ -8,7 +8,7 @@ export default function Home() {
     <>
       <IntroLoader />
       <SiteHeader />
-      <main className="page-shell">
+      <main id="main-content" tabIndex={-1} className="page-shell">
         <Hero />
         <WorkIndex />
       </main>
