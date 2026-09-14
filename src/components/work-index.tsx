@@ -118,6 +118,7 @@ export function WorkIndex() {
     let alive = true;
     const mm = gsap.matchMedia();
     mm.add({
+      all: "all",
       desktop: "(min-width: 768px) and (min-height: 640px)",
       reduce: "(prefers-reduced-motion: reduce)",
       short: "(max-height: 639px)",
@@ -201,6 +202,7 @@ export function WorkIndex() {
         ScrollTrigger.refresh();
         restore();
         ready = true;
+        scroller.dataset.enhanced = "true";
       };
       document.fonts.ready.then(setup);
       scroller.addEventListener("scroll", onScroll, { passive: true });
@@ -217,6 +219,7 @@ export function WorkIndex() {
         window.removeEventListener("hashchange", restore);
         rail.removeEventListener("focusin", onFocus);
         navigate.current = () => {};
+        delete scroller.dataset.enhanced;
       };
     });
     return () => { alive = false; mm.revert(); };
@@ -231,6 +234,7 @@ export function WorkIndex() {
               <Link key={collection.slug} href={"/series/" + collection.slug} aria-current={active === index ? "location" : undefined}
                 onClick={(event) => {
                   if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+                  if (!pin.current?.dataset.enhanced) return;
                   event.preventDefault(); navigate.current(index, true);
                 }}>{collection.title}</Link>
             ))}

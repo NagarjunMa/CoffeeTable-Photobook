@@ -4,7 +4,8 @@
 
 This is derivative tooling and an asset inventory, not completion of the map
 redesign. No source artwork was cropped, retouched, regenerated, uploaded, or
-removed. No network requests were made. UI integration belongs to the parent task.
+removed. No network requests were made during map preparation. The application now
+consumes this manifest through one responsive `picture` per destination.
 
 **Label-free map-only masters remain blocked for every collection.** Maine has
 real, separately composed desktop/mobile atlas maps, not a fabricated substitute.
@@ -142,6 +143,9 @@ desktop and New York 1920-edge outputs were visually spot-checked locally; their
 full compositions and baked labels remain present. An initial CLI attempt was
 temporarily blocked by the parent task's incomplete editorial-data import; the
 later normal CLI rerun succeeded with unchanged derivative output.
-Browser framing, label collisions, responsive picture selection and attribution
-visibility require the parent's phase-5 integration review. No build or commit is
-performed by this sidecar. A later independent review remains required.
+Integration checks now verify desktop/mobile source switching in Chrome, Firefox
+and WebKit. Desktop/tablet/mobile screenshots preserve recognizable Washington
+map detail, but the inherited title block remains visible on mobile. It is an
+explicit replacement-artwork blocker, not a conversion defect hidden by cropping.
+Independent frontend source review and the isolated production build passed;
+see `REFINEMENT_STATUS.md` for the complete acceptance status.

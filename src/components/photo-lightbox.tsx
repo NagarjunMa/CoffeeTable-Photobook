@@ -3,7 +3,7 @@
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { createPortal } from "react-dom";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { PortfolioPhoto } from "@/components/portfolio-photo";
 import { imageSources } from "@/lib/image-variants";
 import type { LightboxOrigin } from "@/components/collection-gallery";
@@ -36,7 +36,7 @@ export function PhotoLightbox({ photo, current, total, origin, onClose, onNext, 
     return () => { cancelled = true; };
   }, [photo, displayed.id, attempt]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const element = dialog.current;
     if (!element) return;
     const opener = document.activeElement as HTMLElement | null;

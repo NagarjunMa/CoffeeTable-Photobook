@@ -26,7 +26,9 @@ main:focus { outline: none; }
 .destination-title { width: 100%; max-width: 100%; font-size: 56px; font-weight: 500; line-height: 0.9; }
 .portfolio-hero { min-height: calc(100svh - 32px); }
 .hero-title { font-size: 80px; }
+.hero-title span { display: block; }
 @media (min-width: 768px) { .hero-title { font-size: 140px; } }
+@media (min-width: 768px) { .hero-title[data-title-ready] { width: max-content; white-space: nowrap; } .hero-title[data-title-ready] span { display: inline; } }
 @media (min-width: 1280px) { .hero-title { font-size: 220px; } }
 @media (min-width: 1600px) { .hero-title { font-size: 280px; } }
 .destination-title span { max-width: 100%; overflow-wrap: anywhere; }
@@ -149,7 +151,8 @@ img {
 .destination-links { display: flex; flex-wrap: wrap; gap: 4px 16px; }
 .destination-links a { display: inline-flex; min-height: 44px; align-items: center; font-size: 13px; color: var(--muted); }
 .destination-links a[aria-current] { color: var(--foreground); text-decoration: underline; text-underline-offset: 6px; }
-.destination-controls { display: flex; align-items: center; gap: 4px; }
+.destination-controls { display: none; align-items: center; gap: 4px; }
+.destination-scroller[data-enhanced] .destination-controls { display: flex; }
 .destination-controls button { display: grid; place-items: center; width: 44px; height: 44px; border: none; background: transparent; color: var(--foreground); cursor: pointer; }
 .destination-controls button:disabled { opacity: 0.35; cursor: default; }
 .destination-position { white-space: nowrap; font-size: 12px; margin-right: 8px; }

@@ -16,6 +16,7 @@ export function Hero() {
     }
 
     const fitTitle = () => {
+      titleElement.dataset.titleReady = "true";
       titleElement.style.removeProperty("font-size");
       const naturalSize = Number.parseFloat(
         window.getComputedStyle(titleElement).fontSize,
@@ -60,10 +61,10 @@ export function Hero() {
         <h1
           ref={title}
           data-hero-name
-          className="hero-title font-display block w-full pb-[0.06em] font-semibold uppercase leading-[0.8] md:w-max md:whitespace-nowrap"
+          className="hero-title font-display block w-full pb-[0.06em] font-semibold uppercase leading-[0.8]"
         >
-          <span className="block md:inline">Nagarjun</span>{" "}
-          <span className="block md:inline">Mallesh</span>
+          <span>Nagarjun</span>{" "}
+          <span>Mallesh</span>
         </h1>
       </div>
     </section>
