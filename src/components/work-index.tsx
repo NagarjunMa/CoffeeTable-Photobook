@@ -5,7 +5,8 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
 import Link from "next/link";
-import { useRef } from "react";
+import { useRef, useState } from "react";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 import { collections } from "@/data/collections";
 import type { Collection } from "@/data/collections";
 import { DestinationTitle } from "@/components/destination-title";
@@ -75,9 +76,11 @@ function CityPanel({
   index: number;
 }) {
   const href = `/series/${collection.slug}`;
+  const gesture = useRef<{ x: number; y: number; moved: boolean } | null>(null);
 
   return (
     <article
+      id={`city-${collection.slug}`}
       data-city-panel
       className="relative h-full w-[100cqw] shrink-0 snap-start overflow-hidden bg-[var(--background)]"
     >
@@ -86,7 +89,11 @@ function CityPanel({
       <div className="pointer-events-none absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-[var(--background)] to-transparent" />
       <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[var(--background)] to-transparent" />
 
-      <Link href={href} aria-label={`Open ${collection.title} city book`} className="city-panel-link relative z-20 flex h-full items-center px-[clamp(1.4rem,4vw,5rem)] pb-16 pt-24">
+      <Link href={href} aria-label={`Open ${collection.title} city book`} className="city-panel-link relative z-20 flex h-full items-center px-[clamp(1.4rem,4vw,5rem)] pb-16 pt-24"
+        onPointerDown={(event) => { gesture.current = { x: event.clientX, y: event.clientY, moved: false }; }}
+        onPointerMove={(event) => { if (gesture.current && Math.hypot(event.clientX - gesture.current.x, event.clientY - gesture.current.y) > 12) gesture.current.moved = true; }}
+        onPointerCancel={() => { if (gesture.current) gesture.current.moved = true; }}
+        onClick={(event) => { if (event.detail !== 0 && gesture.current?.moved) event.preventDefault(); gesture.current = null; }}>
         <div data-city-copy className="city-copy pointer-events-none min-w-0 w-full max-w-xl">
           <p className="font-mono-custom text-[10px] uppercase tracking-[0.18em] text-[var(--muted)] md:text-[11px]">
             {String(index + 1).padStart(2, "0")} / {collection.location}
@@ -117,135 +124,142 @@ export function WorkIndex() {
   const scope = useRef<HTMLElement>(null);
   const pin = useRef<HTMLDivElement>(null);
   const track = useRef<HTMLDivElement>(null);
+  const navigate = useRef<(index: number, push: boolean) => void>(() => {});
+  const [active, setActive] = useState(0);
 
-  useGSAP(
-    () => {
-      const scopeElement = scope.current;
-      const pinElement = pin.current;
-      const trackElement = track.current;
-
-      if (!scopeElement || !pinElement || !trackElement) {
-        return;
-      }
-
-      const mm = gsap.matchMedia();
-      mm.add(
-        {
-          desktop: "(min-width: 768px)",
-          animate: "(prefers-reduced-motion: no-preference)",
-        },
-        (context) => {
-          const { desktop, animate } = context.conditions ?? {};
-
-          if (!desktop) {
-            return;
-          }
-
-          const distance = () =>
-            Math.max(0, trackElement.scrollWidth - pinElement.clientWidth);
-          const horizontalTween = gsap.to(trackElement, {
-            x: () => -distance(),
-            ease: "none",
-            scrollTrigger: {
-              trigger: pinElement,
-              start: "top top",
-              end: () => `+=${distance()}`,
-              pin: true,
-              scrub: animate ? 0.85 : true,
-              anticipatePin: 1,
-              invalidateOnRefresh: true,
+  useGSAP(() => {
+    const section = scope.current;
+    const scroller = pin.current;
+    const rail = track.current;
+    if (!section || !scroller || !rail || !collections.length) return;
+    let alive = true;
+    const mm = gsap.matchMedia();
+    mm.add({
+      desktop: "(min-width: 768px) and (min-height: 640px)",
+      reduce: "(prefers-reduced-motion: reduce)",
+      short: "(max-height: 639px)",
+    }, (context) => {
+      const { desktop, reduce, short } = context.conditions ?? {};
+      const flow = Boolean(reduce || short);
+      const panels = Array.from(rail.querySelectorAll<HTMLElement>("[data-city-panel]"));
+      let disposed = false;
+      let navigating = false;
+      let ready = false;
+      let current = -1;
+      let unlockFrame = 0;
+      const setPosition = (index: number, updateUrl: boolean) => {
+        const bounded = Math.max(0, Math.min(collections.length - 1, index));
+        if (current === bounded) return;
+        current = bounded;
+        setActive(bounded);
+        if (ready && updateUrl && !navigating) {
+          history.replaceState(history.state, "", "#city-" + collections[bounded].slug);
+        }
+      };
+      let tween: gsap.core.Tween | undefined;
+      if (desktop && !flow) {
+        const distance = () => Math.max(0, rail.scrollWidth - scroller.clientWidth);
+        tween = gsap.to(rail, {
+          x: () => -distance(),
+          ease: "none",
+          scrollTrigger: {
+            trigger: scroller, start: "top top", end: () => "+=" + distance(),
+            pin: true, scrub: 0.85, invalidateOnRefresh: true,
+            onUpdate: (self) => {
+              if (self.isActive) setPosition(Math.round(self.progress * (panels.length - 1)), true);
             },
-          });
-
-          if (animate) {
-            gsap.utils
-              .toArray<HTMLElement>("[data-city-panel]")
-              .forEach((panel) => {
-                const copy = panel.querySelector("[data-city-copy]");
-                const map = panel.querySelector("[data-city-map]");
-
-                if (copy) {
-                  gsap.from(copy, {
-                    autoAlpha: 0,
-                    x: 70,
-                    duration: 0.65,
-                    ease: "power3.out",
-                    scrollTrigger: {
-                      trigger: panel,
-                      containerAnimation: horizontalTween,
-                      start: "left 78%",
-                      toggleActions: "play none none reverse",
-                    },
-                  });
-                }
-
-                if (map) {
-                  gsap.fromTo(
-                    map,
-                    { xPercent: 3 },
-                    {
-                      xPercent: -3,
-                      ease: "none",
-                      scrollTrigger: {
-                        trigger: panel,
-                        containerAnimation: horizontalTween,
-                        start: "left right",
-                        end: "right left",
-                        scrub: true,
-                      },
-                    },
-                  );
-                }
-              });
-          }
-        },
-      );
-
-      const refreshAfterFonts = () => ScrollTrigger.refresh();
-      document.fonts.ready.then(refreshAfterFonts);
-
-      return () => mm.revert();
-    },
-    { scope },
-  );
+          },
+        });
+      }
+      const scrollRoot = (top: number) => {
+        window.scrollTo({ top, behavior: "instant" });
+        window.dispatchEvent(new CustomEvent("portfolio:navigate", { detail: { top } }));
+        ScrollTrigger.update();
+      };
+      navigate.current = (index, push) => {
+        const target = Math.max(0, Math.min(panels.length - 1, index));
+        navigating = true;
+        if (push) history.pushState(history.state, "", "#city-" + collections[target].slug);
+        const trigger = tween?.scrollTrigger;
+        if (trigger) {
+          scrollRoot(trigger.start + target * scroller.clientWidth);
+          trigger.getTween()?.progress(1);
+        } else if (flow) {
+          scrollRoot(panels[target].getBoundingClientRect().top + window.scrollY - 128);
+        } else {
+          scroller.scrollTo({ left: target * scroller.clientWidth, behavior: "instant" });
+          scrollRoot(section.getBoundingClientRect().top + window.scrollY);
+        }
+        setPosition(target, false);
+        cancelAnimationFrame(unlockFrame);
+        unlockFrame = requestAnimationFrame(() => { navigating = false; });
+      };
+      const restore = () => {
+        const slug = location.hash.replace("#city-", "");
+        const target = collections.findIndex((collection) => collection.slug === slug);
+        if (target >= 0) navigate.current(target, false);
+        else if (location.hash === "#work") navigate.current(0, false);
+      };
+      const onScroll = () => {
+        if (!desktop && !flow) {
+          const bounds = section.getBoundingClientRect();
+          setPosition(Math.round(scroller.scrollLeft / scroller.clientWidth), bounds.top < 160 && bounds.bottom > 160);
+        } else if (flow) {
+          const candidate = panels.findLastIndex((panel) => panel.getBoundingClientRect().top < window.innerHeight / 2);
+          if (candidate >= 0 && section.getBoundingClientRect().bottom > 160) setPosition(candidate, true);
+        }
+      };
+      const onFocus = (event: FocusEvent) => {
+        const panel = (event.target as HTMLElement).closest<HTMLElement>("[data-city-panel]");
+        if (panel) navigate.current(panels.indexOf(panel), false);
+      };
+      const setup = () => {
+        if (!alive || disposed) return;
+        ScrollTrigger.refresh();
+        restore();
+        ready = true;
+      };
+      document.fonts.ready.then(setup);
+      scroller.addEventListener("scroll", onScroll, { passive: true });
+      window.addEventListener("scroll", onScroll, { passive: true });
+      window.addEventListener("popstate", restore);
+      window.addEventListener("hashchange", restore);
+      rail.addEventListener("focusin", onFocus);
+      return () => {
+        disposed = true;
+        cancelAnimationFrame(unlockFrame);
+        scroller.removeEventListener("scroll", onScroll);
+        window.removeEventListener("scroll", onScroll);
+        window.removeEventListener("popstate", restore);
+        window.removeEventListener("hashchange", restore);
+        rail.removeEventListener("focusin", onFocus);
+        navigate.current = () => {};
+      };
+    });
+    return () => { alive = false; mm.revert(); };
+  }, { scope });
 
   return (
-    <section id="work" ref={scope} className="relative border-t hairline">
-      <div
-        ref={pin}
-        className="no-scrollbar h-svh overflow-x-auto overflow-y-hidden [container-type:inline-size] md:overflow-hidden"
-      >
-        <div
-          ref={track}
-          className="flex h-full w-max snap-x snap-mandatory will-change-transform md:snap-none"
-        >
-          <article className="relative flex h-full w-[100cqw] shrink-0 snap-start items-end overflow-hidden bg-[var(--background)] px-[clamp(1.4rem,4vw,5rem)] pb-[clamp(3rem,8vh,7rem)] pt-24">
-            <div className="grid w-full gap-8 md:grid-cols-[minmax(12rem,0.45fr)_minmax(0,1.2fr)] md:items-end">
-              <p className="font-mono-custom text-[11px] uppercase tracking-[0.18em] text-[var(--muted)]">
-                Selected Places / {String(collections.length).padStart(2, "0")}
-              </p>
-              <div>
-                <h2 className="font-display text-[clamp(4.8rem,11vw,12rem)] font-medium leading-[0.78]">
-                  City Books
-                </h2>
-                <p className="mt-7 max-w-2xl text-balance text-[clamp(1.15rem,2vw,1.8rem)] leading-[1.3] text-[#34312b]">
-                  Places held as individual volumes. Move across the exhibition,
-                  then open a city to read its photographs vertically.
-                </p>
-              </div>
-            </div>
-            <p className="font-mono-custom absolute bottom-5 right-6 text-[9px] uppercase tracking-[0.16em] text-[var(--muted)]">
-              Scroll to explore
-            </p>
-          </article>
-
-          {collections.map((collection, index) => (
-            <CityPanel
-              key={collection.slug}
-              collection={collection}
-              index={index}
-            />
-          ))}
+    <section id="work" ref={scope} className="work-index relative border-t hairline" aria-label="Destination books">
+      <div ref={pin} className="destination-scroller no-scrollbar">
+        <nav className="destination-contents" aria-label="Destination contents">
+          <div className="destination-links">
+            {collections.map((collection, index) => (
+              <Link key={collection.slug} href={"/series/" + collection.slug} aria-current={active === index ? "location" : undefined}
+                onClick={(event) => {
+                  if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+                  event.preventDefault(); navigate.current(index, true);
+                }}>{collection.title}</Link>
+            ))}
+          </div>
+          <div className="destination-controls">
+            <span className="destination-position" aria-live="polite">{String(active + 1).padStart(2, "0")} / {String(collections.length).padStart(2, "0")}</span>
+            <button type="button" title="Previous destination" aria-label="Previous destination" disabled={active === 0} onClick={() => navigate.current(active - 1, true)}><ArrowLeft size={18} /></button>
+            <button type="button" title="Next destination" aria-label="Next destination" disabled={active === collections.length - 1} onClick={() => navigate.current(active + 1, true)}><ArrowRight size={18} /></button>
+          </div>
+        </nav>
+        <div ref={track} className="destination-track">
+          {collections.map((collection, index) => <CityPanel key={collection.slug} collection={collection} index={index} />)}
         </div>
       </div>
     </section>
