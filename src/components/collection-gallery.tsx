@@ -117,6 +117,8 @@ export function CollectionGallery({ collection }: { collection: Collection }) {
   const note = collection.note.startsWith("A field study from ") ? "" : collection.note;
 
   const openLightbox = (index: number, element: HTMLElement) => {
+    // Safari does not focus buttons on pointer activation by default.
+    element.focus({ preventScroll: true });
     const rect = element.getBoundingClientRect();
     setOrigin({
       left: rect.left,
@@ -163,7 +165,6 @@ export function CollectionGallery({ collection }: { collection: Collection }) {
         .toArray<HTMLElement>("[data-book-spread]")
         .forEach((spread) => {
           gsap.from(spread, {
-            autoAlpha: 0,
             y: 34,
             duration: 0.85,
             ease: "power3.out",

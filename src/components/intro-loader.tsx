@@ -35,6 +35,7 @@ export function IntroLoader() {
       overlayElement.style.display = "block";
       const previousHtmlOverflow = document.documentElement.style.overflow;
       let cancelled = false;
+      let finished = false;
       let introStarted = false;
       let timeline: gsap.core.Timeline | null = null;
       let fontFallbackTimer: number | null = null;
@@ -45,9 +46,10 @@ export function IntroLoader() {
       gsap.set(heroName, { autoAlpha: 0 });
 
       const finish = () => {
-        if (cancelled) {
+        if (cancelled || finished) {
           return;
         }
+        finished = true;
 
         if (fontFallbackTimer !== null) {
           window.clearTimeout(fontFallbackTimer);
@@ -63,7 +65,7 @@ export function IntroLoader() {
       };
 
       const runIntro = () => {
-        if (cancelled || introStarted) {
+        if (cancelled || finished || introStarted) {
           return;
         }
 
@@ -82,6 +84,10 @@ export function IntroLoader() {
           return;
         }
 
+        const initialWidth = nameElement.getBoundingClientRect().width;
+        if (initialWidth > window.innerWidth - 40) {
+          nameElement.style.fontSize = `${parseFloat(getComputedStyle(nameElement).fontSize) * (window.innerWidth - 40) / initialWidth}px`;
+        }
         const sourceRect = nameElement.getBoundingClientRect();
         const targetRect = heroName.getBoundingClientRect();
         const targetScale = targetRect.width / sourceRect.width;
@@ -135,11 +141,16 @@ export function IntroLoader() {
       };
 
       document.fonts.ready.then(scheduleIntro);
+      const skip = () => { timeline?.kill(); finish(); };
+      window.addEventListener("keydown", skip, { once: true });
+      window.addEventListener("pointerdown", skip, { once: true });
       fontFallbackTimer = window.setTimeout(scheduleIntro, 1200);
       finishTimer = window.setTimeout(finish, 5500);
 
       return () => {
         cancelled = true;
+        window.removeEventListener("keydown", skip);
+        window.removeEventListener("pointerdown", skip);
         if (fontFallbackTimer !== null) {
           window.clearTimeout(fontFallbackTimer);
         }
@@ -166,7 +177,7 @@ export function IntroLoader() {
     >
       <div
         ref={name}
-        className="font-display fixed left-0 top-0 whitespace-nowrap text-[clamp(3.1rem,7.5vw,8.5rem)] font-semibold uppercase leading-[0.72] tracking-normal text-[#f7f3ea] opacity-0"
+        className="font-display fixed left-0 top-0 whitespace-nowrap text-[136px] font-semibold uppercase leading-[0.72] tracking-normal text-[#f7f3ea] opacity-0"
       >
         Nagarjun Mallesh
       </div>

@@ -2,6 +2,12 @@
 
 Reviewed September 14, 2026. Review only; no application changes implemented.
 
+> Historical review below records the pre-refinement findings. The subsequent
+> local implementation and issue-by-issue status are documented in
+> [Refinement status](docs/REFINEMENT_STATUS.md). Engineering regressions now pass;
+> editorial approval, replacement map artwork and manual device checks remain
+> explicit gates. Do not interpret the historical source line numbers as current.
+
 ## Verdict
 
 The photographic presentation has a strong foundation. The current white mats on a dark gallery, uncropped photographs, and restrained typography deserve to stay. This is not a project that needs another framework or another animation library.
