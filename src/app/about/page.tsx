@@ -1,5 +1,11 @@
 import Link from "next/link";
+import type { Metadata } from "next";
 import { SiteHeader } from "@/components/site-header";
+
+export const metadata: Metadata = {
+  title: "About",
+  description: "Nagarjun Mallesh on family photographs, a childhood image from Badami, and why he makes still images.",
+};
 
 const paragraphs = [
   "Ever since I was young, there was a camera in our house. My father photographed my childhood with the patience of someone composing more than a record. He would place my sister and me carefully against a background, balancing us inside the canvas he had already imagined.",
@@ -12,20 +18,19 @@ export default function AboutPage() {
   return (
     <>
       <SiteHeader />
-      <main className="site-gutter page-shell pt-24">
-        <section className="grid min-h-screen gap-12 border-t hairline pb-24 pt-8 md:grid-cols-[1fr_2fr]">
+      <main id="main-content" tabIndex={-1} className="site-gutter page-shell pt-24">
+        <section className="grid gap-10 border-t hairline pb-24 pt-10 md:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] md:gap-16 md:pt-16">
           <div>
-            <p className="font-mono-custom text-[11px] uppercase tracking-[0.18em] text-[var(--muted)]">
-              About
-            </p>
+            <h1 className="font-display text-3xl leading-tight md:text-4xl">Nagarjun Mallesh</h1>
+            <p className="mt-3 text-base text-[#5f5c56]">Travel and wildlife photography</p>
           </div>
 
           <div>
-            <h1 className="font-display max-w-[10ch] text-[clamp(4.5rem,12vw,12rem)] font-medium leading-[0.82]">
+            <h2 className="font-display text-4xl font-medium leading-tight md:text-5xl">
               Why Still Images
-            </h1>
+            </h2>
 
-            <div className="mt-14 max-w-3xl space-y-8 text-[clamp(1.25rem,2.3vw,2.15rem)] leading-[1.25] text-[#25231f]">
+            <div className="mt-8 max-w-[65ch] space-y-6 text-base leading-relaxed text-[#25231f] md:text-xl">
               {paragraphs.map((paragraph) => (
                 <p key={paragraph}>{paragraph}</p>
               ))}
@@ -33,7 +38,7 @@ export default function AboutPage() {
 
             <Link
               href="/#work"
-              className="editorial-link mt-16 inline-flex font-mono-custom text-[11px] uppercase tracking-[0.18em]"
+              className="editorial-link mt-10 inline-flex text-base underline underline-offset-4"
             >
               Selected Work
             </Link>

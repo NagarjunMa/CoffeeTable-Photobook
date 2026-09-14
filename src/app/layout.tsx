@@ -4,9 +4,9 @@ import "./globals.css";
 import { SmoothScroll } from "@/components/smooth-scroll";
 
 export const metadata: Metadata = {
-  title: "Travel & Wildlife Photography Portfolio",
+  title: { default: "Nagarjun Mallesh | Travel & Wildlife Photography", template: "%s | Nagarjun Mallesh" },
   description:
-    "A minimalist travel and wildlife photography portfolio built as an editorial coffee-table experience.",
+    "Travel and wildlife photographs by Nagarjun Mallesh. Explore individual collections of places, people, and moments held in still images.",
 };
 
 export default function RootLayout({

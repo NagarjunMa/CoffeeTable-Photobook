@@ -95,7 +95,7 @@ export function CollectionGallery({ collection }: { collection: Collection }) {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const [origin, setOrigin] = useState<LightboxOrigin | null>(null);
   const previewImage =
-    collection.images.find(
+    collection.coverImages[0] ?? collection.images.find(
       (photo) =>
         photo.orientation === "portrait" || photo.orientation === "square",
     ) ?? collection.images[0];
@@ -107,7 +107,14 @@ export function CollectionGallery({ collection }: { collection: Collection }) {
   );
   const nextCollection =
     collections[(currentCollectionIndex + 1) % collections.length];
-  const exhibitionRows = buildExhibitionRows(collection.images);
+  const exhibitionRows = collection.spreads?.length
+    ? collection.spreads.map((ids) => ids.flatMap((id) => {
+      const index = collection.images.findIndex((image) => image.id === id);
+      return index < 0 ? [] : [{ photo: collection.images[index], index }];
+    })).filter((row) => row.length > 0)
+    : buildExhibitionRows(collection.images);
+  const category = collection.year === "Field Notes" ? collection.category : collection.year ?? collection.category;
+  const note = collection.note.startsWith("A field study from ") ? "" : collection.note;
 
   const openLightbox = (index: number, element: HTMLElement) => {
     const rect = element.getBoundingClientRect();
@@ -185,22 +192,20 @@ export function CollectionGallery({ collection }: { collection: Collection }) {
           className="collection-opening site-gutter"
         >
           <div className="collection-index">
-            <Link
-              href="/#work"
+            <a
+              href={`/#city-${collection.slug}`}
               className="editorial-link font-mono-custom text-[13px] uppercase text-[var(--gallery-secondary)]"
             >
               Index
-            </Link>
+            </a>
           </div>
 
           <div className="min-w-0 max-w-4xl self-center">
             <p className="font-mono-custom mb-4 text-[10px] uppercase tracking-[0.18em] text-white/45 md:text-[11px]">
-              {collection.location} / {collection.year}
+              {[collection.location, category].filter(Boolean).join(" / ")}
             </p>
             <DestinationTitle title={collection.title} as="h1" />
-            <p className="mt-8 max-w-2xl text-balance text-lg leading-relaxed text-[var(--gallery-secondary)] md:text-xl">
-              {collection.note}
-            </p>
+            {note && <p className="mt-8 max-w-2xl text-balance text-lg leading-relaxed text-[var(--gallery-secondary)] md:text-xl">{note}</p>}
           </div>
 
           {previewImage ? (
@@ -228,9 +233,9 @@ export function CollectionGallery({ collection }: { collection: Collection }) {
             <header className="mb-[clamp(4rem,9vw,9rem)] grid gap-5 border-b border-white/15 pb-6 md:grid-cols-[1fr_auto] md:items-end">
               <div>
                 <p className="font-mono-custom text-[9px] uppercase tracking-[0.16em] text-white/45">
-                  {collection.location} / {collection.year}
+                  {[collection.location, category].filter(Boolean).join(" / ")}
                 </p>
-                <h2 className="font-display mt-4 text-[clamp(2.8rem,5vw,5rem)] font-medium leading-none">
+                <h2 className="font-display mt-4 text-5xl md:text-7xl font-medium leading-none">
                   Gallery
                 </h2>
               </div>
@@ -239,6 +244,7 @@ export function CollectionGallery({ collection }: { collection: Collection }) {
               </p>
             </header>
 
+            {collection.images.length === 0 && <p className="text-[var(--gallery-secondary)]">This volume is being prepared.</p>}
             <div className="space-y-[clamp(2.5rem,5vw,5.5rem)]">
             {exhibitionRows.map((row) => (
               <div
@@ -275,10 +281,7 @@ export function CollectionGallery({ collection }: { collection: Collection }) {
                       </div>
                       <figcaption className="mt-4 flex items-start justify-between gap-4 border-t border-white/12 pt-2 text-white/70">
                         <span className="font-display text-[12px] leading-4">
-                          Frame {String(index + 1).padStart(2, "0")}
-                        </span>
-                        <span className="font-mono-custom text-right text-[8px] uppercase tracking-[0.12em] text-white/35">
-                          {photo.orientation}
+                          {photo.caption ?? `Frame ${String(index + 1).padStart(2, "0")}`}
                         </span>
                       </figcaption>
                     </div>
@@ -295,12 +298,12 @@ export function CollectionGallery({ collection }: { collection: Collection }) {
             <p className="font-mono-custom text-[10px] uppercase tracking-[0.18em] text-white/40">
               End of volume
             </p>
-            <Link
-              href="/#work"
-              className="editorial-link mt-5 font-display text-[clamp(2.8rem,5vw,5rem)] leading-none"
+            <a
+              href={`/#city-${collection.slug}`}
+              className="editorial-link mt-5 font-display text-4xl md:text-6xl leading-none"
             >
               City Index
-            </Link>
+            </a>
           </div>
 
           {nextCollection ? (
@@ -310,7 +313,7 @@ export function CollectionGallery({ collection }: { collection: Collection }) {
               </p>
               <Link
                 href={`/series/${nextCollection.slug}`}
-                className="editorial-link mt-5 font-display text-[clamp(2.8rem,5vw,5rem)] leading-none"
+                className="editorial-link mt-5 font-display text-4xl md:text-6xl leading-none break-words"
               >
                 {nextCollection.title}
               </Link>

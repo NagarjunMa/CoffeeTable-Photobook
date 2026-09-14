@@ -1,4 +1,6 @@
 import generatedCollections from "./generated/collections.json";
+import editorial from "./editorial.json";
+import { applyEditorialOverrides } from "../lib/editorial";
 import { sampleCollections } from "./sample-collections";
 import type { Collection } from "./types";
 
@@ -48,10 +50,14 @@ const applyLocalOverrides = (items: Collection[]): Collection[] =>
       collection.mapPosterMobile ?? localMobileMapPosterOverrides[collection.slug],
   }));
 
-export const collections: Collection[] = applyLocalOverrides(
-  hasGeneratedCollections
-    ? (generatedCollections as unknown as Collection[])
-    : sampleCollections,
+export const collections: Collection[] = applyEditorialOverrides(
+  applyLocalOverrides(
+    hasGeneratedCollections
+      ? (generatedCollections as unknown as Collection[])
+      : sampleCollections,
+  ),
+  editorial,
+  { includeDrafts: process.env.NEXT_PUBLIC_EDITORIAL_PREVIEW === "true" },
 );
 
 export const getCollection = (slug: string) =>

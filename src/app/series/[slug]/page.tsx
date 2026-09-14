@@ -26,8 +26,8 @@ export async function generateMetadata({ params }: PageProps) {
   }
 
   return {
-    title: `${collection.title} - Photography Series`,
-    description: collection.note,
+    title: `${collection.title} Photography`,
+    description: collection.note.startsWith("A field study from ") ? `Photographs from ${collection.title} by Nagarjun Mallesh.` : collection.note,
   };
 }
 
