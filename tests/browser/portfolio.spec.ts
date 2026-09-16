@@ -11,6 +11,24 @@ test("city map surface opens the destination", async ({ page }) => {
   await expect(page).toHaveURL(/\/series\/washington$/);
 });
 
+test("map-only artwork selects the matching desktop and mobile composition", async ({ page }) => {
+  for (const viewport of [
+    { width: 1440, height: 900, mode: "desktop" },
+    { width: 390, height: 844, mode: "mobile" },
+  ] as const) {
+    await page.setViewportSize(viewport);
+    await page.goto("/");
+    for (const slug of ["new-york", "santa-cruz", "washington"]) {
+      const image = page.locator(`#city-${slug} .city-map-image`);
+      await image.scrollIntoViewIfNeeded();
+      await expect.poll(() => image.evaluate((element) =>
+        (element as HTMLImageElement).currentSrc)).toMatch(
+          new RegExp(`/map-posters/optimized/${slug}-${viewport.mode}-`),
+        );
+    }
+  }
+});
+
 test("lightbox retains keyboard focus and restores its opener", async ({ page }) => {
   await page.goto("/series/santa-cruz");
   const opener = page.locator(".exhibition-frame [data-open-photo]").first();

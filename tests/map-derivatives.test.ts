@@ -137,6 +137,7 @@ test("checked-in picture manifest matches every generated WebP", async () => {
   assert.equal(manifest.version, 1);
   assert.equal(manifest.quality, 95);
   const seen = new Set<string>();
+  let verifiedMapOnlySources = 0;
   for (const variants of Object.values(manifest.collections)) {
     for (const variant of Object.values(variants)) {
       if (!variant.source) {
@@ -146,6 +147,11 @@ test("checked-in picture manifest matches every generated WebP", async () => {
         continue;
       }
       assert.ok(variant.fallback);
+      if (variant.source.artwork === "map-only") {
+        verifiedMapOnlySources += 1;
+        assert.equal(variant.status, "ready");
+        assert.equal(variant.mapOnlyMasterStatus, "verified");
+      }
       assert.ok(variant.candidates.some((candidate) => candidate.src === variant.fallback?.src));
       assert.equal(new Set(variant.candidates.map((candidate) => candidate.width)).size,
         variant.candidates.length);
@@ -165,4 +171,5 @@ test("checked-in picture manifest matches every generated WebP", async () => {
     }
   }
   assert.ok(seen.size > 0);
+  assert.equal(verifiedMapOnlySources, 6);
 });

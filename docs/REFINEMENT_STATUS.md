@@ -1,5 +1,42 @@
 # Phased Refinement: Implementation And Acceptance
 
+## September 16 Layout Follow-up
+
+The [responsive layout refinement](LAYOUT_REFINEMENT.md) supersedes the earlier
+geometry-only acceptance for mobile contents, tablet openings and pending images.
+All 123 final browser checks and 30 unit tests pass. Mobile copy no longer sits
+in a rectangular paper panel; framed galleries retain their natural image ratios.
+Editorial image approvals and physical-device checks remain pending. The ledger
+below is historical and should be read alongside this follow-up and MAP_ASSETS.md.
+
+## September 16 Santa Cruz Copy
+
+Added the photographer's July memories as a concise Santa Cruz introduction:
+golden light, pink sunset skies and a break from everyday worries. It is enabled
+in approved-only mode, on the map panel and collection opening. Image review
+states remain unchanged. The Santa Monica comparison was omitted to keep the
+destination unambiguous; no map layout changes are included in this copy update.
+
+## September 15 Editorial Update
+
+The photographer supplied personal memories for New York, Washington, DC and
+Maine and requested their inclusion. Those collection introductions are now
+enabled in approved-only mode; the 41 image drafts and 11 blocked descriptions
+remain unapproved. Santa Cruz still awaits a personal story. A photography
+one-liner now sits below the hero name. The phase ledger below records the
+September 14 acceptance checkpoint, before these supplied stories.
+
+The copy update keeps meaningful place names, distinct page descriptions and
+visible server-rendered paragraphs, following [Google's snippet guidance](https://developers.google.com/search/docs/appearance/snippet)
+and [JavaScript SEO guidance](https://developers.google.com/search/docs/crawling-indexing/javascript/javascript-seo-basics).
+No word-count quota, ranking promise or full technical SEO score is implied.
+
+Validation for this copy update: approved-only production build, lint and 14
+editorial tests passed. Nine focused browser checks passed across Chrome,
+Firefox and WebKit at 320, 390 and 1440px, checking raw HTML, page descriptions,
+hero-line placement and visible city copy. Desktop hero and mobile New York
+screenshots were visually inspected. No changes were pushed or deployed.
+
 Updated September 14, 2026. Local implementation; no deployment, remote push,
 Drive synchronization, Cloudflare upload or photograph deletion performed.
 

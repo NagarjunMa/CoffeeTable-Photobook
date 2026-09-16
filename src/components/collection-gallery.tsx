@@ -210,28 +210,28 @@ export function CollectionGallery({ collection }: { collection: Collection }) {
           </div>
 
           {previewImage ? (
-            <figure className="min-w-0 self-center">
+            <figure className="collection-preview" style={{ "--preview-ratio": photoRatio(previewImage) } as CSSProperties}>
               <div
-                className="group relative ml-auto block w-fit max-w-full"
+                className="collection-preview-stage group"
               >
                 <PortfolioPhoto
                   photo={previewImage}
-                  sizes="25rem"
-                  className="h-auto max-h-[60vh] w-auto max-w-full object-contain shadow-[0_1.4rem_4rem_rgb(0_0_0_/_0.4)] transition-transform duration-500 ease-out group-hover:scale-[1.01]"
+                  sizes="(min-width: 1280px) 42vw, (min-width: 768px) 45vw, 92vw"
+                  className="collection-preview-photo shadow-[0_1.4rem_4rem_rgb(0_0_0_/_0.4)] transition-transform duration-500 ease-out group-hover:scale-[1.01]"
                   loading="eager"
                 />
                 <button type="button" className="photo-open" data-open-photo aria-label={`Open ${previewImage.alt} full screen`} onClick={(event) => openLightbox(previewIndex, event.currentTarget)} />
               </div>
-              <figcaption className="font-mono-custom mt-4 text-right text-[10px] uppercase tracking-[0.16em] text-white/40">
+              <figcaption className="font-mono-custom uppercase">
                 Preview / {String(collection.images.length).padStart(2, "0")} frames
               </figcaption>
             </figure>
           ) : null}
         </article>
 
-        <div className="border-t border-white/10 px-[clamp(1rem,4vw,5rem)] py-[clamp(3.5rem,8vw,8rem)] text-[var(--gallery-ink)]">
+        <div className="border-t border-white/10 px-[clamp(1rem,4vw,5rem)] py-12 md:py-16 text-[var(--gallery-ink)]">
           <div className="mx-auto max-w-[96rem]">
-            <header className="mb-[clamp(4rem,9vw,9rem)] grid gap-5 border-b border-white/15 pb-6 md:grid-cols-[1fr_auto] md:items-end">
+            <header className="mb-12 md:mb-16 grid gap-5 border-b border-white/15 pb-6 md:grid-cols-[1fr_auto] md:items-end">
               <div>
                 <p className="font-mono-custom text-[9px] uppercase tracking-[0.16em] text-white/45">
                   {[collection.location, category].filter(Boolean).join(" / ")}
@@ -294,7 +294,7 @@ export function CollectionGallery({ collection }: { collection: Collection }) {
           </div>
         </div>
 
-        <footer className="site-gutter grid min-h-[55svh] items-end gap-14 border-t border-white/10 pb-16 pt-24 md:grid-cols-2 md:pb-20">
+        <footer className="site-gutter grid items-end gap-14 border-t border-white/10 py-16 md:grid-cols-2 md:py-24">
           <div>
             <p className="font-mono-custom text-[10px] uppercase tracking-[0.18em] text-white/40">
               End of volume

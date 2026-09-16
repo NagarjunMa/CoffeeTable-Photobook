@@ -21,6 +21,10 @@ Exact dependency versions are recorded in `package.json` and `package-lock.json`
 
 ## Frontend Refinement
 
+The latest [responsive layout review](docs/LAYOUT_REFINEMENT.md) records the
+mobile map-height correction, stable photograph loading, aligned collection
+previews and tighter gallery transitions, with cross-browser regression evidence.
+
 The typography-only opening now leads directly to compact destination contents.
 City maps are single accessible links, with horizontal browsing, history-aware
 destination anchors, and a normal-flow alternative for reduced motion and short

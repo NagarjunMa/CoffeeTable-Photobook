@@ -12,7 +12,10 @@ both from the generated manifest. These are Drive IDs, not filenames, slugs or
 Cloudflare delivery IDs. Renaming a file preserves its edits when the ID stays
 the same. Re-uploading as a new Drive file gives it a new identity.
 
-All current proposed text is unapproved. There are 41 visually grounded image
+The New York, Washington and Maine introductions now use the photographer's
+September 15 memories and are enabled as approved collection copy at his request.
+Santa Cruz now uses his September 16 July-sunset story as approved copy. Image review
+states are separate and unchanged. There are 41 visually grounded image
 description/caption drafts and 11 blocked records (nine Maine, two New York)
 whose local source images were unavailable. Blocked records keep the generated
 photo visible; they do not remove photographs or invent descriptions.
@@ -82,10 +85,10 @@ the placeholder IDs with exact existing IDs and author verified copy.
 
 ## Photographer Review Queue
 
-1. Review the 41 image drafts and the New York, Santa Cruz and Washington notes.
+1. Review the 41 image drafts. All four city introductions now use supplied personal stories.
 2. Supply or inspect the 11 blocked photographs and replace each blocked record
-   with a verified draft before approving it. Write Maine's introduction from
-   genuine experience; none has been invented.
+   with a verified draft before approving it. Maine's introduction now reflects
+   the supplied early-fall weekend in Acadia and Bar Harbor.
 3. Choose cover IDs and deliberate spread groups for each book. Automatic layout
    remains the fallback until those selections are made.
 4. Approve actual dates/categories and the revised About story. The father and

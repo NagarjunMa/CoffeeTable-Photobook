@@ -2,11 +2,12 @@
   "version": 1,
   "collections": {
     "1hZuKzQ2PNLCNo5Jdn_CHPwsRjDBUmDN5": {
-      "reviewStatus": "draft",
+      "reviewStatus": "approved",
       "title": "Maine",
       "location": "Maine",
       "category": "Region",
       "year": null,
+      "note": "An early-fall weekend in Maine: crisp coastal air, foggy forest roads through Acadia National Park, and an unhurried evening wandering Bar Harbor. A place I could love in any weather.",
       "images": {
         "1KU2iKrKF9KGH7XgWVvGPufhe-l1k6vz2": { "reviewStatus": "blocked", "reason": "Local source unavailable; visual review required." },
         "1v_6IR0dojwB1jPgDJsvKk1Io9rQ-YPRm": { "reviewStatus": "blocked", "reason": "Local source unavailable; visual review required." },
@@ -20,12 +21,12 @@
       }
     },
     "17sFhhUTnrPpNa8QL90tlkk3aeRfw4_M4": {
-      "reviewStatus": "draft",
+      "reviewStatus": "approved",
       "title": "New York",
       "location": "New York City",
       "category": "City",
       "year": null,
-      "note": "Bridges and waterfront skylines under low clouds, a crowded terminal, and streets lit by signs. Views of the city from across the water and from within its buildings.",
+      "note": "My city of dreams. Seven or eight visits in, New York still feels new. Between subway chaos, restless streets and the lights of Times Square, I keep finding moments of calm and more reasons to fall in love.",
       "images": {
         "1Nby1muC2vQlxrR75JUthxvK-F2PZJUzT": {
           "reviewStatus": "draft",
@@ -82,12 +83,12 @@
       }
     },
     "1vbylDPPQbuB6P394-iQN4hwMGeUboTkC": {
-      "reviewStatus": "draft",
+      "reviewStatus": "approved",
       "title": "Santa Cruz",
       "location": "Santa Cruz",
       "category": "City",
       "year": null,
-      "note": "Ferris wheels, food stands, and people on the boardwalk beneath a changing sky. Orange and pink clouds give way to the lights of the rides.",
+      "note": "A July escape to Santa Cruz, with golden light and pink sunset skies. A place to leave my worries behind and simply enjoy the moment.",
       "images": {
         "1q5hrWIJOOZxjEeKxUIRzGD0me-5E-yEZ": {
           "reviewStatus": "draft",
@@ -152,12 +153,12 @@
       }
     },
     "1nSNRJDPWxHDbFxKBsxuNKD8Jg-PJEaSk": {
-      "reviewStatus": "draft",
+      "reviewStatus": "approved",
       "title": "Washington",
       "location": "Washington, DC",
       "category": "City",
       "year": null,
-      "note": "Decorated ceilings and reading rooms, monuments across the water, and streets between them. Architectural detail sits alongside the movement of everyday city life.",
+      "note": "Washington, DC leaves me in awe at every turn. Beyond its power, I love the marble halls, intricate carvings and quiet of its reading rooms. From the reflecting pool to spring blossoms, there is beauty in every direction.",
       "images": {
         "1qYFlj889f6Ed8wRnXtzrc7qibBlVwH6e": {
           "reviewStatus": "draft",

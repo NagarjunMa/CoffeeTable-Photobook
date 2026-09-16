@@ -8,24 +8,21 @@ export type { Collection, PortfolioImage } from "./types";
 
 const hasGeneratedCollections = generatedCollections.length > 0;
 
-const localMapPosterOverrides: Record<string, Collection["mapPoster"]> = {
-  "new-york": {
-    src: "/map-posters/new-york-city.png",
-    alt: "Minimal New York City map poster",
-  },
-  "santa-cruz": {
-    src: "/map-posters/santa-cruz.png",
-    alt: "Sunset-toned Santa Cruz map poster",
-  },
-};
-
 const localDesktopMapPosterOverrides: Record<
   string,
   Collection["mapPosterDesktop"]
 > = {
+  "new-york": {
+    src: "/map-posters/new-york-desktop.png",
+    alt: "Clean New York City street map for desktop",
+  },
+  "santa-cruz": {
+    src: "/map-posters/santa-cruz-desktop.png",
+    alt: "Clean Santa Cruz street map for desktop",
+  },
   washington: {
     src: "/map-posters/washington-dc-desktop.png",
-    alt: "Minimal Washington DC map poster for desktop",
+    alt: "Clean Washington DC street map for desktop",
   },
 };
 
@@ -33,16 +30,23 @@ const localMobileMapPosterOverrides: Record<
   string,
   Collection["mapPosterMobile"]
 > = {
+  "new-york": {
+    src: "/map-posters/new-york-mobile.png",
+    alt: "Clean New York City street map for mobile",
+  },
+  "santa-cruz": {
+    src: "/map-posters/santa-cruz-mobile.png",
+    alt: "Clean Santa Cruz street map for mobile",
+  },
   washington: {
     src: "/map-posters/washington-dc-mobile.png",
-    alt: "Minimal Washington DC map poster for mobile",
+    alt: "Clean Washington DC street map for mobile",
   },
 };
 
 const applyLocalOverrides = (items: Collection[]): Collection[] =>
   items.map((collection) => ({
     ...collection,
-    mapPoster: collection.mapPoster ?? localMapPosterOverrides[collection.slug],
     mapPosterDesktop:
       collection.mapPosterDesktop ??
       localDesktopMapPosterOverrides[collection.slug],

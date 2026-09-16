@@ -169,7 +169,8 @@ export function WorkIndex() {
           scrollRoot(trigger.start + target * scroller.clientWidth);
           trigger.getTween()?.progress(1);
         } else if (flow) {
-          scrollRoot(panels[target].getBoundingClientRect().top + window.scrollY - 128);
+          const contentsHeight = scroller.querySelector(".destination-contents")?.getBoundingClientRect().height ?? 0;
+          scrollRoot(panels[target].getBoundingClientRect().top + window.scrollY - 64 - contentsHeight);
         } else {
           scroller.scrollTo({ left: target * scroller.clientWidth, behavior: "instant" });
           scrollRoot(section.getBoundingClientRect().top + window.scrollY);
