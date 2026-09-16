@@ -15,13 +15,19 @@ const suppliedMaine = {
 };
 
 // Only these locally inspected exports have a known artwork classification.
-const reviewedArtwork: Partial<Record<string, "labeled-poster" | "annotated-atlas">> = {
+const reviewedArtwork: Partial<Record<string, "labeled-poster" | "annotated-atlas" | "map-only">> = {
   "9b8fcede0585e532fc4e0aa886af89e783233eb55151ed954dfb76cdda0817b2": "labeled-poster",
   "3e88d95416498e6871f16931eb9bb2d0bd67d101a40fe58b697754935a8d90a4": "labeled-poster",
   "526d56b7ac8ea3e970b980959ad6f44a477e893ab5e030951e0260fa17a2ab02": "labeled-poster",
   "a9f58245336ff66c500890833ef027e53d2d9a928638777806839cb57ca882a3": "labeled-poster",
   "ea7e1eaa014ee80e2908cb94a42b4fb41b5d1331cac4e968f1dd6273b74990d7": "annotated-atlas",
   "b003585ab2770b09f86118f8c350629d44a6aae8258ae148e2150822b2c6e6e1": "annotated-atlas",
+  "759f534237a031fb0c10263dd73e09c7ae673655c71e1bd22d30590f3b869f45": "map-only",
+  "753cccbd03700ea12b5f1f97154416e015e6d87e619c65c90215416b22a22df9": "map-only",
+  "e83a8fb7e3d2e4fc408741df557b8bbf8dd2a5a0879037aed639f3257d884f16": "map-only",
+  "2fddbe81d0ff76bc871dc173fb3034cc5525612eb8149a56fdb36b850d9d2e19": "map-only",
+  "add1d1d98b8b98a167a0dd0aea34eccd6f559699072446d88661f411a794d738": "map-only",
+  "2cea9d7081bdb4c19268db862b45608f846a577ad4ef746f4fc5b52a97bb3774": "map-only",
 };
 
 export function derivativeSizes(
@@ -63,12 +69,12 @@ type MapSource = {
   height: number;
   bytes: number;
   sha256: string;
-  artwork: "labeled-poster" | "annotated-atlas" | "unreviewed";
+  artwork: "labeled-poster" | "annotated-atlas" | "map-only" | "unreviewed";
 };
 
 type MapVariant = {
-  status: "transitional" | "blocked" | "needs-artwork-review";
-  mapOnlyMasterStatus: "blocked" | "unreviewed";
+  status: "ready" | "transitional" | "blocked" | "needs-artwork-review";
+  mapOnlyMasterStatus: "verified" | "blocked" | "unreviewed";
   note: string;
   objectPosition: string;
   focalPoint: { x: number; y: number };
@@ -170,13 +176,17 @@ export async function prepareMaps({
         kind, path: sourcePath, width: dimensions.width, height: dimensions.height,
         bytes: source.length, sha256, artwork,
       };
-      variant.status = artwork === "unreviewed" ? "needs-artwork-review" : "transitional";
-      variant.mapOnlyMasterStatus = artwork === "unreviewed" ? "unreviewed" : "blocked";
-      variant.note = artwork === "annotated-atlas"
-        ? "Supplied atlas map; place labels, coordinates and journey footer retained. Label-free master not found."
-        : artwork === "labeled-poster"
-          ? "Incumbent poster; baked title, coordinates and attribution retained. Map-only master not found."
-          : "Unreviewed source. Do not claim this is a map-only master until artwork is inspected.";
+      variant.status = artwork === "map-only"
+        ? "ready" : artwork === "unreviewed" ? "needs-artwork-review" : "transitional";
+      variant.mapOnlyMasterStatus = artwork === "map-only"
+        ? "verified" : artwork === "unreviewed" ? "unreviewed" : "blocked";
+      variant.note = artwork === "map-only"
+        ? "Verified map-only master; no baked title, coordinates, gradient, divider or attribution."
+        : artwork === "annotated-atlas"
+          ? "Supplied atlas map; place labels, coordinates and journey footer retained. Label-free master not found."
+          : artwork === "labeled-poster"
+            ? "Incumbent poster; baked title, coordinates and attribution retained. Map-only master not found."
+            : "Unreviewed source. Do not claim this is a map-only master until artwork is inspected.";
 
       let candidates = cache.get(sha256);
       if (!candidates) {

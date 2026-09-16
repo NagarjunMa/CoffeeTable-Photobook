@@ -67,6 +67,9 @@ export function Hero() {
           <span>Mallesh</span>
         </h1>
       </div>
+      <p className="font-display mt-6 max-w-2xl text-lg font-medium leading-relaxed md:text-xl">
+        Only photography can freeze time and let us return to a moment.
+      </p>
     </section>
   );
 }

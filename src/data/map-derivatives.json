@@ -127,9 +127,9 @@
     },
     "new-york": {
       "desktop": {
-        "status": "transitional",
-        "mapOnlyMasterStatus": "blocked",
-        "note": "Incumbent poster; baked title, coordinates and attribution retained. Map-only master not found.",
+        "status": "ready",
+        "mapOnlyMasterStatus": "verified",
+        "note": "Verified map-only master; no baked title, coordinates, gradient, divider or attribution.",
         "objectPosition": "50% 50%",
         "focalPoint": {
           "x": 50,
@@ -138,55 +138,55 @@
         "focalPointBasis": "existing-workflow",
         "source": {
           "kind": "incumbent-public",
-          "path": "public/map-posters/new-york-city.png",
-          "width": 3630,
-          "height": 4830,
-          "bytes": 7467853,
-          "sha256": "9b8fcede0585e532fc4e0aa886af89e783233eb55151ed954dfb76cdda0817b2",
-          "artwork": "labeled-poster"
+          "path": "public/map-posters/new-york-desktop.png",
+          "width": 6000,
+          "height": 3375,
+          "bytes": 9958137,
+          "sha256": "759f534237a031fb0c10263dd73e09c7ae673655c71e1bd22d30590f3b869f45",
+          "artwork": "map-only"
         },
         "fallback": {
-          "src": "/map-posters/optimized/new-york-desktop-1443x1920-fe68086e1cab4adf.webp",
-          "width": 1443,
-          "height": 1920,
-          "bytes": 798848,
+          "src": "/map-posters/optimized/new-york-desktop-1920x1080-c408c90b8dd57109.webp",
+          "width": 1920,
+          "height": 1080,
+          "bytes": 842638,
           "requestedLongEdge": 1920
         },
         "candidates": [
           {
-            "src": "/map-posters/optimized/new-york-desktop-721x960-adc0b5b1fd6b0127.webp",
-            "width": 721,
-            "height": 960,
-            "bytes": 248302,
+            "src": "/map-posters/optimized/new-york-desktop-960x540-ccc3e88eb5081a54.webp",
+            "width": 960,
+            "height": 540,
+            "bytes": 257802,
             "requestedLongEdge": 960
           },
           {
-            "src": "/map-posters/optimized/new-york-desktop-1443x1920-fe68086e1cab4adf.webp",
-            "width": 1443,
-            "height": 1920,
-            "bytes": 798848,
+            "src": "/map-posters/optimized/new-york-desktop-1920x1080-c408c90b8dd57109.webp",
+            "width": 1920,
+            "height": 1080,
+            "bytes": 842638,
             "requestedLongEdge": 1920
           },
           {
-            "src": "/map-posters/optimized/new-york-desktop-1924x2560-5268aee402c19d97.webp",
-            "width": 1924,
-            "height": 2560,
-            "bytes": 1295108,
+            "src": "/map-posters/optimized/new-york-desktop-2560x1440-dec92d56aab44678.webp",
+            "width": 2560,
+            "height": 1440,
+            "bytes": 1328924,
             "requestedLongEdge": 2560
           },
           {
-            "src": "/map-posters/optimized/new-york-desktop-2886x3840-d75560ff5789c149.webp",
-            "width": 2886,
-            "height": 3840,
-            "bytes": 2489898,
+            "src": "/map-posters/optimized/new-york-desktop-3840x2160-b17e9bd26f66b526.webp",
+            "width": 3840,
+            "height": 2160,
+            "bytes": 2526402,
             "requestedLongEdge": 3840
           }
         ]
       },
       "mobile": {
-        "status": "transitional",
-        "mapOnlyMasterStatus": "blocked",
-        "note": "Incumbent poster; baked title, coordinates and attribution retained. Map-only master not found.",
+        "status": "ready",
+        "mapOnlyMasterStatus": "verified",
+        "note": "Verified map-only master; no baked title, coordinates, gradient, divider or attribution.",
         "objectPosition": "50% 50%",
         "focalPoint": {
           "x": 50,
@@ -195,47 +195,47 @@
         "focalPointBasis": "existing-workflow",
         "source": {
           "kind": "incumbent-public",
-          "path": "public/map-posters/new-york-city.png",
-          "width": 3630,
-          "height": 4830,
-          "bytes": 7467853,
-          "sha256": "9b8fcede0585e532fc4e0aa886af89e783233eb55151ed954dfb76cdda0817b2",
-          "artwork": "labeled-poster"
+          "path": "public/map-posters/new-york-mobile.png",
+          "width": 3375,
+          "height": 6000,
+          "bytes": 9564068,
+          "sha256": "753cccbd03700ea12b5f1f97154416e015e6d87e619c65c90215416b22a22df9",
+          "artwork": "map-only"
         },
         "fallback": {
-          "src": "/map-posters/optimized/new-york-desktop-1443x1920-fe68086e1cab4adf.webp",
-          "width": 1443,
+          "src": "/map-posters/optimized/new-york-mobile-1080x1920-fba4935337fcb5be.webp",
+          "width": 1080,
           "height": 1920,
-          "bytes": 798848,
+          "bytes": 788312,
           "requestedLongEdge": 1920
         },
         "candidates": [
           {
-            "src": "/map-posters/optimized/new-york-desktop-721x960-adc0b5b1fd6b0127.webp",
-            "width": 721,
+            "src": "/map-posters/optimized/new-york-mobile-540x960-d6acb07e946a42ed.webp",
+            "width": 540,
             "height": 960,
-            "bytes": 248302,
+            "bytes": 237842,
             "requestedLongEdge": 960
           },
           {
-            "src": "/map-posters/optimized/new-york-desktop-1443x1920-fe68086e1cab4adf.webp",
-            "width": 1443,
+            "src": "/map-posters/optimized/new-york-mobile-1080x1920-fba4935337fcb5be.webp",
+            "width": 1080,
             "height": 1920,
-            "bytes": 798848,
+            "bytes": 788312,
             "requestedLongEdge": 1920
           },
           {
-            "src": "/map-posters/optimized/new-york-desktop-1924x2560-5268aee402c19d97.webp",
-            "width": 1924,
+            "src": "/map-posters/optimized/new-york-mobile-1440x2560-92d19d31e230442c.webp",
+            "width": 1440,
             "height": 2560,
-            "bytes": 1295108,
+            "bytes": 1241560,
             "requestedLongEdge": 2560
           },
           {
-            "src": "/map-posters/optimized/new-york-desktop-2886x3840-d75560ff5789c149.webp",
-            "width": 2886,
+            "src": "/map-posters/optimized/new-york-mobile-2160x3840-1789b74d700a14e6.webp",
+            "width": 2160,
             "height": 3840,
-            "bytes": 2489898,
+            "bytes": 2390596,
             "requestedLongEdge": 3840
           }
         ]
@@ -243,9 +243,9 @@
     },
     "santa-cruz": {
       "desktop": {
-        "status": "transitional",
-        "mapOnlyMasterStatus": "blocked",
-        "note": "Incumbent poster; baked title, coordinates and attribution retained. Map-only master not found.",
+        "status": "ready",
+        "mapOnlyMasterStatus": "verified",
+        "note": "Verified map-only master; no baked title, coordinates, gradient, divider or attribution.",
         "objectPosition": "50% 38%",
         "focalPoint": {
           "x": 50,
@@ -254,55 +254,55 @@
         "focalPointBasis": "existing-workflow",
         "source": {
           "kind": "incumbent-public",
-          "path": "public/map-posters/santa-cruz.png",
-          "width": 3630,
-          "height": 4830,
-          "bytes": 3469601,
-          "sha256": "3e88d95416498e6871f16931eb9bb2d0bd67d101a40fe58b697754935a8d90a4",
-          "artwork": "labeled-poster"
+          "path": "public/map-posters/santa-cruz-desktop.png",
+          "width": 6000,
+          "height": 3375,
+          "bytes": 3795549,
+          "sha256": "e83a8fb7e3d2e4fc408741df557b8bbf8dd2a5a0879037aed639f3257d884f16",
+          "artwork": "map-only"
         },
         "fallback": {
-          "src": "/map-posters/optimized/santa-cruz-desktop-1443x1920-24b2a667b7580079.webp",
-          "width": 1443,
-          "height": 1920,
-          "bytes": 390418,
+          "src": "/map-posters/optimized/santa-cruz-desktop-1920x1080-99d2a4320253c01d.webp",
+          "width": 1920,
+          "height": 1080,
+          "bytes": 398088,
           "requestedLongEdge": 1920
         },
         "candidates": [
           {
-            "src": "/map-posters/optimized/santa-cruz-desktop-721x960-71cbfc2bed75ab6c.webp",
-            "width": 721,
-            "height": 960,
-            "bytes": 124256,
+            "src": "/map-posters/optimized/santa-cruz-desktop-960x540-3a6b197d459f5ce5.webp",
+            "width": 960,
+            "height": 540,
+            "bytes": 138274,
             "requestedLongEdge": 960
           },
           {
-            "src": "/map-posters/optimized/santa-cruz-desktop-1443x1920-24b2a667b7580079.webp",
-            "width": 1443,
-            "height": 1920,
-            "bytes": 390418,
+            "src": "/map-posters/optimized/santa-cruz-desktop-1920x1080-99d2a4320253c01d.webp",
+            "width": 1920,
+            "height": 1080,
+            "bytes": 398088,
             "requestedLongEdge": 1920
           },
           {
-            "src": "/map-posters/optimized/santa-cruz-desktop-1924x2560-fda5a88911aed3fc.webp",
-            "width": 1924,
-            "height": 2560,
-            "bytes": 592212,
+            "src": "/map-posters/optimized/santa-cruz-desktop-2560x1440-5985a2254e600bd8.webp",
+            "width": 2560,
+            "height": 1440,
+            "bytes": 593044,
             "requestedLongEdge": 2560
           },
           {
-            "src": "/map-posters/optimized/santa-cruz-desktop-2886x3840-73395007120bc2d2.webp",
-            "width": 2886,
-            "height": 3840,
-            "bytes": 1006344,
+            "src": "/map-posters/optimized/santa-cruz-desktop-3840x2160-d68eec2e809a7834.webp",
+            "width": 3840,
+            "height": 2160,
+            "bytes": 1008028,
             "requestedLongEdge": 3840
           }
         ]
       },
       "mobile": {
-        "status": "transitional",
-        "mapOnlyMasterStatus": "blocked",
-        "note": "Incumbent poster; baked title, coordinates and attribution retained. Map-only master not found.",
+        "status": "ready",
+        "mapOnlyMasterStatus": "verified",
+        "note": "Verified map-only master; no baked title, coordinates, gradient, divider or attribution.",
         "objectPosition": "50% 38%",
         "focalPoint": {
           "x": 50,
@@ -311,47 +311,47 @@
         "focalPointBasis": "existing-workflow",
         "source": {
           "kind": "incumbent-public",
-          "path": "public/map-posters/santa-cruz.png",
-          "width": 3630,
-          "height": 4830,
-          "bytes": 3469601,
-          "sha256": "3e88d95416498e6871f16931eb9bb2d0bd67d101a40fe58b697754935a8d90a4",
-          "artwork": "labeled-poster"
+          "path": "public/map-posters/santa-cruz-mobile.png",
+          "width": 3375,
+          "height": 6000,
+          "bytes": 4423155,
+          "sha256": "2fddbe81d0ff76bc871dc173fb3034cc5525612eb8149a56fdb36b850d9d2e19",
+          "artwork": "map-only"
         },
         "fallback": {
-          "src": "/map-posters/optimized/santa-cruz-desktop-1443x1920-24b2a667b7580079.webp",
-          "width": 1443,
+          "src": "/map-posters/optimized/santa-cruz-mobile-1080x1920-9d51ee000ecccd10.webp",
+          "width": 1080,
           "height": 1920,
-          "bytes": 390418,
+          "bytes": 468606,
           "requestedLongEdge": 1920
         },
         "candidates": [
           {
-            "src": "/map-posters/optimized/santa-cruz-desktop-721x960-71cbfc2bed75ab6c.webp",
-            "width": 721,
+            "src": "/map-posters/optimized/santa-cruz-mobile-540x960-9b622d3c48339b6c.webp",
+            "width": 540,
             "height": 960,
-            "bytes": 124256,
+            "bytes": 159300,
             "requestedLongEdge": 960
           },
           {
-            "src": "/map-posters/optimized/santa-cruz-desktop-1443x1920-24b2a667b7580079.webp",
-            "width": 1443,
+            "src": "/map-posters/optimized/santa-cruz-mobile-1080x1920-9d51ee000ecccd10.webp",
+            "width": 1080,
             "height": 1920,
-            "bytes": 390418,
+            "bytes": 468606,
             "requestedLongEdge": 1920
           },
           {
-            "src": "/map-posters/optimized/santa-cruz-desktop-1924x2560-fda5a88911aed3fc.webp",
-            "width": 1924,
+            "src": "/map-posters/optimized/santa-cruz-mobile-1440x2560-60ffcdc5e3886686.webp",
+            "width": 1440,
             "height": 2560,
-            "bytes": 592212,
+            "bytes": 707492,
             "requestedLongEdge": 2560
           },
           {
-            "src": "/map-posters/optimized/santa-cruz-desktop-2886x3840-73395007120bc2d2.webp",
-            "width": 2886,
+            "src": "/map-posters/optimized/santa-cruz-mobile-2160x3840-e8c58370383cb909.webp",
+            "width": 2160,
             "height": 3840,
-            "bytes": 1006344,
+            "bytes": 1220494,
             "requestedLongEdge": 3840
           }
         ]
@@ -359,9 +359,9 @@
     },
     "washington": {
       "desktop": {
-        "status": "transitional",
-        "mapOnlyMasterStatus": "blocked",
-        "note": "Incumbent poster; baked title, coordinates and attribution retained. Map-only master not found.",
+        "status": "ready",
+        "mapOnlyMasterStatus": "verified",
+        "note": "Verified map-only master; no baked title, coordinates, gradient, divider or attribution.",
         "objectPosition": "50% 50%",
         "focalPoint": {
           "x": 50,
@@ -371,54 +371,54 @@
         "source": {
           "kind": "incumbent-public",
           "path": "public/map-posters/washington-dc-desktop.png",
-          "width": 6030,
-          "height": 3405,
-          "bytes": 9151641,
-          "sha256": "526d56b7ac8ea3e970b980959ad6f44a477e893ab5e030951e0260fa17a2ab02",
-          "artwork": "labeled-poster"
+          "width": 6000,
+          "height": 3375,
+          "bytes": 9766881,
+          "sha256": "add1d1d98b8b98a167a0dd0aea34eccd6f559699072446d88661f411a794d738",
+          "artwork": "map-only"
         },
         "fallback": {
-          "src": "/map-posters/optimized/washington-desktop-1920x1084-50c8994c6a3e3178.webp",
+          "src": "/map-posters/optimized/washington-desktop-1920x1080-355d09b5830a17c1.webp",
           "width": 1920,
-          "height": 1084,
-          "bytes": 829352,
+          "height": 1080,
+          "bytes": 956528,
           "requestedLongEdge": 1920
         },
         "candidates": [
           {
-            "src": "/map-posters/optimized/washington-desktop-960x542-aeae22fe1c71051c.webp",
+            "src": "/map-posters/optimized/washington-desktop-960x540-3e3102355b5f7ea1.webp",
             "width": 960,
-            "height": 542,
-            "bytes": 254980,
+            "height": 540,
+            "bytes": 289992,
             "requestedLongEdge": 960
           },
           {
-            "src": "/map-posters/optimized/washington-desktop-1920x1084-50c8994c6a3e3178.webp",
+            "src": "/map-posters/optimized/washington-desktop-1920x1080-355d09b5830a17c1.webp",
             "width": 1920,
-            "height": 1084,
-            "bytes": 829352,
+            "height": 1080,
+            "bytes": 956528,
             "requestedLongEdge": 1920
           },
           {
-            "src": "/map-posters/optimized/washington-desktop-2560x1446-08aedcd819b3ee41.webp",
+            "src": "/map-posters/optimized/washington-desktop-2560x1440-20dcb247afc1fd71.webp",
             "width": 2560,
-            "height": 1446,
-            "bytes": 1326602,
+            "height": 1440,
+            "bytes": 1493030,
             "requestedLongEdge": 2560
           },
           {
-            "src": "/map-posters/optimized/washington-desktop-3840x2168-a40951f70f095c1a.webp",
+            "src": "/map-posters/optimized/washington-desktop-3840x2160-1bd09ab574950ff4.webp",
             "width": 3840,
-            "height": 2168,
-            "bytes": 2415074,
+            "height": 2160,
+            "bytes": 2804412,
             "requestedLongEdge": 3840
           }
         ]
       },
       "mobile": {
-        "status": "transitional",
-        "mapOnlyMasterStatus": "blocked",
-        "note": "Incumbent poster; baked title, coordinates and attribution retained. Map-only master not found.",
+        "status": "ready",
+        "mapOnlyMasterStatus": "verified",
+        "note": "Verified map-only master; no baked title, coordinates, gradient, divider or attribution.",
         "objectPosition": "50% 50%",
         "focalPoint": {
           "x": 50,
@@ -428,46 +428,46 @@
         "source": {
           "kind": "incumbent-public",
           "path": "public/map-posters/washington-dc-mobile.png",
-          "width": 3405,
-          "height": 6030,
-          "bytes": 8905762,
-          "sha256": "a9f58245336ff66c500890833ef027e53d2d9a928638777806839cb57ca882a3",
-          "artwork": "labeled-poster"
+          "width": 3375,
+          "height": 6000,
+          "bytes": 9479481,
+          "sha256": "2cea9d7081bdb4c19268db862b45608f846a577ad4ef746f4fc5b52a97bb3774",
+          "artwork": "map-only"
         },
         "fallback": {
-          "src": "/map-posters/optimized/washington-mobile-1084x1920-595459d2402fae21.webp",
-          "width": 1084,
+          "src": "/map-posters/optimized/washington-mobile-1080x1920-6726bcc6ed43db23.webp",
+          "width": 1080,
           "height": 1920,
-          "bytes": 817018,
+          "bytes": 937850,
           "requestedLongEdge": 1920
         },
         "candidates": [
           {
-            "src": "/map-posters/optimized/washington-mobile-542x960-dd47b5195a728b07.webp",
-            "width": 542,
+            "src": "/map-posters/optimized/washington-mobile-540x960-aed2d317bd67d6e5.webp",
+            "width": 540,
             "height": 960,
-            "bytes": 248166,
+            "bytes": 280964,
             "requestedLongEdge": 960
           },
           {
-            "src": "/map-posters/optimized/washington-mobile-1084x1920-595459d2402fae21.webp",
-            "width": 1084,
+            "src": "/map-posters/optimized/washington-mobile-1080x1920-6726bcc6ed43db23.webp",
+            "width": 1080,
             "height": 1920,
-            "bytes": 817018,
+            "bytes": 937850,
             "requestedLongEdge": 1920
           },
           {
-            "src": "/map-posters/optimized/washington-mobile-1446x2560-83cfb9c0ffdebe85.webp",
-            "width": 1446,
+            "src": "/map-posters/optimized/washington-mobile-1440x2560-28053040fde96a00.webp",
+            "width": 1440,
             "height": 2560,
-            "bytes": 1297748,
+            "bytes": 1471020,
             "requestedLongEdge": 2560
           },
           {
-            "src": "/map-posters/optimized/washington-mobile-2168x3840-0977f14515edb098.webp",
-            "width": 2168,
+            "src": "/map-posters/optimized/washington-mobile-2160x3840-cee1f555284fc392.webp",
+            "width": 2160,
             "height": 3840,
-            "bytes": 2387774,
+            "bytes": 2750426,
             "requestedLongEdge": 3840
           }
         ]

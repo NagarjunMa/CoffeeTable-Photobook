@@ -143,7 +143,7 @@ test("checked-in editorial accounts for all 52 images without fabricating approv
   for (const source of generated) {
     const entry = parsed.collections[source.sourceFolderId];
     assert.ok(entry);
-    assert.equal(entry.reviewStatus, "draft");
+    assert.equal(entry.reviewStatus, "approved");
     assert.deepEqual(Object.keys(entry.images ?? {}).sort(), source.images.map((p) => p.id).sort());
     for (const image of Object.values(entry.images ?? {})) {
       if (image.reviewStatus === "draft") { drafts++; assert.ok(image.alt); }
@@ -153,8 +153,16 @@ test("checked-in editorial accounts for all 52 images without fabricating approv
   assert.equal(drafts, 41);
   assert.equal(blocked, 11);
   const warnings: string[] = [];
-  assert.deepEqual(applyEditorialOverrides(generated as Collection[], local,
-    { warn: (message) => warnings.push(message) }), generated);
+  const resolved = applyEditorialOverrides(generated as Collection[], local,
+    { warn: (message) => warnings.push(message) });
+  for (const source of generated) {
+    const result = resolved.find((item) => item.sourceFolderId === source.sourceFolderId)!;
+    const entry = parsed.collections[source.sourceFolderId];
+    assert.equal(result.note, entry.reviewStatus === "approved" ? entry.note : source.note);
+    // Publishing the photographer's city stories must not approve image drafts.
+    assert.deepEqual(result.images, source.images);
+    assert.deepEqual(result.coverImages, source.coverImages);
+  }
   assert.deepEqual(warnings, []);
 });
 

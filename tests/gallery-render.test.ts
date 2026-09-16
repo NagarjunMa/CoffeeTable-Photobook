@@ -27,6 +27,7 @@ test("a single photograph renders one gallery frame with intrinsic uncropped dim
   assert.equal((html.match(/class="exhibition-frame flex/g) ?? []).length, 1);
   assert.match(html, /width="800" height="1200"/);
   assert.match(html, /aspect-ratio:800 \/ 1200/);
+  assert.match(html, /class="photo-loading" hidden=""/);
   assert.doesNotMatch(html, /<dialog/);
 });
 
