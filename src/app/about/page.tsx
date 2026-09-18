@@ -1,4 +1,3 @@
-import Link from "next/link";
 import type { Metadata } from "next";
 import { SiteHeader } from "@/components/site-header";
 
@@ -36,12 +35,14 @@ export default function AboutPage() {
               ))}
             </div>
 
-            <Link
+            {/* Full navigation lets the scroll controller initialize with the destination hash. */}
+            {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
+            <a
               href="/#work"
               className="editorial-link mt-10 inline-flex text-base underline underline-offset-4"
             >
-              Selected Work
-            </Link>
+              Explore Photobooks
+            </a>
           </div>
         </section>
       </main>

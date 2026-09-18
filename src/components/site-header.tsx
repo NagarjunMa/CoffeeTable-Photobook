@@ -25,9 +25,11 @@ export function SiteHeader({
         NM
       </Link>
       <nav aria-label="Main navigation" className="flex items-center gap-1 sm:gap-5">
-        <Link href="/#work" className="editorial-link">
-          Work
-        </Link>
+        {/* Full navigation lets the scroll controller initialize with the destination hash. */}
+        {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
+        <a href="/#work" className="editorial-link">
+          Photobooks
+        </a>
         <Link href="/about" aria-current={pathname === "/about" ? "page" : undefined} className="editorial-link">
           About
         </Link>

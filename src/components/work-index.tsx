@@ -186,6 +186,14 @@ export function WorkIndex() {
         if (target >= 0) navigate.current(target, false);
         else if (location.hash === "#work") navigate.current(0, false);
       };
+      const onIndexLink = (event: MouseEvent) => {
+        if (!ready || event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+        const link = event.target instanceof Element ? event.target.closest<HTMLAnchorElement>("a[href='/#work']") : null;
+        if (!link || link.target === "_blank") return;
+        // Native hash scrolling can move the pinned rail independently in WebKit.
+        event.preventDefault();
+        navigate.current(0, true);
+      };
       const onScroll = () => {
         if (!desktop && !flow) {
           const bounds = section.getBoundingClientRect();
@@ -211,6 +219,7 @@ export function WorkIndex() {
       window.addEventListener("scroll", onScroll, { passive: true });
       window.addEventListener("popstate", restore);
       window.addEventListener("hashchange", restore);
+      document.addEventListener("click", onIndexLink);
       rail.addEventListener("focusin", onFocus);
       return () => {
         disposed = true;
@@ -219,6 +228,7 @@ export function WorkIndex() {
         window.removeEventListener("scroll", onScroll);
         window.removeEventListener("popstate", restore);
         window.removeEventListener("hashchange", restore);
+        document.removeEventListener("click", onIndexLink);
         rail.removeEventListener("focusin", onFocus);
         navigate.current = () => {};
         delete scroller.dataset.enhanced;
