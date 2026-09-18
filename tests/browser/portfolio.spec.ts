@@ -18,7 +18,7 @@ test("map-only artwork selects the matching desktop and mobile composition", asy
   ] as const) {
     await page.setViewportSize(viewport);
     await page.goto("/");
-    for (const slug of ["new-york", "santa-cruz", "washington"]) {
+    for (const slug of ["new-york", "santa-cruz", "washington", "hampi"]) {
       const image = page.locator(`#city-${slug} .city-map-image`);
       await image.scrollIntoViewIfNeeded();
       await expect.poll(() => image.evaluate((element) =>

@@ -12,6 +12,10 @@ const localDesktopMapPosterOverrides: Record<
   string,
   Collection["mapPosterDesktop"]
 > = {
+  hampi: {
+    src: "/map-posters/hampi-desktop.png",
+    alt: "Hampi street and river map for desktop",
+  },
   "new-york": {
     src: "/map-posters/new-york-desktop.png",
     alt: "Clean New York City street map for desktop",
@@ -30,6 +34,10 @@ const localMobileMapPosterOverrides: Record<
   string,
   Collection["mapPosterMobile"]
 > = {
+  hampi: {
+    src: "/map-posters/hampi-mobile.png",
+    alt: "Hampi street and river map for mobile",
+  },
   "new-york": {
     src: "/map-posters/new-york-mobile.png",
     alt: "Clean New York City street map for mobile",

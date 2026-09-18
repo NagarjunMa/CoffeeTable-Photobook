@@ -18,6 +18,7 @@ import { z } from "zod";
 import { loadLocalEnv } from "./lib/local-env";
 import { createCloudflarePublisher, writeJsonAtomic } from "./lib/cloudflare-images";
 import { imagePath } from "../src/lib/image-variants";
+import { mergeSyncedCollections, parseSyncOptions, selectSyncFolders } from "./lib/sync-scope";
 import type { Collection, PortfolioImage } from "../src/data/types";
 
 type DriveFile = {
@@ -420,9 +421,12 @@ async function writeOptimizedMapPoster(
 }
 
 async function syncDrive() {
+  const options = parseSyncOptions(process.argv.slice(2));
   loadLocalEnv(projectRoot);
 
-  const cloudflare = process.env.CLOUDFLARE_ACCOUNT_ID || process.argv.includes("--cloudflare")
+  const previous: Collection[] = existsSync(collectionsOutputPath)
+    ? JSON.parse(readFileSync(collectionsOutputPath, "utf8")) : [];
+  const cloudflare = process.env.CLOUDFLARE_ACCOUNT_ID || options.cloudflare
     ? await createCloudflarePublisher(projectRoot) : null;
 
   const env = envSchema.parse(process.env);
@@ -465,7 +469,13 @@ async function syncDrive() {
   const collections: Collection[] = [];
   const failures: string[] = [];
 
-  for (const folder of cityFolders) {
+  const selectedFolders = selectSyncFolders(cityFolders, options.folderId);
+  if (options.folderId && previous.some((book) =>
+    book.sourceFolderId !== options.folderId && book.slug === toSlug(cleanFolderName(selectedFolders[0].name)))) {
+    throw new Error("The selected folder's URL conflicts with another collection. Rename the Drive folder before syncing.");
+  }
+
+  for (const folder of selectedFolders) {
     const folderTitle = cleanFolderName(folder.name);
     const folderSlug = toSlug(folderTitle);
     const images = await listCollectionImages(drive, folder.id);
@@ -624,23 +634,24 @@ async function syncDrive() {
       if (first?.cloudflareImageId) await cloudflare.verify(first.cloudflareImageId);
     }
   }
+  const publishedCollections = mergeSyncedCollections(previous, collections, options.folderId);
   if (existsSync(collectionsOutputPath)) {
-    const previous: Collection[] = JSON.parse(readFileSync(collectionsOutputPath, "utf8"));
     writeJson(join(projectRoot, ".cache", "collections-before-sync.json"), previous);
     const migrationBackup = join(projectRoot, ".cache", "collections-before-cloudflare.json");
     if (cloudflare && !existsSync(migrationBackup) && previous.some(c => c.images.some(p => !p.cloudflareImageId))) {
       writeJson(migrationBackup, previous);
     }
   }
-  writeJson(collectionsOutputPath, collections);
+  writeJson(collectionsOutputPath, publishedCollections);
   writeJson(syncOutputPath, {
     status: "synced",
     delivery: cloudflare ? "cloudflare" : "local",
     cloudflare: cloudflare?.stats(),
+    scope: options.folderId ?? "all",
     rootFolderId: rootFolder.id,
     rootFolderName: rootFolder.name,
-    collectionCount: collections.length,
-    imageCount: collections.reduce(
+    collectionCount: publishedCollections.length,
+    imageCount: publishedCollections.reduce(
       (total, collection) => total + collection.images.length,
       0,
     ),
@@ -648,7 +659,7 @@ async function syncDrive() {
   });
 
   console.log(
-    `Drive sync complete: ${collections.length} collections, ${collections.reduce(
+    `Drive sync complete: ${publishedCollections.length} collections, ${publishedCollections.reduce(
       (total, collection) => total + collection.images.length,
       0,
     )} images.`,

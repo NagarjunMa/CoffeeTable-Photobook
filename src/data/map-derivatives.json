@@ -472,6 +472,122 @@
           }
         ]
       }
+    },
+    "hampi": {
+      "desktop": {
+        "status": "ready",
+        "mapOnlyMasterStatus": "verified",
+        "note": "Verified map-only master; no baked title, coordinates, gradient, divider or attribution.",
+        "objectPosition": "50% 50%",
+        "focalPoint": {
+          "x": 50,
+          "y": 50
+        },
+        "focalPointBasis": "existing-workflow",
+        "source": {
+          "kind": "incumbent-public",
+          "path": "public/map-posters/hampi-desktop.png",
+          "width": 6000,
+          "height": 3375,
+          "bytes": 1716113,
+          "sha256": "964f0f96a132d89f7c86221f6faccaf2a8d8799d526d3c36d5cfeac5667d9067",
+          "artwork": "map-only"
+        },
+        "fallback": {
+          "src": "/map-posters/optimized/hampi-desktop-1920x1080-9d43d8e38a01a21d.webp",
+          "width": 1920,
+          "height": 1080,
+          "bytes": 161948,
+          "requestedLongEdge": 1920
+        },
+        "candidates": [
+          {
+            "src": "/map-posters/optimized/hampi-desktop-960x540-32131d5d0c6f3764.webp",
+            "width": 960,
+            "height": 540,
+            "bytes": 64488,
+            "requestedLongEdge": 960
+          },
+          {
+            "src": "/map-posters/optimized/hampi-desktop-1920x1080-9d43d8e38a01a21d.webp",
+            "width": 1920,
+            "height": 1080,
+            "bytes": 161948,
+            "requestedLongEdge": 1920
+          },
+          {
+            "src": "/map-posters/optimized/hampi-desktop-2560x1440-3e1fbe8e3a14c076.webp",
+            "width": 2560,
+            "height": 1440,
+            "bytes": 236408,
+            "requestedLongEdge": 2560
+          },
+          {
+            "src": "/map-posters/optimized/hampi-desktop-3840x2160-67660285c39aff0a.webp",
+            "width": 3840,
+            "height": 2160,
+            "bytes": 386286,
+            "requestedLongEdge": 3840
+          }
+        ]
+      },
+      "mobile": {
+        "status": "ready",
+        "mapOnlyMasterStatus": "verified",
+        "note": "Verified map-only master; no baked title, coordinates, gradient, divider or attribution.",
+        "objectPosition": "50% 50%",
+        "focalPoint": {
+          "x": 50,
+          "y": 50
+        },
+        "focalPointBasis": "existing-workflow",
+        "source": {
+          "kind": "incumbent-public",
+          "path": "public/map-posters/hampi-mobile.png",
+          "width": 3375,
+          "height": 6000,
+          "bytes": 1678187,
+          "sha256": "838a08e180ab7ae52c99af8bb742d6608f2cd48cb72d39a1d2aafc3ca354e2ab",
+          "artwork": "map-only"
+        },
+        "fallback": {
+          "src": "/map-posters/optimized/hampi-mobile-1080x1920-9b853954e5164afe.webp",
+          "width": 1080,
+          "height": 1920,
+          "bytes": 160306,
+          "requestedLongEdge": 1920
+        },
+        "candidates": [
+          {
+            "src": "/map-posters/optimized/hampi-mobile-540x960-1840c44eccc2342a.webp",
+            "width": 540,
+            "height": 960,
+            "bytes": 62894,
+            "requestedLongEdge": 960
+          },
+          {
+            "src": "/map-posters/optimized/hampi-mobile-1080x1920-9b853954e5164afe.webp",
+            "width": 1080,
+            "height": 1920,
+            "bytes": 160306,
+            "requestedLongEdge": 1920
+          },
+          {
+            "src": "/map-posters/optimized/hampi-mobile-1440x2560-0fb9b2fe4d3e7879.webp",
+            "width": 1440,
+            "height": 2560,
+            "bytes": 233300,
+            "requestedLongEdge": 2560
+          },
+          {
+            "src": "/map-posters/optimized/hampi-mobile-2160x3840-29a5c4636b1ae538.webp",
+            "width": 2160,
+            "height": 3840,
+            "bytes": 388722,
+            "requestedLongEdge": 3840
+          }
+        ]
+      }
     }
   }
 }

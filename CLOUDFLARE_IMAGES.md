@@ -11,6 +11,18 @@ npm run sync:cloudflare
 npm run dev
 ```
 
+To add or refresh just one album without changing other books:
+
+```sh
+npm run sync:cloudflare -- --folder-id DRIVE_ALBUM_FOLDER_ID
+```
+
+Use the album's ID, not the Photography root ID. The folder must be an immediate
+child of the configured root. The command preserves other collections and their
+order, appends new books, and still requires all selected photographs and privacy
+checks to pass before replacing the manifest. Without `--folder-id`, the command
+retains its full-library sync behavior. No Cloudflare images are deleted.
+
 Open http://localhost:3000. `npm run sync:drive` also uses Cloudflare whenever
 `CLOUDFLARE_ACCOUNT_ID` is configured. The explicit Cloudflare command fails if
 credentials are missing, instead of falling back to public local images.

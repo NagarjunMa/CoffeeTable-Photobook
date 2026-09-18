@@ -3,7 +3,7 @@
 ## Status and Scope
 
 The application consumes the checked-in manifest through one responsive `picture`
-per destination. New York, Santa Cruz and Washington now use separately composed,
+per destination. New York, Santa Cruz, Washington and Hampi use separately composed,
 verified map-only desktop and mobile masters generated with `--map-only`. They have
 no baked title, coordinates, gradient, divider or attribution; the application
 renders the required OpenStreetMap attribution. Maine remains a transitional,
@@ -19,6 +19,8 @@ map-to-poster workspace with the repository's `contrast_zones` theme.
 
 | Collection / source | Dimensions | Original bytes | Status |
 | --- | --- | ---: | --- |
+| Hampi desktop: `public/map-posters/hampi-desktop.png` | 6000 x 3375 | 1,716,113 | Verified map-only landscape master. |
+| Hampi mobile: `public/map-posters/hampi-mobile.png` | 3375 x 6000 | 1,678,187 | Verified map-only portrait master. |
 | New York desktop: `public/map-posters/new-york-desktop.png` | 6000 x 3375 | 9,958,137 | Verified map-only landscape master. |
 | New York mobile: `public/map-posters/new-york-mobile.png` | 3375 x 6000 | 9,564,068 | Verified map-only portrait master. |
 | Santa Cruz desktop: `public/map-posters/santa-cruz-desktop.png` | 6000 x 3375 | 3,795,549 | Verified map-only landscape master. |
@@ -99,7 +101,7 @@ variant's intrinsic dimensions to reserve space. Do not mount two CSS-hidden
 fallback and do not request an invented URL. Attribution remains the UI owner's
 responsibility because verified map-only masters contain no baked credit.
 
-New York, Santa Cruz, Washington and Maine now have distinct desktop/mobile
+New York, Santa Cruz, Washington, Hampi and Maine have distinct desktop/mobile
 compositions. Existing focal positions are
 Santa Cruz `50% 38%`, New York/Washington `50% 50%`. Maine has no incumbent image
 workflow: `50% 50%` is explicitly marked a centered default requiring integration
@@ -113,6 +115,8 @@ Measured local encoded bytes (not browser transfer timings):
 
 | Source | Original | 960 edge | 1920 edge | 2560 edge | 3840 edge | Reduction at 1920 / 3840 |
 | --- | ---: | ---: | ---: | ---: | ---: | --- |
+| Hampi desktop | 1,716,113 | 64,488 | 161,948 | 236,408 | 386,286 | 90.6% / 77.5% |
+| Hampi mobile | 1,678,187 | 62,894 | 160,306 | 233,300 | 388,722 | 90.4% / 76.8% |
 | Maine desktop | 1,874,375 | 43,638 | 136,066 | 208,820 | 371,036 | 92.7% / 80.2% |
 | Maine mobile | 2,139,200 | 50,686 | 159,100 | 242,688 | 431,052 | 92.6% / 79.8% |
 | New York desktop | 9,958,137 | 257,802 | 842,638 | 1,328,924 | 2,526,402 | 91.5% / 74.6% |
@@ -122,12 +126,12 @@ Measured local encoded bytes (not browser transfer timings):
 | Washington desktop | 9,766,881 | 289,992 | 956,528 | 1,493,030 | 2,804,412 | 90.2% / 71.3% |
 | Washington mobile | 9,479,481 | 280,964 | 937,850 | 1,471,020 | 2,750,426 | 90.1% / 71.0% |
 
-Eight distinct current masters total **51,000,846 bytes**. All 32 referenced
-responsive derivatives total **26,934,710 bytes** on disk. These figures include
+Ten distinct current masters total **54,395,146 bytes**. All 40 referenced
+responsive derivatives total **28,629,062 bytes** on disk. These figures include
 both orientations for every destination and are not a claim that a browser
 downloads all of them.
 No source PNG is deleted, so repository disk usage increases. Source SHA-256
-values were rechecked against the manifest after generation: all eight matched.
+values were rechecked against the manifest after generation.
 
 Focused tests cover portrait/landscape rounding, small-source deduplication,
 invalid dimensions, actual encoded dimensions, immutable source bytes, shared

@@ -171,5 +171,5 @@ test("checked-in picture manifest matches every generated WebP", async () => {
     }
   }
   assert.ok(seen.size > 0);
-  assert.equal(verifiedMapOnlySources, 6);
+  assert.equal(verifiedMapOnlySources, 8);
 });

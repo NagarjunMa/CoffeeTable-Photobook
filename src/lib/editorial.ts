@@ -26,6 +26,7 @@ const collectionEditorialSchema = z.object({
   title: text.optional(),
   location: text.optional(),
   note: text.optional(),
+  indexNote: text.optional(),
   category: text.nullable().optional(),
   year: text.nullable().optional(),
   mapPresentation: z.object({
@@ -120,7 +121,7 @@ export function applyEditorialOverrides(
     // Image review is independent of collection-level copy and sequencing approval.
     if (entry.reviewStatus !== "approved" && !includeDrafts) return result;
 
-    for (const field of ["title", "location", "note"] as const) {
+    for (const field of ["title", "location", "note", "indexNote"] as const) {
       if (entry[field] !== undefined) result[field] = entry[field];
     }
     for (const field of ["category", "year"] as const) {

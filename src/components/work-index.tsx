@@ -58,6 +58,7 @@ function CityPanel({
   index: number;
 }) {
   const href = `/series/${collection.slug}`;
+  const note = collection.indexNote ?? collection.note;
   const gesture = useRef<{ x: number; y: number; moved: boolean } | null>(null);
 
   return (
@@ -84,8 +85,8 @@ function CityPanel({
           <div className="mt-5 block">
             <DestinationTitle title={collection.title} />
           </div>
-          {!collection.note.startsWith("A field study from ") && <p className="mt-7 max-w-md text-base md:text-lg leading-[1.45] text-[var(--foreground)]">
-            {collection.note}
+          {!note.startsWith("A field study from ") && <p className="mt-7 max-w-md text-base md:text-lg leading-[1.45] text-[var(--foreground)]">
+            {note}
           </p>}
           <span
             className="editorial-link pointer-events-auto mt-8 font-mono-custom text-[10px] uppercase tracking-[0.18em] md:text-[11px]"
