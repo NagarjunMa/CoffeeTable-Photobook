@@ -30,6 +30,8 @@ export type Collection = {
   year?: string;
   category?: string;
   note: string;
+  /** Optional short introduction for the viewport-height destination panel. */
+  indexNote?: string;
   mapPoster?: MapPoster;
   mapPosterDesktop?: MapPoster;
   mapPosterMobile?: MapPoster;

@@ -1,7 +1,7 @@
 import { test, expect } from "./fixtures";
 import type { Route } from "@playwright/test";
 
-const cities = ["maine", "new-york", "santa-cruz", "washington"];
+const cities = ["maine", "new-york", "santa-cruz", "washington", "hampi"];
 
 test("wrapped mobile contents reserve space for every map and attribution", async ({ page }) => {
   for (const viewport of [

@@ -16,6 +16,8 @@ const suppliedMaine = {
 
 // Only these locally inspected exports have a known artwork classification.
 const reviewedArtwork: Partial<Record<string, "labeled-poster" | "annotated-atlas" | "map-only">> = {
+  "964f0f96a132d89f7c86221f6faccaf2a8d8799d526d3c36d5cfeac5667d9067": "map-only",
+  "838a08e180ab7ae52c99af8bb742d6608f2cd48cb72d39a1d2aafc3ca354e2ab": "map-only",
   "9b8fcede0585e532fc4e0aa886af89e783233eb55151ed954dfb76cdda0817b2": "labeled-poster",
   "3e88d95416498e6871f16931eb9bb2d0bd67d101a40fe58b697754935a8d90a4": "labeled-poster",
   "526d56b7ac8ea3e970b980959ad6f44a477e893ab5e030951e0260fa17a2ab02": "labeled-poster",

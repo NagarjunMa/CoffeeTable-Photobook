@@ -106,6 +106,8 @@ out of client code and avoiding expired URLs in static pages.
 | --- | --- |
 | `npm run dev` | Start the local development server. |
 | `npm run sync:cloudflare` | Sync Drive collections to private Cloudflare Images. |
+| `npm run sync:cloudflare -- --folder-id ALBUM_ID` | Add or refresh one album, preserving the other books. |
+| `npm run test:sync` | Test scoped album selection and manifest preservation without cloud access. |
 | `npm run test:images` | Run image-delivery and publisher tests without cloud uploads. |
 | `npm run test:editorial` | Validate stable-ID editorial merging, review states and stale references. |
 | `npm run test:maps` | Validate responsive map encoding, source preservation and atomic manifest publication. |

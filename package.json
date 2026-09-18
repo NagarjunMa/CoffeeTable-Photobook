@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "eslint",
     "test:images": "tsx --test tests/image-delivery.test.ts",
+    "test:sync": "tsx --test tests/sync-scope.test.ts",
     "test:editorial": "tsx --test tests/editorial.test.ts",
     "test:maps": "tsx --test tests/map-derivatives.test.ts",
     "test:gallery": "tsx --test tests/gallery-render.test.ts",

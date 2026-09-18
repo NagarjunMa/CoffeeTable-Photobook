@@ -646,5 +646,157 @@
         "orientation": "landscape"
       }
     ]
+  },
+  {
+    "title": "HAMPI",
+    "slug": "hampi",
+    "location": "HAMPI",
+    "year": "Field Notes",
+    "note": "A field study from HAMPI, gathered as a quiet sequence of images and memory.",
+    "sourceFolderId": "1uouK7mzsxuY1Xx9F4_ZjfG_Bv5--HSbX",
+    "coverImages": [
+      {
+        "id": "1I7NtayW4n_IW4tv4seSVRL_NhqZtsfKc",
+        "fileName": "81840.jpeg",
+        "alt": "81840",
+        "src": "/api/photographs/5b8d6300-ea58-469b-e5b6-4bf418160801/gallery",
+        "cloudflareImageId": "5b8d6300-ea58-469b-e5b6-4bf418160801",
+        "width": 3744,
+        "height": 2808,
+        "orientation": "landscape"
+      },
+      {
+        "id": "1sn3rAU9TId2Fe5ZmqEm3I8UYQhY-yFHn",
+        "fileName": "90161.jpeg",
+        "alt": "90161",
+        "src": "/api/photographs/2b32e834-13de-4720-1eae-cd19b7fe3b01/gallery",
+        "cloudflareImageId": "2b32e834-13de-4720-1eae-cd19b7fe3b01",
+        "width": 3745,
+        "height": 2996,
+        "orientation": "landscape"
+      }
+    ],
+    "images": [
+      {
+        "id": "1I7NtayW4n_IW4tv4seSVRL_NhqZtsfKc",
+        "fileName": "81840.jpeg",
+        "alt": "81840",
+        "src": "/api/photographs/5b8d6300-ea58-469b-e5b6-4bf418160801/gallery",
+        "cloudflareImageId": "5b8d6300-ea58-469b-e5b6-4bf418160801",
+        "width": 3744,
+        "height": 2808,
+        "orientation": "landscape"
+      },
+      {
+        "id": "1sn3rAU9TId2Fe5ZmqEm3I8UYQhY-yFHn",
+        "fileName": "90161.jpeg",
+        "alt": "90161",
+        "src": "/api/photographs/2b32e834-13de-4720-1eae-cd19b7fe3b01/gallery",
+        "cloudflareImageId": "2b32e834-13de-4720-1eae-cd19b7fe3b01",
+        "width": 3745,
+        "height": 2996,
+        "orientation": "landscape"
+      },
+      {
+        "id": "1PlVBPpThMU-bjR7TSlNJiAos9e-hf2YG",
+        "fileName": "90360.jpeg",
+        "alt": "90360",
+        "src": "/api/photographs/981b5f8b-0d27-49c1-f94d-a6edde705701/gallery",
+        "cloudflareImageId": "981b5f8b-0d27-49c1-f94d-a6edde705701",
+        "width": 4096,
+        "height": 2673,
+        "orientation": "landscape"
+      },
+      {
+        "id": "1-ME9-jNS7591wFPbVuI-RJwVC8HU1i0H",
+        "fileName": "DSC06318-01_Original.JPG",
+        "alt": "DSC06318 01 Original",
+        "src": "/api/photographs/1d87ee4f-444d-40bb-7a77-d89f988be201/gallery",
+        "cloudflareImageId": "1d87ee4f-444d-40bb-7a77-d89f988be201",
+        "width": 4096,
+        "height": 2304,
+        "orientation": "landscape"
+      },
+      {
+        "id": "1fwA_ynQgZK1uTyKnphnJ4jCz2SDfK6QN",
+        "fileName": "DSC06348-01_Original.JPG",
+        "alt": "DSC06348 01 Original",
+        "src": "/api/photographs/5deaf30e-ef33-4c18-544f-6e6d26645501/gallery",
+        "cloudflareImageId": "5deaf30e-ef33-4c18-544f-6e6d26645501",
+        "width": 4096,
+        "height": 2300,
+        "orientation": "landscape"
+      },
+      {
+        "id": "1Yp3M0r85OeXDH3nqcvgI6P-eBIiuQEHt",
+        "fileName": "DSC06401_Original.JPG",
+        "alt": "DSC06401 Original",
+        "src": "/api/photographs/c40afdaf-8d19-486f-3c2b-c80519a58901/gallery",
+        "cloudflareImageId": "c40afdaf-8d19-486f-3c2b-c80519a58901",
+        "width": 3829,
+        "height": 3064,
+        "orientation": "landscape"
+      },
+      {
+        "id": "1FooVHsb64GBA3qWRnJZqBvKTmsU0oUn5",
+        "fileName": "DSC06423_Original.JPG",
+        "alt": "DSC06423 Original",
+        "src": "/api/photographs/efdf98f7-8653-48a1-1b7a-46d049b2be01/gallery",
+        "cloudflareImageId": "efdf98f7-8653-48a1-1b7a-46d049b2be01",
+        "width": 4096,
+        "height": 2304,
+        "orientation": "landscape"
+      },
+      {
+        "id": "1DYgcy8DCiGxNl7O4OwarVMtwrapzTOM7",
+        "fileName": "DSC06465_Original.JPG",
+        "alt": "DSC06465 Original",
+        "src": "/api/photographs/983bfee0-efc6-414b-85e7-7ee7ff580401/gallery",
+        "cloudflareImageId": "983bfee0-efc6-414b-85e7-7ee7ff580401",
+        "width": 4096,
+        "height": 2300,
+        "orientation": "landscape"
+      },
+      {
+        "id": "1jJMc3YNXVtUg5s-zx4tDT6hHEOQLT6hK",
+        "fileName": "GOPR1190_1530983333048_high_Original.JPG",
+        "alt": "GOPR1190 1530983333048 high Original",
+        "src": "/api/photographs/5fb40bea-9762-4177-fd27-b7f782e01a01/gallery",
+        "cloudflareImageId": "5fb40bea-9762-4177-fd27-b7f782e01a01",
+        "width": 4000,
+        "height": 3000,
+        "orientation": "landscape"
+      },
+      {
+        "id": "1Zi0rz-npOBnk1Om9NVw5RoezHWeDqns-",
+        "fileName": "IMG_20180707_112710-01_Original.JPG",
+        "alt": "IMG 20180707 112710 01 Original",
+        "src": "/api/photographs/838b6336-a2c4-4184-a915-e1029ff22001/gallery",
+        "cloudflareImageId": "838b6336-a2c4-4184-a915-e1029ff22001",
+        "width": 2910,
+        "height": 3637,
+        "orientation": "portrait"
+      },
+      {
+        "id": "1qoJCXfy5D-JXcgS1nyFTvgF9Rqg1-fMQ",
+        "fileName": "IMG_20180707_141733_Original.JPG",
+        "alt": "IMG 20180707 141733 Original",
+        "src": "/api/photographs/e08538bd-59ba-4413-dd38-916b299ac501/gallery",
+        "cloudflareImageId": "e08538bd-59ba-4413-dd38-916b299ac501",
+        "width": 3024,
+        "height": 4032,
+        "orientation": "portrait"
+      },
+      {
+        "id": "1oJYj0DWw08aF1p2gT73_Oj8xACzaituw",
+        "fileName": "IMG_20180707_190005_Original.JPG",
+        "alt": "IMG 20180707 190005 Original",
+        "src": "/api/photographs/3806d75d-d348-4537-0d6f-c3c87d1b5601/gallery",
+        "cloudflareImageId": "3806d75d-d348-4537-0d6f-c3c87d1b5601",
+        "width": 3780,
+        "height": 3024,
+        "orientation": "landscape"
+      }
+    ]
   }
 ]

@@ -136,7 +136,7 @@ test("stable IDs are exact and whitespace cannot collapse distinct override keys
   }).success, false);
 });
 
-test("checked-in editorial accounts for all 52 images without fabricating approvals", () => {
+test("checked-in editorial accounts for all 64 images without fabricating approvals", () => {
   const parsed = editorialSchema.parse(local);
   let drafts = 0;
   let blocked = 0;
@@ -151,7 +151,7 @@ test("checked-in editorial accounts for all 52 images without fabricating approv
     }
   }
   assert.equal(drafts, 41);
-  assert.equal(blocked, 11);
+  assert.equal(blocked, 23);
   const warnings: string[] = [];
   const resolved = applyEditorialOverrides(generated as Collection[], local,
     { warn: (message) => warnings.push(message) });
@@ -164,6 +164,22 @@ test("checked-in editorial accounts for all 52 images without fabricating approv
     assert.deepEqual(result.coverImages, source.coverImages);
   }
   assert.deepEqual(warnings, []);
+});
+
+test("Hampi publishes its approved full story and concise index introduction without approving photographs", () => {
+  const source = generated.find((item) => item.slug === "hampi")!;
+  const [result] = applyEditorialOverrides([source as Collection], local, { warn: () => {} });
+  assert.equal(result.title, "Hampi");
+  assert.equal(result.year, "2019");
+  assert.match(result.note, /forgotten grandeur of the Vijayanagara Empire/);
+  assert.match(result.note, /timeless, silent, and unforgettable/);
+  assert.ok(result.indexNote && result.indexNote.length < result.note.length);
+  assert.deepEqual(result.images, source.images);
+  const draft = structuredClone(local);
+  draft.collections[source.sourceFolderId as keyof typeof draft.collections].reviewStatus = "draft";
+  const [unapproved] = applyEditorialOverrides([source as Collection], draft, { warn: () => {} });
+  assert.equal(unapproved.indexNote, undefined);
+  assert.equal(unapproved.note, source.note);
 });
 
 test("map presentation merges per device without replacing sources or leaking between variants", () => {

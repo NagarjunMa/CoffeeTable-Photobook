@@ -14,10 +14,12 @@ the same. Re-uploading as a new Drive file gives it a new identity.
 
 The New York, Washington and Maine introductions now use the photographer's
 September 15 memories and are enabled as approved collection copy at his request.
-Santa Cruz now uses his September 16 July-sunset story as approved copy. Image review
-states are separate and unchanged. There are 41 visually grounded image
-description/caption drafts and 11 blocked records (nine Maine, two New York)
-whose local source images were unavailable. Blocked records keep the generated
+Santa Cruz uses his September 16 July-sunset story as approved copy. Hampi uses
+his supplied monochrome-photography story and early-2019 visit year. Its full
+story is in `note`; its concise map-card excerpt is in `indexNote`. Image review
+states are separate. There are 41 visually grounded image description/caption
+drafts and 23 blocked records (nine Maine, two New York, twelve newly imported
+Hampi photographs awaiting descriptions). Blocked records keep the generated
 photo visible; they do not remove photographs or invent descriptions.
 
 By default only `approved` overrides apply. Collection copy/cover/spread approval
@@ -65,6 +67,9 @@ the placeholder IDs with exact existing IDs and author verified copy.
 
 ## Rules
 
+- `note` is the full collection introduction. Optional `indexNote` is a short
+  map-card excerpt; when absent, the card uses `note`. Both require collection
+  approval. Keep excerpts concise enough for short mobile screens.
 - Omitted fields keep generated values. `null` clears optional year, category or
   caption; unknown dates should stay unknown, not be replaced with Field Notes.
 - `coverIds[0]` is the opening preview. Invalid stale covers warn and cannot
