@@ -136,7 +136,7 @@ test("stable IDs are exact and whitespace cannot collapse distinct override keys
   }).success, false);
 });
 
-test("checked-in editorial accounts for all 88 images without fabricating approvals", () => {
+test("checked-in editorial accounts for all 81 images without fabricating approvals", () => {
   const parsed = editorialSchema.parse(local);
   let drafts = 0;
   let blocked = 0;
@@ -151,7 +151,7 @@ test("checked-in editorial accounts for all 88 images without fabricating approv
     }
   }
   assert.equal(drafts, 41);
-  assert.equal(blocked, 47);
+  assert.equal(blocked, 40);
   const warnings: string[] = [];
   const resolved = applyEditorialOverrides(generated as Collection[], local,
     { warn: (message) => warnings.push(message) });

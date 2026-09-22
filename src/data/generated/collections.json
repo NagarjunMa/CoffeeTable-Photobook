@@ -638,46 +638,6 @@
         "orientation": "square"
       },
       {
-        "id": "1D3-GHkp9F9SDwrxwDZiCPq1drieTYmVY",
-        "fileName": "76647.JPEG",
-        "alt": "76647",
-        "src": "/api/photographs/c6a299bd-b65a-4fdb-1659-e5884e351101/gallery",
-        "cloudflareImageId": "c6a299bd-b65a-4fdb-1659-e5884e351101",
-        "width": 4096,
-        "height": 3278,
-        "orientation": "landscape"
-      },
-      {
-        "id": "1MvW7b6IsybgrX_HEjgqdA9hMxk9qTzkJ",
-        "fileName": "81867.JPEG",
-        "alt": "81867",
-        "src": "/api/photographs/00b68e05-3783-4655-f824-47c77cfce301/gallery",
-        "cloudflareImageId": "00b68e05-3783-4655-f824-47c77cfce301",
-        "width": 4067,
-        "height": 3253,
-        "orientation": "landscape"
-      },
-      {
-        "id": "15b_1NpsxIwXLp-rUJQlYsWPstMJ_oQXi",
-        "fileName": "81924.JPEG",
-        "alt": "81924",
-        "src": "/api/photographs/451ab2ae-7e60-4880-7c1f-88bc81dd8d01/gallery",
-        "cloudflareImageId": "451ab2ae-7e60-4880-7c1f-88bc81dd8d01",
-        "width": 2048,
-        "height": 1639,
-        "orientation": "landscape"
-      },
-      {
-        "id": "1TCr36NnGDiyTjFkn5MY2wg2wO5Q4OuxS",
-        "fileName": "81964.JPEG",
-        "alt": "81964",
-        "src": "/api/photographs/adb8ec04-f7b1-4efd-872d-21d91d922501/gallery",
-        "cloudflareImageId": "adb8ec04-f7b1-4efd-872d-21d91d922501",
-        "width": 3890,
-        "height": 3112,
-        "orientation": "landscape"
-      },
-      {
         "id": "19F1bJuPytIT9zbbn9kOOwZVD7ajkrO4x",
         "fileName": "82075.JPEG",
         "alt": "82075",
@@ -685,26 +645,6 @@
         "cloudflareImageId": "bf97ba5e-be75-46b4-386c-fcb3ebfe5c01",
         "width": 3246,
         "height": 2597,
-        "orientation": "landscape"
-      },
-      {
-        "id": "1gJmr3gJMsNWvb6UhsMhvak6TPl_byeQd",
-        "fileName": "82641.JPEG",
-        "alt": "82641",
-        "src": "/api/photographs/d785af9d-a9b1-42c2-513b-6e18ff45ed01/gallery",
-        "cloudflareImageId": "d785af9d-a9b1-42c2-513b-6e18ff45ed01",
-        "width": 3651,
-        "height": 2921,
-        "orientation": "landscape"
-      },
-      {
-        "id": "1F71DxsR4tvDdt6wL4tCXvrwNK6CdqA9c",
-        "fileName": "90436.JPEG",
-        "alt": "90436",
-        "src": "/api/photographs/b116f638-ee8c-49e3-be8d-e929832bad01/gallery",
-        "cloudflareImageId": "b116f638-ee8c-49e3-be8d-e929832bad01",
-        "width": 3651,
-        "height": 2921,
         "orientation": "landscape"
       },
       {
@@ -725,16 +665,6 @@
         "cloudflareImageId": "3de27973-5209-4def-09d7-d3a5dbb77101",
         "width": 2509,
         "height": 2508,
-        "orientation": "landscape"
-      },
-      {
-        "id": "1volrF8mERZvQEZySh8Gq02eRkjtJkdUL",
-        "fileName": "117704.JPEG",
-        "alt": "117704",
-        "src": "/api/photographs/ca279ea2-2d56-4cc5-b5a4-3c90a50e8c01/gallery",
-        "cloudflareImageId": "ca279ea2-2d56-4cc5-b5a4-3c90a50e8c01",
-        "width": 3246,
-        "height": 2597,
         "orientation": "landscape"
       },
       {

@@ -39,7 +39,7 @@ The responsive website is viewed on desktop and mobile. Google Drive is the priv
 
 - Authored travel collections and photographs in `src/data/generated/collections.json` and `src/data/editorial.json`.
 - The user-approved tiger line illustration at `public/intro-art/tigers-line-poster.webp`.
-- The synced Tigers volume contains 24 photographs delivered through Cloudflare Images.
+- The synced Tigers volume contains 17 photographs delivered through Cloudflare Images.
 
 ## Product Principles
 
