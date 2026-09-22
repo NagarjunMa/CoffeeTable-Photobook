@@ -136,7 +136,7 @@ test("stable IDs are exact and whitespace cannot collapse distinct override keys
   }).success, false);
 });
 
-test("checked-in editorial accounts for all 64 images without fabricating approvals", () => {
+test("checked-in editorial accounts for all 88 images without fabricating approvals", () => {
   const parsed = editorialSchema.parse(local);
   let drafts = 0;
   let blocked = 0;
@@ -151,14 +151,15 @@ test("checked-in editorial accounts for all 64 images without fabricating approv
     }
   }
   assert.equal(drafts, 41);
-  assert.equal(blocked, 23);
+  assert.equal(blocked, 47);
   const warnings: string[] = [];
   const resolved = applyEditorialOverrides(generated as Collection[], local,
     { warn: (message) => warnings.push(message) });
   for (const source of generated) {
     const result = resolved.find((item) => item.sourceFolderId === source.sourceFolderId)!;
     const entry = parsed.collections[source.sourceFolderId];
-    assert.equal(result.note, entry.reviewStatus === "approved" ? entry.note : source.note);
+    assert.equal(result.note,
+      entry.reviewStatus === "approved" && entry.note !== undefined ? entry.note : source.note);
     // Publishing the photographer's city stories must not approve image drafts.
     assert.deepEqual(result.images, source.images);
     assert.deepEqual(result.coverImages, source.coverImages);

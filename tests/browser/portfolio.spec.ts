@@ -29,6 +29,27 @@ test("map-only artwork selects the matching desktop and mobile composition", asy
   }
 });
 
+test("tiger illustration introduces its wildlife collection on desktop and mobile", async ({ page }) => {
+  for (const viewport of [
+    { width: 1440, height: 900, focalPosition: "50% 50%" },
+    { width: 390, height: 844, focalPosition: "51% 50%" },
+  ]) {
+    await page.setViewportSize(viewport);
+    await page.goto("/#city-tigers");
+    const panel = page.locator("#city-tigers");
+    await expect(panel.getByRole("heading", { name: "Tigers", exact: true })).toBeVisible();
+    const artwork = panel.locator(".city-map-image");
+    await expect.poll(() => artwork.evaluate((image) => (image as HTMLImageElement).currentSrc)).toContain("/intro-art/tigers-line-poster.webp");
+    await expect(artwork).toHaveCSS("object-position", viewport.focalPosition);
+    await expect(panel.getByText("Map data", { exact: false })).toHaveCount(0);
+  }
+
+  await page.getByRole("link", { name: "Open Tigers collection" }).click();
+  await expect(page).toHaveURL(/\/series\/tigers$/);
+  await expect(page.getByRole("heading", { name: "Tigers", exact: true })).toBeVisible();
+  await expect(page.getByText("24 photographs")).toBeVisible();
+});
+
 test("lightbox retains keyboard focus and restores its opener", async ({ page }) => {
   await page.goto("/series/santa-cruz");
   const opener = page.locator(".exhibition-frame [data-open-photo]").first();
@@ -102,7 +123,7 @@ test("contents, history and reduced motion keep destinations reachable", async (
   await contents.getByRole("link", { name: "Washington", exact: true }).click();
   await expect(page).toHaveURL(/#city-washington$/);
   await expect(contents.getByRole("link", { name: "Washington", exact: true })).toHaveAttribute("aria-current", "location");
-  await page.getByRole("link", { name: "Open Washington city book" }).click();
+  await page.getByRole("link", { name: "Open Washington collection" }).click();
   await expect(page).toHaveURL(/\/series\/washington$/);
   await page.getByRole("link", { name: "Index", exact: true }).click();
   await expect(page).toHaveURL(/#city-washington$/);
@@ -170,7 +191,7 @@ test("short landscape uses accessible normal flow", async ({ page }) => {
   await page.goto("/#city-washington");
   await expect(page.locator(".pin-spacer")).toHaveCount(0);
   await expect(page.locator(".destination-track")).toHaveCSS("display", "block");
-  await page.getByRole("link", { name: "Open Washington city book" }).click();
+  await page.getByRole("link", { name: "Open Washington collection" }).click();
   await expect(page).toHaveURL(/\/series\/washington$/);
 });
 
@@ -186,7 +207,7 @@ test("homepage, About and modal pass automated accessibility checks", async ({ p
 test("dragging a map does not activate its link", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("/#city-washington");
-  const link = page.getByRole("link", { name: "Open Washington city book" });
+  const link = page.getByRole("link", { name: "Open Washington collection" });
   const box = (await link.boundingBox())!;
   await page.mouse.move(box.x + 250, box.y + 300);
   await page.mouse.down();

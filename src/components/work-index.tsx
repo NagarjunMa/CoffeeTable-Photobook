@@ -28,10 +28,16 @@ function mapSource(collection: Collection, device: "desktop" | "mobile") {
     srcSet: prepared.candidates.map((candidate) => candidate.src + " " + candidate.width + "w").join(", "),
     focalPosition: collection.mapPresentation?.[device]?.focalPosition ?? poster?.focalPosition ?? prepared.objectPosition,
   };
-  return poster ? { src: poster.src, width: undefined, height: undefined, srcSet: poster.sources?.map((item) => item.src + " " + item.width + "w").join(", "), focalPosition: poster.focalPosition ?? "50% 50%" } : null;
+  return poster ? {
+    src: poster.src,
+    width: undefined,
+    height: undefined,
+    srcSet: poster.sources?.map((item) => item.src + " " + item.width + "w").join(", "),
+    focalPosition: collection.mapPresentation?.[device]?.focalPosition ?? poster.focalPosition ?? "50% 50%",
+  } : null;
 }
 
-function MapBackdrop({ collection, eager = false }: { collection: Collection; eager?: boolean }) {
+function CollectionBackdrop({ collection, eager = false }: { collection: Collection; eager?: boolean }) {
   const desktop = mapSource(collection, "desktop");
   const mobile = mapSource(collection, "mobile") ?? desktop;
   if (!mobile) return null;
@@ -68,12 +74,12 @@ function CityPanel({
       data-city-panel
       className="relative h-full w-[100cqw] shrink-0 snap-start overflow-hidden bg-[var(--background)]"
     >
-      <MapBackdrop collection={collection} eager={index === 0} />
+      <CollectionBackdrop collection={collection} eager={index === 0} />
       <div className="city-map-scrim pointer-events-none absolute inset-0" />
       <div className="pointer-events-none absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-[var(--background)] to-transparent" />
       <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[var(--background)] to-transparent" />
 
-      <Link href={href} aria-label={`Open ${collection.title} city book`} className="city-panel-link relative z-20 flex h-full items-center px-[clamp(1.4rem,4vw,5rem)] pb-16 pt-24"
+      <Link href={href} aria-label={`Open ${collection.title} collection`} className="city-panel-link relative z-20 flex h-full items-center px-[clamp(1.4rem,4vw,5rem)] pb-16 pt-24"
         onPointerDown={(event) => { gesture.current = { x: event.clientX, y: event.clientY, moved: false }; }}
         onPointerMove={(event) => { if (gesture.current && Math.hypot(event.clientX - gesture.current.x, event.clientY - gesture.current.y) > 12) gesture.current.moved = true; }}
         onPointerCancel={() => { if (gesture.current) gesture.current.moved = true; }}
@@ -97,7 +103,7 @@ function CityPanel({
 
       </Link>
 
-      {(mapSource(collection, "desktop") || mapSource(collection, "mobile")) && <p className="font-mono-custom pointer-events-none absolute bottom-4 right-5 z-20 text-[10px] text-[var(--foreground)] bg-[var(--background)] px-2 py-1 md:bottom-5 md:right-7">
+      {collection.introArtworkType !== "illustration" && (mapSource(collection, "desktop") || mapSource(collection, "mobile")) && <p className="font-mono-custom pointer-events-none absolute bottom-4 right-5 z-20 text-[10px] text-[var(--foreground)] bg-[var(--background)] px-2 py-1 md:bottom-5 md:right-7">
         Map data (c) OpenStreetMap contributors
       </p>}
     </article>

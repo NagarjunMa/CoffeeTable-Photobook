@@ -1,9 +1,10 @@
 # CoffeeTable Photobook
 
 Nagarjun Mallesh's travel and wildlife photography portfolio, designed to feel
-like a coffee-table book. Each place becomes its own volume: a horizontal index
-of city maps opens into a vertical gallery of uncropped photographs, with white
-frames on a textured black background and an immersive, blurred lightbox.
+like a coffee-table book. Each place or wildlife subject becomes its own volume:
+a horizontal index of maps and illustrated covers opens into a vertical gallery
+of uncropped photographs, with white frames on a textured black background and
+an immersive, blurred lightbox.
 
 This repository contains the Next.js website and its local publishing tools.
 Google Drive is the private source library; Cloudflare Images delivers responsive
@@ -26,8 +27,8 @@ mobile map-height correction, stable photograph loading, aligned collection
 previews and tighter gallery transitions, with cross-browser regression evidence.
 
 The typography-only opening now leads directly to compact destination contents.
-City maps are single accessible links, with horizontal browsing, history-aware
-destination anchors, and a normal-flow alternative for reduced motion and short
+Collection introductions are single accessible links, with horizontal browsing,
+history-aware anchors, and a normal-flow alternative for reduced motion and short
 screens. Collections retain their dark exhibition wall, equal-height desktop
 rows, uniform mats, and uncropped photographs. The native modal lightbox traps
 focus, restores the opener, and retains the current photo while the next decodes.
