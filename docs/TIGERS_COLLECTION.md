@@ -24,8 +24,8 @@ Add a first-class `Tigers` volume to the portfolio index, using the approved mon
 
 ## Evaluation
 
-- Drive-to-Cloudflare sync completed with 7 collections and 88 photographs, including 24 Tigers photographs.
-- Live delivery verification passed for all 88 private photographs and all five variants; unsigned, expired, and tampered URLs were denied.
+- Drive-to-Cloudflare sync completed with 7 collections and 81 photographs, including 17 Tigers photographs after duplicate removal.
+- Live delivery verification passed for all 81 private photographs and all five variants; unsigned, expired, and tampered URLs were denied.
 - `npm run lint`, `npm run test:gallery`, `npm run test:editorial`, and `npm run test:images` passed.
 - `npm run test:browser:build` passed and generated the Tigers route.
 - Focused desktop/mobile Tigers coverage passed in Chrome, Firefox, and WebKit.

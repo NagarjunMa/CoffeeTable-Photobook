@@ -19,7 +19,7 @@ const render = (collection: Collection) => renderToStaticMarkup(createElement(Co
 test("the synced Tigers album keeps its authored introduction without creating a duplicate", () => {
   const tigers = collections.filter((collection) => collection.slug === "tigers");
   assert.equal(tigers.length, 1);
-  assert.equal(tigers[0].images.length, 24);
+  assert.equal(tigers[0].images.length, 17);
   assert.equal(tigers[0].location, "Indian Tiger Reserves");
   assert.equal(tigers[0].introArtworkType, "illustration");
   assert.equal(tigers[0].mapPoster?.src, "/intro-art/tigers-line-poster.webp");

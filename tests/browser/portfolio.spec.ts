@@ -47,7 +47,7 @@ test("tiger illustration introduces its wildlife collection on desktop and mobil
   await page.getByRole("link", { name: "Open Tigers collection" }).click();
   await expect(page).toHaveURL(/\/series\/tigers$/);
   await expect(page.getByRole("heading", { name: "Tigers", exact: true })).toBeVisible();
-  await expect(page.getByText("24 photographs")).toBeVisible();
+  await expect(page.getByText("17 photographs")).toBeVisible();
 });
 
 test("lightbox retains keyboard focus and restores its opener", async ({ page }) => {
