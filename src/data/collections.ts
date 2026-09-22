@@ -8,6 +8,36 @@ export type { Collection, PortfolioImage } from "./types";
 
 const hasGeneratedCollections = generatedCollections.length > 0;
 
+const tigersIntroduction = {
+  title: "Tigers",
+  slug: "tigers",
+  location: "Indian Tiger Reserves",
+  category: "Wildlife",
+  note: "A growing study of wild tigers across India's reserve forests, shaped by patience, presence, and the quiet between sightings.",
+  indexNote: "Wild tigers, observed across India's reserve forests.",
+  introArtworkType: "illustration",
+  mapPoster: {
+    src: "/intro-art/tigers-line-poster.webp",
+    alt: "Detailed monochrome line illustration of a tiger among forest foliage",
+  },
+  mapPresentation: {
+    desktop: { focalPosition: "50% 50%", scrim: 0.82 },
+    mobile: { focalPosition: "51% 50%", scrim: 0.78 },
+  },
+} satisfies Pick<Collection,
+  "title" | "slug" | "location" | "category" | "note" | "indexNote" |
+  "introArtworkType" | "mapPoster" | "mapPresentation">;
+
+const applyTigersIntroduction = (items: Collection[]): Collection[] => {
+  const hasSyncedTigers = items.some((collection) => collection.slug === "tigers");
+  if (!hasSyncedTigers) {
+    return [...items, { ...tigersIntroduction, coverImages: [], images: [] }];
+  }
+  return items.map((collection) => collection.slug === "tigers"
+    ? { ...collection, ...tigersIntroduction }
+    : collection);
+};
+
 const localDesktopMapPosterOverrides: Record<
   string,
   Collection["mapPosterDesktop"]
@@ -64,9 +94,11 @@ const applyLocalOverrides = (items: Collection[]): Collection[] =>
 
 export const collections: Collection[] = applyEditorialOverrides(
   applyLocalOverrides(
-    hasGeneratedCollections
-      ? (generatedCollections as unknown as Collection[])
-      : sampleCollections,
+    applyTigersIntroduction(
+      hasGeneratedCollections
+        ? (generatedCollections as unknown as Collection[])
+        : sampleCollections,
+    ),
   ),
   editorial,
   { includeDrafts: process.env.NEXT_PUBLIC_EDITORIAL_PREVIEW === "true" },

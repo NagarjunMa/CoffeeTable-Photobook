@@ -37,6 +37,8 @@ export type Collection = {
   mapPosterMobile?: MapPoster;
   /** Retained even when map assets come from a separate manifest. */
   mapPresentation?: { desktop?: MapPresentation; mobile?: MapPresentation };
+  /** Map is the default for existing place collections; illustration suppresses map attribution. */
+  introArtworkType?: "map" | "illustration";
   sourceFolderId?: string;
   coverImages: PortfolioImage[];
   images: PortfolioImage[];

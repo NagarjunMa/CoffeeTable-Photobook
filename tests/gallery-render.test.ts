@@ -3,6 +3,7 @@ import test from "node:test";
 import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { CollectionGallery } from "../src/components/collection-gallery";
+import { collections } from "../src/data/collections";
 import type { Collection, PortfolioImage } from "../src/data/types";
 
 const photo: PortfolioImage = {
@@ -14,6 +15,15 @@ const base: Collection = {
   coverImages: [], images: [],
 };
 const render = (collection: Collection) => renderToStaticMarkup(createElement(CollectionGallery, { collection }));
+
+test("the synced Tigers album keeps its authored introduction without creating a duplicate", () => {
+  const tigers = collections.filter((collection) => collection.slug === "tigers");
+  assert.equal(tigers.length, 1);
+  assert.equal(tigers[0].images.length, 24);
+  assert.equal(tigers[0].location, "Indian Tiger Reserves");
+  assert.equal(tigers[0].introArtworkType, "illustration");
+  assert.equal(tigers[0].mapPoster?.src, "/intro-art/tigers-line-poster.webp");
+});
 
 test("an empty book renders navigation and a clear empty state without image controls", () => {
   const html = render(base);
