@@ -162,7 +162,14 @@ test("checked-in editorial accounts for all 81 images without fabricating approv
       entry.reviewStatus === "approved" && entry.note !== undefined ? entry.note : source.note);
     // Publishing the photographer's city stories must not approve image drafts.
     assert.deepEqual(result.images, source.images);
-    assert.deepEqual(result.coverImages, source.coverImages);
+    if (source.slug === "tigers") {
+      // The photographer selected Drive's `front-page` (formerly 90557.JPEG).
+      const selectedCover = source.images.find((photo) => photo.id === "1wjpYvZEcuq3QDoE6pALOfrbFPixjkacr");
+      assert.ok(selectedCover);
+      assert.deepEqual(result.coverImages, [selectedCover]);
+    } else {
+      assert.deepEqual(result.coverImages, source.coverImages);
+    }
   }
   assert.deepEqual(warnings, []);
 });

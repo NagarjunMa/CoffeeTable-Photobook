@@ -73,7 +73,10 @@ the placeholder IDs with exact existing IDs and author verified copy.
 - Omitted fields keep generated values. `null` clears optional year, category or
   caption; unknown dates should stay unknown, not be replaced with Field Notes.
 - `coverIds[0]` is the opening preview. Invalid stale covers warn and cannot
-  erase every usable generated cover. No authored cover choices are approved yet.
+  erase every usable generated cover. Tigers uses the photographer-selected
+  Drive image `front-page` (ID `1wjpYvZEcuq3QDoE6pALOfrbFPixjkacr`, imported as
+  `90557.JPEG`) as its approved opening cover. The gallery order is unchanged;
+  the stable ID preserves the selection across Drive renames and future syncs.
 - `spreads` is an ordered list of single, paired or portrait/square-trio groups.
   Triples containing a landscape fail validation. Duplicate assignments fail,
   including in drafts. Nothing is cropped to force a spread shape.

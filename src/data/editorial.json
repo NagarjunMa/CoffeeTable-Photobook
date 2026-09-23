@@ -179,6 +179,7 @@
     },
     "1XcAUQbXvPFXLwpi9Ob5XHpG6cTMZYrVZ": {
       "reviewStatus": "approved",
+      "coverIds": ["1wjpYvZEcuq3QDoE6pALOfrbFPixjkacr"],
       "images": {
         "1OSd_-Ut0R1_vY0JPSs6LK63GQjWVHm98": { "reviewStatus": "blocked", "reason": "New Tigers import; image description awaiting review." },
         "1vrKNtswBcKvP85PrmvMO_WYlP4iwg3jc": { "reviewStatus": "blocked", "reason": "New Tigers import; image description awaiting review." },
