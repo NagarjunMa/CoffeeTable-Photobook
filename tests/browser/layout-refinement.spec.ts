@@ -123,6 +123,52 @@ test("photobooks remain visible when JavaScript is unavailable", async ({ browse
   }
 });
 
+for (const reducedMotion of [false, true]) {
+  test(`photobooks recover when client JavaScript fails to load${reducedMotion ? " with reduced motion" : ""}`, async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: reducedMotion ? "reduce" : "no-preference" });
+    let blockedScripts = 0;
+    await page.route("**/_next/static/**/*.js", (route) => {
+      blockedScripts += 1;
+      return route.abort();
+    });
+    await page.goto("/series/tigers", { waitUntil: "domcontentloaded" });
+    await expect(page.locator(".collection-loading-screen")).toBeVisible();
+    await expect(page.locator(".collection-loading-screen")).toBeHidden({ timeout: 15_000 });
+    expect(blockedScripts).toBeGreaterThan(0);
+    await expect(page.locator(".collection-opening h1")).toBeVisible();
+    await expect(page.locator(".site-header a").first()).toBeEnabled();
+  });
+}
+
+test("late hydration does not cover the photobook again", async ({ page }) => {
+  test.setTimeout(45_000);
+  let releaseScripts!: () => void;
+  let releaseImages!: () => void;
+  const scriptsHeld = new Promise<void>((resolve) => { releaseScripts = resolve; });
+  const imagesHeld = new Promise<void>((resolve) => { releaseImages = resolve; });
+  await page.route("**/_next/static/**/*.js", async (route) => {
+    await scriptsHeld;
+    await route.fallback();
+  });
+  await page.route("**/api/photographs/**", async (route) => {
+    await imagesHeld;
+    await route.fallback();
+  });
+
+  try {
+    await page.goto("/series/tigers", { waitUntil: "domcontentloaded" });
+    await expect(page.locator(".collection-loading-screen")).toBeVisible();
+    await expect(page.locator(".collection-loading-screen")).toBeHidden({ timeout: 15_000 });
+    releaseScripts();
+    await expect(page.locator(".collection-opening img")).toHaveAttribute("data-photo-state", "loading");
+    await expect(page.locator(".collection-loading-screen")).toBeHidden();
+    await expect(page.locator("body")).not.toHaveClass(/collection-is-loading/);
+  } finally {
+    releaseScripts();
+    releaseImages();
+  }
+});
+
 for (const width of [320, 390, 768, 1024, 1440, 1920]) {
   test(`collection compositions remain uncropped at ${width}px`, async ({ page }, info) => {
     await page.setViewportSize({ width, height: width < 768 ? 844 : 1000 });

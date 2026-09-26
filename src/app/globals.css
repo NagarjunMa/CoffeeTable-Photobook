@@ -200,6 +200,9 @@ img {
 }
 .collection-is-loading { overflow: hidden; }
 .collection-loading-screen { position: fixed; inset: 0; z-index: 100; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 24px; padding: 32px; background: var(--gallery-wall); color: var(--gallery-ink); text-align: center; }
+/* If hydration never runs, reveal the server-rendered book instead of covering it forever. */
+body:not(.collection-is-loading) .collection-loading-screen { animation: reveal-unhydrated-book 1ms 12s step-start forwards; }
+@keyframes reveal-unhydrated-book { to { visibility: hidden; pointer-events: none; } }
 .collection-loading-continue { min-height: 44px; padding: 8px 16px; border: 1px solid var(--gallery-secondary); color: var(--gallery-ink); cursor: pointer; }
 .collection-loading-continue:hover { background: var(--gallery-ink); color: var(--gallery-wall); }
 .photo-error { position: absolute; inset: 0; z-index: 3; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1rem; background: var(--gallery-wall); color: var(--gallery-ink); font-size: 14px; }

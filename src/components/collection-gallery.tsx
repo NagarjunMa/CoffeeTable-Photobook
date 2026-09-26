@@ -93,6 +93,7 @@ function buildExhibitionRows(images: PortfolioImage[]) {
 
 export function CollectionGallery({ collection }: { collection: Collection }) {
   const scope = useRef<HTMLElement>(null);
+  const loadingScreen = useRef<HTMLDivElement>(null);
   const [loadingPhase, setLoadingPhase] = useState<"loading" | "slow" | "ready">(
     collection.images.length > 0 ? "loading" : "ready",
   );
@@ -156,6 +157,11 @@ export function CollectionGallery({ collection }: { collection: Collection }) {
 
   useEffect(() => {
     const waiting = loadingPhase !== "ready";
+    // Hydration can arrive after the CSS-only fallback has already revealed the book.
+    if (waiting && loadingScreen.current && getComputedStyle(loadingScreen.current).visibility === "hidden") {
+      setLoadingPhase("ready");
+      return;
+    }
     const header = document.querySelector<HTMLElement>(".site-header");
     const section = scope.current;
     if (section) section.inert = waiting;
@@ -237,7 +243,7 @@ export function CollectionGallery({ collection }: { collection: Collection }) {
   return (
     <>
       {loadingPhase !== "ready" && (
-        <div className="collection-loading-screen" role="status" aria-live="polite">
+        <div ref={loadingScreen} className="collection-loading-screen" role="status" aria-live="polite">
           <ThinkingOrb state="searching" size={64} theme="dark" aria-hidden="true" />
           <p className="font-mono-custom text-xs uppercase tracking-[0.16em]">
             {loadingPhase === "slow" ? "Photographs are taking longer than expected" : "Preparing photographs"}
