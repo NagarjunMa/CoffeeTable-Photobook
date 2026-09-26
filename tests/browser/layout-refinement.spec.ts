@@ -44,7 +44,8 @@ test("mobile previews keep their dimensions while photographs are delayed", asyn
       await page.evaluate(() => Promise.all([...document.fonts].map((font) => font.load())));
       const preview = page.locator(".collection-opening figure img");
       await expect(preview).toHaveAttribute("data-photo-state", "loading");
-      await expect(page.locator(".collection-opening .photo-loading")).toBeVisible();
+      await expect(page.locator(".collection-loading-screen")).toBeVisible();
+      await expect(page.locator(".site-header")).toHaveAttribute("inert", "");
       const before = (await preview.boundingBox())!;
       expect(before.width).toBeGreaterThan(150);
       expect(before.height).toBeGreaterThan(150);
@@ -52,6 +53,8 @@ test("mobile previews keep their dimensions while photographs are delayed", asyn
       expect(Math.abs(before.x - title.x)).toBeLessThan(2);
       release();
       await expect.poll(() => preview.evaluate((element) => (element as HTMLImageElement).naturalWidth)).toBeGreaterThan(0);
+      await expect(page.locator(".collection-loading-screen")).toBeHidden();
+      await expect(page.locator(".site-header")).not.toHaveAttribute("inert", "");
       await expect(page.locator(".collection-opening .photo-loading")).toBeHidden();
       const after = (await preview.boundingBox())!;
       for (const dimension of ["x", "y", "width", "height"] as const) {
@@ -73,17 +76,51 @@ test("delayed gallery images preserve frame geometry and replace their placehold
   try {
     await page.goto("/series/new-york", { waitUntil: "domcontentloaded" });
     const frame = page.locator(".exhibition-frame").first();
-    await frame.scrollIntoViewIfNeeded();
-    await expect(frame.locator(".photo-loading")).toBeVisible();
+    await expect(page.locator(".collection-loading-screen")).toBeVisible();
     const before = (await frame.boundingBox())!;
     const imageBefore = (await frame.locator("img").boundingBox())!;
     expect(imageBefore.height).toBeGreaterThan(150);
     release();
+    await expect(page.locator(".collection-loading-screen")).toBeHidden();
+    expect(await page.locator(".exhibition-photo").evaluateAll((images) =>
+      images.every((image) => (image as HTMLImageElement).complete && (image as HTMLImageElement).naturalWidth > 0),
+    )).toBe(true);
     await expect(frame.locator(".photo-loading")).toBeHidden();
     const after = (await frame.boundingBox())!;
     expect(Math.abs(before.width - after.width)).toBeLessThan(2);
     expect(Math.abs(before.height - after.height)).toBeLessThan(2);
   } finally { release(); }
+});
+
+test("a failed photograph cannot hold the collection loading screen", async ({ page }) => {
+  await page.route("**/api/photographs/**", (route) => route.abort());
+  await page.goto("/series/tigers", { waitUntil: "domcontentloaded" });
+  await expect(page.locator(".collection-loading-screen")).toBeHidden();
+  await expect(page.locator(".collection-opening .photo-error")).toBeVisible();
+  await expect(page.locator(".collection-opening a")).toBeEnabled();
+});
+
+test("a slow collection offers a way to continue", async ({ page }) => {
+  await page.clock.install();
+  await page.route("**/api/photographs/**", () => new Promise(() => {}));
+  await page.goto("/series/tigers", { waitUntil: "domcontentloaded" });
+  await expect(page.locator(".collection-loading-screen")).toBeVisible();
+  await page.clock.fastForward(12_100);
+  await page.getByRole("button", { name: "Continue to photobook" }).click();
+  await expect(page.locator(".collection-loading-screen")).toBeHidden();
+  await expect(page.locator(".collection-opening a")).toBeEnabled();
+});
+
+test("photobooks remain visible when JavaScript is unavailable", async ({ browser }) => {
+  const context = await browser.newContext({ javaScriptEnabled: false, baseURL: "http://127.0.0.1:3100" });
+  try {
+    const page = await context.newPage();
+    await page.goto("/series/tigers", { waitUntil: "domcontentloaded" });
+    await expect(page.locator(".collection-loading-screen")).toBeHidden();
+    await expect(page.locator(".collection-opening h1")).toBeVisible();
+  } finally {
+    await context.close();
+  }
 });
 
 for (const width of [320, 390, 768, 1024, 1440, 1920]) {

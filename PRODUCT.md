@@ -26,6 +26,7 @@ The responsive website is viewed on desktop and mobile. Google Drive is the priv
 
 - The collection index supports place maps and illustrated subject introductions.
 - Individual collections open as vertical galleries with uncropped photographs.
+- A collection's photographs load behind a full-screen Thinking Orbs transition before its book is revealed; slow loads offer a way to continue.
 - A collection may include a photographer-authored personal account between its opening and gallery.
 - New collections may be published before their gallery photographs are ready, with an explicit preparation state.
 - Do not fabricate photographs, captions, locations, or field observations.
