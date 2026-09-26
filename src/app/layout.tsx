@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { preconnect } from "react-dom";
 import { display, mono, sans } from "./fonts";
 import "./globals.css";
 import { SmoothScroll } from "@/components/smooth-scroll";
@@ -14,6 +15,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  preconnect("https://imagedelivery.net");
   return (
     <html
       lang="en"

@@ -41,6 +41,10 @@ the placeholder IDs with exact existing IDs and author verified copy.
     "DRIVE_FOLDER_ID": {
       "reviewStatus": "draft",
       "note": "A factual introduction grounded in these photographs.",
+      "experience": {
+        "title": "My first visit",
+        "paragraphs": ["A first-person memory supplied by the photographer."]
+      },
       "category": "City",
       "year": null,
       "coverIds": ["IMAGE_A"],
@@ -70,6 +74,10 @@ the placeholder IDs with exact existing IDs and author verified copy.
 - `note` is the full collection introduction. Optional `indexNote` is a short
   map-card excerpt; when absent, the card uses `note`. Both require collection
   approval. Keep excerpts concise enough for short mobile screens.
+- Optional `experience` is the photographer's first-person account shown between
+  a book's opening and its gallery. Give it a title and one or more paragraphs.
+  It uses the same collection approval as the introduction; books without it
+  continue directly to the gallery. Tigers begins with the 2004 Kanha memory.
 - Omitted fields keep generated values. `null` clears optional year, category or
   caption; unknown dates should stay unknown, not be replaced with Field Notes.
 - `coverIds[0]` is the opening preview. Invalid stale covers warn and cannot
