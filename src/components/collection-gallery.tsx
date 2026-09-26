@@ -299,23 +299,23 @@ export function CollectionGallery({ collection }: { collection: Collection }) {
         {collection.experience && (
           <section
             data-book-spread
-            className="personal-story site-gutter border-t border-white/10 py-[clamp(5rem,12vw,10rem)]"
+            className="personal-story site-gutter border-t border-white/10"
             aria-labelledby={`experience-${collection.slug}`}
           >
-            <div className="mx-auto grid max-w-[96rem] gap-10 md:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] md:gap-16">
-              <h2
+            <div className="personal-story-spread">
+              <header className="personal-story-heading">
+                <h2
                 id={`experience-${collection.slug}`}
-                className="font-display max-w-[10ch] text-[clamp(3.5rem,6vw,6rem)] font-medium leading-[0.95]"
+                className="font-display"
               >
                 {collection.experience.title}
-              </h2>
-              <div className="max-w-[68ch] space-y-7 text-[var(--gallery-secondary)]">
+                </h2>
+                {collection.experience.subtitle && <p>{collection.experience.subtitle}</p>}
+              </header>
+              <div className="personal-story-columns font-display">
                 {collection.experience.paragraphs.map((paragraph, index) => (
                   <p
                     key={index}
-                    className={index === 0
-                      ? "font-display text-[clamp(1.5rem,2.2vw,2.25rem)] leading-[1.3] text-[var(--gallery-ink)]"
-                      : "text-base leading-[1.8] md:text-lg"}
                   >
                     {paragraph}
                   </p>
