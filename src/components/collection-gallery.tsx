@@ -3,9 +3,10 @@
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { ThinkingOrb } from "thinking-orbs";
 import { PortfolioPhoto } from "@/components/portfolio-photo";
 import Link from "next/link";
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import type { CSSProperties } from "react";
 import { PhotoLightbox } from "@/components/photo-lightbox";
 import { DestinationTitle } from "@/components/destination-title";
@@ -92,6 +93,9 @@ function buildExhibitionRows(images: PortfolioImage[]) {
 
 export function CollectionGallery({ collection }: { collection: Collection }) {
   const scope = useRef<HTMLElement>(null);
+  const [loadingPhase, setLoadingPhase] = useState<"loading" | "slow" | "ready">(
+    collection.images.length > 0 ? "loading" : "ready",
+  );
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const [origin, setOrigin] = useState<LightboxOrigin | null>(null);
   const previewImage =
@@ -115,6 +119,54 @@ export function CollectionGallery({ collection }: { collection: Collection }) {
     : buildExhibitionRows(collection.images);
   const category = collection.year === "Field Notes" ? collection.category : collection.year ?? collection.category;
   const note = collection.note.startsWith("A field study from ") ? "" : collection.note;
+
+  useEffect(() => {
+    const pictures = [...(scope.current?.querySelectorAll<HTMLImageElement>("img") ?? [])];
+    if (pictures.length === 0) return;
+
+    let settled = 0;
+    const cleanups = pictures.map((picture) => {
+      let done = false;
+      const settle = () => {
+        if (done) return;
+        done = true;
+        settled += 1;
+        if (settled === pictures.length) setLoadingPhase("ready");
+      };
+
+      picture.addEventListener("load", settle);
+      picture.addEventListener("error", settle);
+      // A cached image may finish before hydration attaches these listeners.
+      if (picture.complete) settle();
+      return () => {
+        picture.removeEventListener("load", settle);
+        picture.removeEventListener("error", settle);
+      };
+    });
+
+    const timeout = window.setTimeout(() => setLoadingPhase((phase) =>
+      phase === "loading" ? "slow" : phase,
+    ), 12_000);
+
+    return () => {
+      window.clearTimeout(timeout);
+      cleanups.forEach((cleanup) => cleanup());
+    };
+  }, [collection.slug]);
+
+  useEffect(() => {
+    const waiting = loadingPhase !== "ready";
+    const header = document.querySelector<HTMLElement>(".site-header");
+    const section = scope.current;
+    if (section) section.inert = waiting;
+    if (header) header.inert = waiting;
+    document.body.classList.toggle("collection-is-loading", waiting);
+    return () => {
+      if (section) section.inert = false;
+      if (header) header.inert = false;
+      document.body.classList.remove("collection-is-loading");
+    };
+  }, [loadingPhase]);
 
   const openLightbox = (index: number, element: HTMLElement) => {
     // Safari does not focus buttons on pointer activation by default.
@@ -184,6 +236,20 @@ export function CollectionGallery({ collection }: { collection: Collection }) {
 
   return (
     <>
+      {loadingPhase !== "ready" && (
+        <div className="collection-loading-screen" role="status" aria-live="polite">
+          <ThinkingOrb state="searching" size={64} theme="dark" aria-hidden="true" />
+          <p className="font-mono-custom text-xs uppercase tracking-[0.16em]">
+            {loadingPhase === "slow" ? "Photographs are taking longer than expected" : "Preparing photographs"}
+          </p>
+          {loadingPhase === "slow" && (
+            <button type="button" className="collection-loading-continue" onClick={() => setLoadingPhase("ready")}>
+              Continue to photobook
+            </button>
+          )}
+        </div>
+      )}
+      <noscript><style>{".collection-loading-screen { display: none; }"}</style></noscript>
       <section
         ref={scope}
         className="city-book-texture relative text-[var(--gallery-ink)]"
@@ -233,23 +299,23 @@ export function CollectionGallery({ collection }: { collection: Collection }) {
         {collection.experience && (
           <section
             data-book-spread
-            className="personal-story site-gutter border-t border-white/10 py-[clamp(5rem,12vw,10rem)]"
+            className="personal-story site-gutter border-t border-white/10"
             aria-labelledby={`experience-${collection.slug}`}
           >
-            <div className="mx-auto grid max-w-[96rem] gap-10 md:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] md:gap-16">
-              <h2
+            <div className="personal-story-spread">
+              <header className="personal-story-heading">
+                <h2
                 id={`experience-${collection.slug}`}
-                className="font-display max-w-[10ch] text-[clamp(3.5rem,6vw,6rem)] font-medium leading-[0.95]"
+                className="font-display"
               >
                 {collection.experience.title}
-              </h2>
-              <div className="max-w-[68ch] space-y-7 text-[var(--gallery-secondary)]">
+                </h2>
+                {collection.experience.subtitle && <p>{collection.experience.subtitle}</p>}
+              </header>
+              <div className="personal-story-columns font-display">
                 {collection.experience.paragraphs.map((paragraph, index) => (
                   <p
                     key={index}
-                    className={index === 0
-                      ? "font-display text-[clamp(1.5rem,2.2vw,2.25rem)] leading-[1.3] text-[var(--gallery-ink)]"
-                      : "text-base leading-[1.8] md:text-lg"}
                   >
                     {paragraph}
                   </p>
@@ -306,7 +372,8 @@ export function CollectionGallery({ collection }: { collection: Collection }) {
                                 : "100vw"
                           }
                           className="exhibition-photo h-auto max-h-[78svh] w-auto max-w-full select-none object-contain transition-[filter,transform] duration-500 ease-out group-hover:scale-[1.003] group-hover:brightness-[1.025]"
-                          loading={index < 2 ? "eager" : "lazy"}
+                          loading="eager"
+                          fetchPriority={index < 2 ? "auto" : "low"}
                         />
                         <button type="button" className="photo-open" data-open-photo aria-label={`Open ${photo.alt} full screen`} onClick={(event) => openLightbox(index, event.currentTarget)} />
                       </div>

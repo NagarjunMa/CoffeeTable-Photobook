@@ -29,6 +29,7 @@ const collectionEditorialSchema = z.object({
   indexNote: text.optional(),
   experience: z.object({
     title: text,
+    subtitle: text.optional(),
     paragraphs: z.array(text).min(1),
   }).strict().optional(),
   category: text.nullable().optional(),

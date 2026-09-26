@@ -33,7 +33,7 @@ export type Collection = {
   /** Optional short introduction for the viewport-height destination panel. */
   indexNote?: string;
   /** Photographer-authored account shown between a collection opening and its gallery. */
-  experience?: { title: string; paragraphs: string[] };
+  experience?: { title: string; subtitle?: string; paragraphs: string[] };
   mapPoster?: MapPoster;
   mapPosterDesktop?: MapPoster;
   mapPosterMobile?: MapPoster;
