@@ -48,7 +48,19 @@
       "location": "New York City",
       "category": "City",
       "year": null,
-      "note": "My city of dreams. Seven or eight visits in, New York still feels new. Between subway chaos, restless streets and the lights of Times Square, I keep finding moments of calm and more reasons to fall in love.",
+      "note": "My city of dreams. Six visits in, New York still feels new. Between subway chaos, restless streets and the lights of Times Square, I keep finding moments of calm and more reasons to fall in love.",
+      "experience": {
+        "title": "The city that still surprises me",
+        "subtitle": "New York City · July 2023",
+        "paragraphs": [
+          "In July 2023, my friends and I planned a trip to New York almost on impulse. We were students, and finding a place to stay in the middle of summer was not easy. But we had seen this city so many times in movies that I wanted to feel its energy for myself. We boarded a bus in Boston and headed for the city that never sleeps.",
+          "Just before the bus entered the Holland Tunnel, the skyline opened up in front of us. I can still remember looking out at it from the road and feeling my heart skip a beat. It was the beginning of one of the best trips I have ever taken with friends.",
+          "We did the iconic Shah Rukh Khan pose on the Brooklyn Bridge and wandered through Bethesda Terrace in Central Park. We stood in line at Adele's for three hours, only to decide that, for us, the food was just average. None of it spoiled the fun. Sweating through the summer heat, we wanted to see everything: Magnolia Bakery, the train from Jersey City, Broadway glowing at night, and the Oculus.",
+          "The highlight was sunset at SUMMIT One Vanderbilt. Even the elevator ride felt like we were entering a larger world. Then we were above the skyline, with the Empire State Building and the Chrysler Building in view, watching the city change in the evening light. For a while, all I wanted to do was stand there and take it in.",
+          "Grand Central Terminal stayed with me too. I loved its vintage architecture and the little details, even the shoe-shine stands. I had known it from the final dance scene in Friends with Benefits, but being there felt different. People moved through it in every direction, and somehow it still felt like one central gathering place: the heartbeat of the city, with the streets and trains flowing out from it like veins.",
+          "I could keep talking about New York forever. I have visited six times, and I still do not tire of it. After my hometown, it is the only city I can imagine living in. To me, it really is the best city in the world."
+        ]
+      },
       "images": {
         "1Nby1muC2vQlxrR75JUthxvK-F2PZJUzT": {
           "reviewStatus": "draft",
