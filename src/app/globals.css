@@ -185,6 +185,19 @@ img {
 .photo-open { position: absolute; inset: 0; z-index: 2; border: 0; background: transparent; cursor: zoom-in; }
 .photo-loading { position: absolute; inset: var(--frame-mat, 0px); z-index: 1; display: grid; place-items: center; background: #1b1b18; color: var(--gallery-secondary); font-size: 12px; pointer-events: none; }
 .photo-loading[hidden] { display: none; }
+.personal-story { padding-block: 48px; scroll-margin-top: 64px; }
+.personal-story-spread { max-width: 1280px; margin-inline: auto; }
+.personal-story-heading { margin: 0 auto 32px; text-align: center; }
+.personal-story-heading h2 { font-size: 40px; line-height: 1.1; font-weight: 500; text-wrap: balance; }
+.personal-story-heading > p { max-width: 62ch; margin: 16px auto 0; color: var(--gallery-secondary); font-size: 15px; line-height: 1.5; text-wrap: balance; }
+.personal-story-columns { font-size: 20px; line-height: 1.5; color: var(--gallery-ink); }
+.personal-story-columns p { margin: 0 0 16px; break-inside: avoid; orphans: 3; widows: 3; }
+.personal-story-columns p:last-child { margin-bottom: 0; }
+@media (min-width: 900px) {
+  .personal-story { padding-block: 40px; }
+  .personal-story-heading h2 { font-size: 64px; }
+  .personal-story-columns { column-count: 2; column-gap: 64px; column-fill: balance; }
+}
 .collection-is-loading { overflow: hidden; }
 .collection-loading-screen { position: fixed; inset: 0; z-index: 100; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 24px; padding: 32px; background: var(--gallery-wall); color: var(--gallery-ink); text-align: center; }
 .collection-loading-continue { min-height: 44px; padding: 8px 16px; border: 1px solid var(--gallery-secondary); color: var(--gallery-ink); cursor: pointer; }
