@@ -27,6 +27,10 @@ const collectionEditorialSchema = z.object({
   location: text.optional(),
   note: text.optional(),
   indexNote: text.optional(),
+  experience: z.object({
+    title: text,
+    paragraphs: z.array(text).min(1),
+  }).strict().optional(),
   category: text.nullable().optional(),
   year: text.nullable().optional(),
   mapPresentation: z.object({
@@ -124,6 +128,7 @@ export function applyEditorialOverrides(
     for (const field of ["title", "location", "note", "indexNote"] as const) {
       if (entry[field] !== undefined) result[field] = entry[field];
     }
+    if (entry.experience) result.experience = entry.experience;
     for (const field of ["category", "year"] as const) {
       if (entry[field] !== undefined) result[field] = entry[field] ?? undefined;
     }

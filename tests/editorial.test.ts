@@ -27,12 +27,14 @@ test("approved local metadata and covers override generated values using stable 
   const before = structuredClone(source);
   const [result] = applyEditorialOverrides([source], document({
     title: "Local title", location: "Local location", note: "Local note", category: "City",
+    experience: { title: "My visit", paragraphs: ["A personal memory."] },
     year: "2024", coverIds: ["d", "c"],
     images: { d: { reviewStatus: "approved", alt: "A factual description", caption: "A caption" } },
   }));
   assert.equal(result.title, "Local title");
   assert.equal(result.location, "Local location");
   assert.equal(result.note, "Local note");
+  assert.deepEqual(result.experience, { title: "My visit", paragraphs: ["A personal memory."] });
   assert.equal(result.category, "City");
   assert.equal(result.year, "2024");
   assert.equal(result.slug, "original-slug");
@@ -44,6 +46,7 @@ test("approved local metadata and covers override generated values using stable 
 
 test("drafts do not publish, blocked records never apply, and image approval is independent", () => {
   const input = document({ reviewStatus: "draft", title: "Unapproved title", coverIds: ["d"],
+    experience: { title: "Unapproved account", paragraphs: ["A draft memory."] },
     images: {
       a: { reviewStatus: "draft", alt: "Unapproved alt" },
       b: { reviewStatus: "approved", alt: "Reviewed square" },
@@ -51,11 +54,13 @@ test("drafts do not publish, blocked records never apply, and image approval is 
     } });
   const [published] = applyEditorialOverrides([collection()], input);
   assert.equal(published.title, "Generated");
+  assert.equal(published.experience, undefined);
   assert.equal(published.coverImages[0].id, "a");
   assert.equal(published.images[0].alt, "Generated a");
   assert.equal(published.coverImages[1].alt, "Reviewed square");
   const [preview] = applyEditorialOverrides([collection()], input, { includeDrafts: true });
   assert.equal(preview.title, "Unapproved title");
+  assert.equal(preview.experience?.title, "Unapproved account");
   assert.equal(preview.images[0].alt, "Unapproved alt");
   assert.equal(preview.images[2].alt, "Generated c");
 });
@@ -112,6 +117,8 @@ test("schema rejects invalid types, blank text, unknown fields, and blocked cont
   for (const entry of [
     { title: " " }, { year: 2024 }, { reviewStatus: "published" }, { slug: "changed" },
     { coverIds: [] }, { spreads: "a" },
+    { experience: { title: "My visit", paragraphs: [] } },
+    { experience: { title: " ", paragraphs: ["A memory."] } },
     { images: { a: { reviewStatus: "approved", alt: " " } } },
     { images: { a: { reviewStatus: "blocked", reason: "Unavailable", alt: "Invented" } } },
   ]) assert.equal(editorialSchema.safeParse(document(entry)).success, false);

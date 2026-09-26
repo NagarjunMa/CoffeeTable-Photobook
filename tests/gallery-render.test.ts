@@ -25,9 +25,25 @@ test("the synced Tigers album keeps its authored introduction without creating a
   assert.equal(tigers[0].mapPoster?.src, "/intro-art/tigers-line-poster.webp");
 });
 
+test("the Tigers personal account sits between the opening and the photographs", () => {
+  const tigers = collections.find((collection) => collection.slug === "tigers");
+  assert.ok(tigers);
+  const html = render(tigers);
+  const openingEnd = html.indexOf("</article>");
+  const storyStart = html.indexOf("My first forest");
+  const galleryStart = html.indexOf(">Gallery</h2>");
+
+  assert.ok(storyStart > openingEnd);
+  assert.ok(galleryStart > storyStart);
+  assert.match(html, /Kanha National Park/);
+  assert.match(html, /2004/);
+  assert.match(html, /17 national parks/);
+});
+
 test("an empty book renders navigation and a clear empty state without image controls", () => {
   const html = render(base);
   assert.match(html, /This volume is being prepared/);
+  assert.doesNotMatch(html, /My first forest|personal-story/);
   assert.match(html, /href="\/#city-test-book"/);
   assert.doesNotMatch(html, /data-open-photo|<dialog|<img/);
 });
