@@ -588,6 +588,122 @@
           }
         ]
       }
+    },
+    "bhutan": {
+      "desktop": {
+        "status": "transitional",
+        "mapOnlyMasterStatus": "blocked",
+        "note": "Annotated map; place labels and map notes retained. Label-free master not found.",
+        "objectPosition": "50% 50%",
+        "focalPoint": {
+          "x": 50,
+          "y": 50
+        },
+        "focalPointBasis": "existing-workflow",
+        "source": {
+          "kind": "incumbent-public",
+          "path": "public/map-posters/bhutan-desktop.png",
+          "width": 6000,
+          "height": 3375,
+          "bytes": 2274405,
+          "sha256": "ce667b792b8ed9e15d0be5ab31f5698d54732d8a0645c5c16a2b12b38a744ca1",
+          "artwork": "annotated-atlas"
+        },
+        "fallback": {
+          "src": "/map-posters/optimized/bhutan-desktop-1920x1080-fe479b5027864702.webp",
+          "width": 1920,
+          "height": 1080,
+          "bytes": 139336,
+          "requestedLongEdge": 1920
+        },
+        "candidates": [
+          {
+            "src": "/map-posters/optimized/bhutan-desktop-960x540-abbf94d266a2deeb.webp",
+            "width": 960,
+            "height": 540,
+            "bytes": 43714,
+            "requestedLongEdge": 960
+          },
+          {
+            "src": "/map-posters/optimized/bhutan-desktop-1920x1080-fe479b5027864702.webp",
+            "width": 1920,
+            "height": 1080,
+            "bytes": 139336,
+            "requestedLongEdge": 1920
+          },
+          {
+            "src": "/map-posters/optimized/bhutan-desktop-2560x1440-ea6276b788641235.webp",
+            "width": 2560,
+            "height": 1440,
+            "bytes": 217748,
+            "requestedLongEdge": 2560
+          },
+          {
+            "src": "/map-posters/optimized/bhutan-desktop-3840x2160-92583ac120111f42.webp",
+            "width": 3840,
+            "height": 2160,
+            "bytes": 395922,
+            "requestedLongEdge": 3840
+          }
+        ]
+      },
+      "mobile": {
+        "status": "transitional",
+        "mapOnlyMasterStatus": "blocked",
+        "note": "Annotated map; place labels and map notes retained. Label-free master not found.",
+        "objectPosition": "50% 50%",
+        "focalPoint": {
+          "x": 50,
+          "y": 50
+        },
+        "focalPointBasis": "existing-workflow",
+        "source": {
+          "kind": "incumbent-public",
+          "path": "public/map-posters/bhutan-mobile.png",
+          "width": 3375,
+          "height": 6000,
+          "bytes": 2393609,
+          "sha256": "d3ef8a8835f9f775e6226d837b4b2e420f3741b2ac1030e07c9d414bd780924e",
+          "artwork": "annotated-atlas"
+        },
+        "fallback": {
+          "src": "/map-posters/optimized/bhutan-mobile-1080x1920-ee6650a1c81124eb.webp",
+          "width": 1080,
+          "height": 1920,
+          "bytes": 152034,
+          "requestedLongEdge": 1920
+        },
+        "candidates": [
+          {
+            "src": "/map-posters/optimized/bhutan-mobile-540x960-c412392618fdbd42.webp",
+            "width": 540,
+            "height": 960,
+            "bytes": 48730,
+            "requestedLongEdge": 960
+          },
+          {
+            "src": "/map-posters/optimized/bhutan-mobile-1080x1920-ee6650a1c81124eb.webp",
+            "width": 1080,
+            "height": 1920,
+            "bytes": 152034,
+            "requestedLongEdge": 1920
+          },
+          {
+            "src": "/map-posters/optimized/bhutan-mobile-1440x2560-935765151f3fa92d.webp",
+            "width": 1440,
+            "height": 2560,
+            "bytes": 234722,
+            "requestedLongEdge": 2560
+          },
+          {
+            "src": "/map-posters/optimized/bhutan-mobile-2160x3840-f97f189077444ab8.webp",
+            "width": 2160,
+            "height": 3840,
+            "bytes": 423016,
+            "requestedLongEdge": 3840
+          }
+        ]
+      }
     }
   }
 }

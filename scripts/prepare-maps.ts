@@ -16,6 +16,8 @@ const suppliedMaine = {
 
 // Only these locally inspected exports have a known artwork classification.
 const reviewedArtwork: Partial<Record<string, "labeled-poster" | "annotated-atlas" | "map-only">> = {
+  "ce667b792b8ed9e15d0be5ab31f5698d54732d8a0645c5c16a2b12b38a744ca1": "annotated-atlas",
+  "d3ef8a8835f9f775e6226d837b4b2e420f3741b2ac1030e07c9d414bd780924e": "annotated-atlas",
   "964f0f96a132d89f7c86221f6faccaf2a8d8799d526d3c36d5cfeac5667d9067": "map-only",
   "838a08e180ab7ae52c99af8bb742d6608f2cd48cb72d39a1d2aafc3ca354e2ab": "map-only",
   "9b8fcede0585e532fc4e0aa886af89e783233eb55151ed954dfb76cdda0817b2": "labeled-poster",
@@ -185,7 +187,9 @@ export async function prepareMaps({
       variant.note = artwork === "map-only"
         ? "Verified map-only master; no baked title, coordinates, gradient, divider or attribution."
         : artwork === "annotated-atlas"
-          ? "Supplied atlas map; place labels, coordinates and journey footer retained. Label-free master not found."
+          ? collection.slug === "maine"
+            ? "Supplied atlas map; place labels, coordinates and journey footer retained. Label-free master not found."
+            : "Annotated map; place labels and map notes retained. Label-free master not found."
           : artwork === "labeled-poster"
             ? "Incumbent poster; baked title, coordinates and attribution retained. Map-only master not found."
             : "Unreviewed source. Do not claim this is a map-only master until artwork is inspected.";

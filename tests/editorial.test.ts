@@ -143,22 +143,29 @@ test("stable IDs are exact and whitespace cannot collapse distinct override keys
   }).success, false);
 });
 
-test("checked-in editorial accounts for all 81 images without fabricating approvals", () => {
+test("checked-in editorial accounts for all 102 images without fabricating approvals", () => {
   const parsed = editorialSchema.parse(local);
   let drafts = 0;
   let blocked = 0;
+  let approved = 0;
   for (const source of generated) {
     const entry = parsed.collections[source.sourceFolderId];
     assert.ok(entry);
     assert.equal(entry.reviewStatus, "approved");
     assert.deepEqual(Object.keys(entry.images ?? {}).sort(), source.images.map((p) => p.id).sort());
-    for (const image of Object.values(entry.images ?? {})) {
+    for (const [id, image] of Object.entries(entry.images ?? {})) {
       if (image.reviewStatus === "draft") { drafts++; assert.ok(image.alt); }
-      else { blocked++; assert.equal(image.reviewStatus, "blocked"); }
+      else if (image.reviewStatus === "blocked") blocked++;
+      else {
+        approved++;
+        assert.equal(source.slug, "bhutan");
+        assert.equal(id, "1xC3W8hW7kt-JxfklT6dE4dtZVyoK4NTQ");
+      }
     }
   }
   assert.equal(drafts, 41);
-  assert.equal(blocked, 40);
+  assert.equal(blocked, 60);
+  assert.equal(approved, 1);
   const warnings: string[] = [];
   const resolved = applyEditorialOverrides(generated as Collection[], local,
     { warn: (message) => warnings.push(message) });
@@ -167,14 +174,22 @@ test("checked-in editorial accounts for all 81 images without fabricating approv
     const entry = parsed.collections[source.sourceFolderId];
     assert.equal(result.note,
       entry.reviewStatus === "approved" && entry.note !== undefined ? entry.note : source.note);
-    // Publishing the photographer's city stories must not approve image drafts.
-    assert.deepEqual(result.images, source.images);
+    if (source.slug === "bhutan") {
+      const changed = result.images.filter((photo, index) =>
+        JSON.stringify(photo) !== JSON.stringify(source.images[index]));
+      assert.deepEqual(changed.map((photo) => photo.id), ["1xC3W8hW7kt-JxfklT6dE4dtZVyoK4NTQ"]);
+      assert.match(changed[0].alt, /monastery with golden roofs/);
+      assert.deepEqual(result.coverImages, changed);
+    } else {
+      // Publishing collection copy must not approve unrelated image drafts.
+      assert.deepEqual(result.images, source.images);
+    }
     if (source.slug === "tigers") {
       // The photographer selected Drive's `front-page` (formerly 90557.JPEG).
       const selectedCover = source.images.find((photo) => photo.id === "1wjpYvZEcuq3QDoE6pALOfrbFPixjkacr");
       assert.ok(selectedCover);
       assert.deepEqual(result.coverImages, [selectedCover]);
-    } else {
+    } else if (source.slug !== "bhutan") {
       assert.deepEqual(result.coverImages, source.coverImages);
     }
   }

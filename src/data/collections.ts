@@ -42,6 +42,10 @@ const localDesktopMapPosterOverrides: Record<
   string,
   Collection["mapPosterDesktop"]
 > = {
+  bhutan: {
+    src: "/map-posters/bhutan-desktop.png",
+    alt: "Map of Bhutan highlighting Paro, Thimphu, Tiger's Nest, and Buddha Dordenma",
+  },
   hampi: {
     src: "/map-posters/hampi-desktop.png",
     alt: "Hampi street and river map for desktop",
@@ -64,6 +68,10 @@ const localMobileMapPosterOverrides: Record<
   string,
   Collection["mapPosterMobile"]
 > = {
+  bhutan: {
+    src: "/map-posters/bhutan-mobile.png",
+    alt: "Portrait map of Bhutan highlighting Paro, Thimphu, Tiger's Nest, and Buddha Dordenma",
+  },
   hampi: {
     src: "/map-posters/hampi-mobile.png",
     alt: "Hampi street and river map for mobile",

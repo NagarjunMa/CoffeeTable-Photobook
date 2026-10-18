@@ -40,6 +40,18 @@ test("the Tigers personal account sits between the opening and the photographs",
   assert.match(html, /17 national parks/);
 });
 
+test("Bhutan uses the selected cover while retaining its full synced gallery", () => {
+  const bhutan = collections.find((collection) => collection.slug === "bhutan");
+  assert.ok(bhutan);
+  assert.equal(bhutan.images.length, 21);
+  assert.equal(bhutan.coverImages[0]?.fileName, "135702.JPEG");
+  assert.equal(bhutan.mapPosterDesktop?.src, "/map-posters/bhutan-desktop.png");
+  assert.equal(bhutan.mapPosterMobile?.src, "/map-posters/bhutan-mobile.png");
+  const html = render(bhutan);
+  assert.match(html, /Cliffside monastery/);
+  assert.match(html, /21 photographs/);
+});
+
 test("an empty book renders navigation and a clear empty state without image controls", () => {
   const html = render(base);
   assert.match(html, /This volume is being prepared/);

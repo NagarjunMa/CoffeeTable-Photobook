@@ -21,6 +21,8 @@ map-to-poster workspace with the repository's `contrast_zones` theme.
 | --- | --- | ---: | --- |
 | Hampi desktop: `public/map-posters/hampi-desktop.png` | 6000 x 3375 | 1,716,113 | Verified map-only landscape master. |
 | Hampi mobile: `public/map-posters/hampi-mobile.png` | 3375 x 6000 | 1,678,187 | Verified map-only portrait master. |
+| Bhutan desktop: `public/map-posters/bhutan-desktop.png` | 6000 x 3375 | 2,274,405 | Annotated landscape map with place callouts and a small map credit; transitional. |
+| Bhutan mobile: `public/map-posters/bhutan-mobile.png` | 3375 x 6000 | 2,393,609 | Separate annotated portrait map; transitional. |
 | New York desktop: `public/map-posters/new-york-desktop.png` | 6000 x 3375 | 9,958,137 | Verified map-only landscape master. |
 | New York mobile: `public/map-posters/new-york-mobile.png` | 3375 x 6000 | 9,564,068 | Verified map-only portrait master. |
 | Santa Cruz desktop: `public/map-posters/santa-cruz-desktop.png` | 6000 x 3375 | 3,795,549 | Verified map-only landscape master. |
@@ -109,12 +111,21 @@ review. Existing Santa Cruz desktop wrapper offsets (left 16%, right -18%,
 top/bottom -8%) are layout behavior, not a focal point or baked crop; they are not
 applied to derivatives.
 
+Bhutan also has distinct desktop/mobile compositions. Both were visually
+inspected after the October 17, 2026 export and are classified as annotated
+maps because Paro, Thimphu, Tiger's Nest, and Buddha Dordenma are printed on
+the artwork. Their responsive derivatives are in the manifest; the source PNGs
+remain unchanged. The index's map attribution remains present, alongside the
+small credit baked into the supplied maps.
+
 ## Validation and Integration Gate
 
 Measured local encoded bytes (not browser transfer timings):
 
 | Source | Original | 960 edge | 1920 edge | 2560 edge | 3840 edge | Reduction at 1920 / 3840 |
 | --- | ---: | ---: | ---: | ---: | ---: | --- |
+| Bhutan desktop | 2,274,405 | 43,714 | 139,336 | 217,748 | 395,922 | 93.9% / 82.6% |
+| Bhutan mobile | 2,393,609 | 48,730 | 152,034 | 234,722 | 423,016 | 93.6% / 82.3% |
 | Hampi desktop | 1,716,113 | 64,488 | 161,948 | 236,408 | 386,286 | 90.6% / 77.5% |
 | Hampi mobile | 1,678,187 | 62,894 | 160,306 | 233,300 | 388,722 | 90.4% / 76.8% |
 | Maine desktop | 1,874,375 | 43,638 | 136,066 | 208,820 | 371,036 | 92.7% / 80.2% |
@@ -126,8 +137,8 @@ Measured local encoded bytes (not browser transfer timings):
 | Washington desktop | 9,766,881 | 289,992 | 956,528 | 1,493,030 | 2,804,412 | 90.2% / 71.3% |
 | Washington mobile | 9,479,481 | 280,964 | 937,850 | 1,471,020 | 2,750,426 | 90.1% / 71.0% |
 
-Ten distinct current masters total **54,395,146 bytes**. All 40 referenced
-responsive derivatives total **28,629,062 bytes** on disk. These figures include
+Twelve distinct current masters total **59,063,160 bytes**. Their 48 responsive
+derivatives total **30,284,284 bytes** on disk. These figures include
 both orientations for every destination and are not a claim that a browser
 downloads all of them.
 No source PNG is deleted, so repository disk usage increases. Source SHA-256
@@ -139,11 +150,11 @@ art reuse, rerun stability, blocked Maine, EXIF orientation, the checked-in mani
 and rejection of remote/missing sources.
 Atomic-publication tests also cover complete replacement, successful temporary-file
 cleanup and preservation of the old manifest on JSON serialization failure.
-Validation passed: eight focused tests, scoped ESLint, a strict no-emit TypeScript
-check, and a normal CLI rerun against the live collection resolver. All 32 current
-derivatives were checked against manifest dimensions and byte counts. The six new
-city masters were visually reviewed together at desktop and mobile aspect ratios;
-no title or coordinate overlays remain. A focused Chrome integration test verifies
-desktop/mobile source switching for New York, Santa Cruz and Washington. The
-isolated production build passed. Maine's retained annotations remain the only
-replacement-artwork limitation.
+The earlier city-map release passed eight focused tests, scoped ESLint, a strict
+no-emit TypeScript check, and a normal CLI rerun against the live collection
+resolver. Its six new city masters were visually reviewed at desktop and mobile
+aspect ratios; no title or coordinate overlays remain. A focused Chrome test
+verified source switching for New York, Santa Cruz and Washington, and its
+isolated production build passed. The Bhutan addition passed the current map
+tests, lint, production build, and desktop/mobile browser checks. Maine and
+Bhutan retain annotations in their supplied artwork.

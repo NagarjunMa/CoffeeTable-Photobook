@@ -18,9 +18,10 @@ Santa Cruz uses his September 16 July-sunset story as approved copy. Hampi uses
 his supplied monochrome-photography story and early-2019 visit year. Its full
 story is in `note`; its concise map-card excerpt is in `indexNote`. Image review
 states are separate. There are 41 visually grounded image description/caption
-drafts and 23 blocked records (nine Maine, two New York, twelve newly imported
-Hampi photographs awaiting descriptions). Blocked records keep the generated
-photo visible; they do not remove photographs or invent descriptions.
+drafts, 60 blocked records, and one approved Bhutan cover description. Bhutan's
+20 other new photographs await full-resolution description review. Blocked
+records keep the generated photo visible; they do not remove photographs or
+invent descriptions.
 
 By default only `approved` overrides apply. Collection copy/cover/spread approval
 and individual image approval are independent. Set
@@ -102,7 +103,9 @@ the placeholder IDs with exact existing IDs and author verified copy.
 ## Photographer Review Queue
 
 1. Review the 41 image drafts. All four city introductions now use supplied personal stories.
-2. Supply or inspect the 11 blocked photographs and replace each blocked record
+2. Inspect the 20 new Bhutan photographs at full resolution and replace each
+   blocked record with a verified draft before approving it. Supply or inspect
+   the previously blocked photographs and replace each blocked record
    with a verified draft before approving it. Maine's introduction now reflects
    the supplied early-fall weekend in Acadia and Bar Harbor.
 3. Choose cover IDs and deliberate spread groups for each book. Automatic layout

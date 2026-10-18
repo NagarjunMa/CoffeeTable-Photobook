@@ -29,6 +29,25 @@ test("map-only artwork selects the matching desktop and mobile composition", asy
   }
 });
 
+test("Bhutan's responsive map opens its photographic collection", async ({ page }) => {
+  for (const viewport of [
+    { width: 1440, height: 900, mode: "desktop" },
+    { width: 390, height: 844, mode: "mobile" },
+  ] as const) {
+    await page.setViewportSize(viewport);
+    await page.goto("/#city-bhutan");
+    const panel = page.locator("#city-bhutan");
+    await expect(panel.getByRole("heading", { name: "Bhutan", exact: true })).toBeVisible();
+    await expect.poll(() => panel.locator(".city-map-image").evaluate((image) =>
+      (image as HTMLImageElement).currentSrc)).toMatch(
+        new RegExp(`/map-posters/optimized/bhutan-${viewport.mode}-`),
+      );
+    await panel.getByRole("link", { name: "Open Bhutan collection" }).click();
+    await expect(page).toHaveURL(/\/series\/bhutan$/);
+    await expect(page.getByText("21 photographs")).toBeVisible();
+  }
+});
+
 test("tiger illustration introduces its wildlife collection on desktop and mobile", async ({ page }) => {
   for (const viewport of [
     { width: 1440, height: 900, focalPosition: "50% 50%" },
