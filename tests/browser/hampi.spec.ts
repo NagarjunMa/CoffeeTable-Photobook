@@ -4,14 +4,14 @@ for (const width of [390, 1440]) {
   test(`Hampi map opens its complete, uncropped book at ${width}px`, async ({ page }, info) => {
     await page.setViewportSize({ width, height: 900 });
     await page.goto("/#city-hampi");
-    await expect(page.locator(".destination-scroller")).toHaveAttribute("data-enhanced", "true");
-    const panel = page.locator("#city-hampi");
-    const map = panel.locator(".city-map-image");
+    await expect(page.getByRole("dialog")).toBeVisible();
+    const panel = page.getByRole("dialog");
+    const map = panel.locator(".book-map-image");
     await expect.poll(() => map.evaluate((image) => (image as HTMLImageElement).naturalWidth)).toBeGreaterThan(0);
     await expect.poll(() => map.evaluate((image) => (image as HTMLImageElement).currentSrc))
       .toContain(`hampi-${width < 768 ? "mobile" : "desktop"}-`);
     await page.screenshot({ path: info.outputPath(`hampi-map-${width}.png`) });
-    await panel.getByRole("link").click();
+    await panel.getByRole("link", { name: "Open Hampi collection" }).click();
     await expect(page).toHaveURL(/\/series\/hampi$/);
     await expect(page.locator(".exhibition-frame")).toHaveCount(12);
     const rows = await page.locator(".exhibition-row").evaluateAll((items) => items.map((row) =>

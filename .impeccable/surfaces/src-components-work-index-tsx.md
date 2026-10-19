@@ -1,0 +1,24 @@
+---
+version: 1
+slug: "src-components-work-index-tsx"
+primary_target: "src/components/work-index.tsx"
+related_targets: ["src/components/photobook-shelf-scene.tsx","src/lib/bookshelf-renderer.ts","src/app/globals.css"]
+---
+
+# Photobook bookshelf
+
+Mode: Experience. A local replacement for the destination index; the existing hero and collection galleries keep their identity and content.
+
+## Direction contract
+
+THESIS: Each place is a volume to take off a shelf. The interaction leads from tangible book to a readable introduction, then the existing photographic collection.
+
+OWN-WORLD: Inherit the portfolio's warm paper, dark brown ink, existing serif and mono faces. Bind the volumes in place-specific forest, slate, ochre, burgundy, indigo and clay cloth; use real photographs as inset cover plates and warm wood for the shelf.
+
+STORY: Browse all collections with touch, pointer or keyboard. Select a book to open an individual paper detail card with authored introduction, location, available date/category, photograph count, map or illustration, and an Open photobook link.
+
+FIRST VIEWPORT: The shelf section has a large left-aligned Photobooks heading and a short invitation, followed by a broad perspective shelf with a central cover and neighboring volumes. Its selection caption, arrows and complete contents remain readable below. On mobile the centered book is large and adjacent books suggest dragging.
+
+FORM: A precisely requested ThreeUI Bookshelf adaptation, not an open concept choice; no seed required. Preserve upstream tactile cloth, page edges, hover opening, damped carousel motion and selection lift. The detail card reads as an open two-page volume.
+
+FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance

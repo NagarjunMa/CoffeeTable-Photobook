@@ -17,7 +17,10 @@ export function IntroLoader() {
 
       let played = false;
       try { played = window.sessionStorage.getItem(introSessionKey) === "true"; } catch { /* Storage is optional. */ }
-      if (played || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      // Deep links go directly to a book; the hero intro must not compete with
+      // the book inspector for scroll ownership on a first visit.
+      const directBook = location.hash === "#work" || location.hash.startsWith("#city-");
+      if (played || directBook || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
         const frame = requestAnimationFrame(() => setIsVisible(false));
         return () => cancelAnimationFrame(frame);
       }

@@ -2,7 +2,7 @@
 
 Nagarjun Mallesh's travel and wildlife photography portfolio, designed to feel
 like a coffee-table book. Each place or wildlife subject becomes its own volume:
-a horizontal index of maps and illustrated covers opens into a vertical gallery
+an interactive shelf of individual volumes opens into a vertical gallery
 of uncropped photographs, with white frames on a textured black background and
 an immersive, blurred lightbox.
 
@@ -14,7 +14,7 @@ local action, with no scheduled polling.
 ## Stack
 
 - Next.js 16, React 19, TypeScript, and Tailwind CSS 4.
-- GSAP and Lenis for transitions and scrolling.
+- Three.js for the photobook shelf; GSAP and Lenis for transitions and scrolling.
 - Google Drive API, Sharp, and Cloudflare Images for the image pipeline.
 - Zod for validation; Node.js built-ins for URL signing and upload transport.
 
@@ -26,10 +26,12 @@ The latest [responsive layout review](docs/LAYOUT_REFINEMENT.md) records the
 mobile map-height correction, stable photograph loading, aligned collection
 previews and tighter gallery transitions, with cross-browser regression evidence.
 
-The typography-only opening now leads directly to compact destination contents.
-Collection introductions are single accessible links, with horizontal browsing,
-history-aware anchors, and a normal-flow alternative for reduced motion and short
-screens. Collections retain their dark exhibition wall, equal-height desktop
+The typography-only opening leads to a [ThreeUI-inspired photobook shelf](docs/PHOTOBOOK_BOOKSHELF.md).
+Each volume opens its own detail card with the photographer's introduction,
+available metadata, a map or illustration, and a link to the complete book.
+Touch dragging, arrow controls, keyboard contents and history-aware anchors keep
+collections reachable. Real cover links remain available without JavaScript or
+WebGL. Collections retain their dark exhibition wall, equal-height desktop
 rows, uniform mats, and uncropped photographs. The native modal lightbox traps
 focus, restores the opener, and retains the current photo while the next decodes.
 Failed images offer Retry; the optional introduction cannot block a page without

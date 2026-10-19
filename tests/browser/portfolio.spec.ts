@@ -2,73 +2,6 @@ import AxeBuilder from "@axe-core/playwright";
 import { test, expect } from "./fixtures";
 import collections from "../../src/data/generated/collections.json";
 
-test("city map surface opens the destination", async ({ page }) => {
-  await page.setViewportSize({ width: 390, height: 844 });
-  await page.goto("/");
-  const panel = page.locator("[data-city-panel]").filter({ has: page.getByRole("heading", { name: "Washington", exact: true }) });
-  await panel.scrollIntoViewIfNeeded();
-  await panel.click({ position: { x: 285, y: 240 } });
-  await expect(page).toHaveURL(/\/series\/washington$/);
-});
-
-test("map-only artwork selects the matching desktop and mobile composition", async ({ page }) => {
-  for (const viewport of [
-    { width: 1440, height: 900, mode: "desktop" },
-    { width: 390, height: 844, mode: "mobile" },
-  ] as const) {
-    await page.setViewportSize(viewport);
-    await page.goto("/");
-    for (const slug of ["new-york", "santa-cruz", "washington", "hampi"]) {
-      const image = page.locator(`#city-${slug} .city-map-image`);
-      await image.scrollIntoViewIfNeeded();
-      await expect.poll(() => image.evaluate((element) =>
-        (element as HTMLImageElement).currentSrc)).toMatch(
-          new RegExp(`/map-posters/optimized/${slug}-${viewport.mode}-`),
-        );
-    }
-  }
-});
-
-test("Bhutan's responsive map opens its photographic collection", async ({ page }) => {
-  for (const viewport of [
-    { width: 1440, height: 900, mode: "desktop" },
-    { width: 390, height: 844, mode: "mobile" },
-  ] as const) {
-    await page.setViewportSize(viewport);
-    await page.goto("/#city-bhutan");
-    const panel = page.locator("#city-bhutan");
-    await expect(panel.getByRole("heading", { name: "Bhutan", exact: true })).toBeVisible();
-    await expect.poll(() => panel.locator(".city-map-image").evaluate((image) =>
-      (image as HTMLImageElement).currentSrc)).toMatch(
-        new RegExp(`/map-posters/optimized/bhutan-${viewport.mode}-`),
-      );
-    await panel.getByRole("link", { name: "Open Bhutan collection" }).click();
-    await expect(page).toHaveURL(/\/series\/bhutan$/);
-    await expect(page.getByText("21 photographs")).toBeVisible();
-  }
-});
-
-test("tiger illustration introduces its wildlife collection on desktop and mobile", async ({ page }) => {
-  for (const viewport of [
-    { width: 1440, height: 900, focalPosition: "50% 50%" },
-    { width: 390, height: 844, focalPosition: "51% 50%" },
-  ]) {
-    await page.setViewportSize(viewport);
-    await page.goto("/#city-tigers");
-    const panel = page.locator("#city-tigers");
-    await expect(panel.getByRole("heading", { name: "Tigers", exact: true })).toBeVisible();
-    const artwork = panel.locator(".city-map-image");
-    await expect.poll(() => artwork.evaluate((image) => (image as HTMLImageElement).currentSrc)).toContain("/intro-art/tigers-line-poster.webp");
-    await expect(artwork).toHaveCSS("object-position", viewport.focalPosition);
-    await expect(panel.getByText("Map data", { exact: false })).toHaveCount(0);
-  }
-
-  await page.getByRole("link", { name: "Open Tigers collection" }).click();
-  await expect(page).toHaveURL(/\/series\/tigers$/);
-  await expect(page.getByRole("heading", { name: "Tigers", exact: true })).toBeVisible();
-  await expect(page.getByText("17 photographs")).toBeVisible();
-});
-
 test("lightbox retains keyboard focus and restores its opener", async ({ page }) => {
   await page.goto("/series/santa-cruz");
   const opener = page.locator(".exhibition-frame [data-open-photo]").first();
@@ -94,14 +27,6 @@ test("tablet preview is fully inside its viewport", async ({ page }) => {
   const bounds = await preview.boundingBox();
   expect(bounds!.x).toBeGreaterThanOrEqual(0);
   expect(bounds!.x + bounds!.width).toBeLessThanOrEqual(768);
-});
-
-test("long city names fit narrow screens", async ({ page }) => {
-  await page.setViewportSize({ width: 320, height: 740 });
-  await page.goto("/");
-  const title = page.getByRole("heading", { name: "Washington", exact: true });
-  await title.scrollIntoViewIfNeeded();
-  expect(await title.evaluate((element) => element.scrollWidth <= element.clientWidth + 1)).toBe(true);
 });
 
 test("gallery frame mats and row heights remain uniform", async ({ page }) => {
@@ -135,23 +60,6 @@ test("capture review surfaces", async ({ page }, info) => {
   await page.screenshot({ path: info.outputPath("gallery.png") });
 });
 
-test("contents, history and reduced motion keep destinations reachable", async ({ page }) => {
-  await page.setViewportSize({ width: 1440, height: 900 });
-  await page.goto("/#work");
-  const contents = page.getByRole("navigation", { name: "Destination contents" });
-  await contents.getByRole("link", { name: "Washington", exact: true }).click();
-  await expect(page).toHaveURL(/#city-washington$/);
-  await expect(contents.getByRole("link", { name: "Washington", exact: true })).toHaveAttribute("aria-current", "location");
-  await page.getByRole("link", { name: "Open Washington collection" }).click();
-  await expect(page).toHaveURL(/\/series\/washington$/);
-  await page.getByRole("link", { name: "Index", exact: true }).click();
-  await expect(page).toHaveURL(/#city-washington$/);
-  await expect(contents.getByRole("link", { name: "Washington", exact: true })).toHaveAttribute("aria-current", "location");
-  await page.emulateMedia({ reducedMotion: "reduce" });
-  await expect.poll(() => page.locator(".destination-track").evaluate((element) => getComputedStyle(element).display)).toBe("block");
-  await expect(page.locator(".pin-spacer")).toHaveCount(0);
-});
-
 test("intro cannot obscure server content when JavaScript is disabled", async ({ browser }) => {
   const context = await browser.newContext({ javaScriptEnabled: false });
   const page = await context.newPage();
@@ -159,28 +67,6 @@ test("intro cannot obscure server content when JavaScript is disabled", async ({
   await expect(page.getByRole("heading", { name: "Nagarjun Mallesh" })).toBeVisible();
   await expect(page.locator('[aria-hidden="true"].fixed')).not.toBeVisible();
   await context.close();
-});
-
-test("mobile snap belongs to the scroll container", async ({ page }) => {
-  await page.setViewportSize({ width: 390, height: 844 });
-  await page.goto("/#work");
-  await expect.poll(() => page.locator(".destination-scroller").evaluate((element) => getComputedStyle(element).scrollSnapType)).toBe("x mandatory");
-});
-
-test("mobile contents, arrows and history move the actual rail", async ({ page }) => {
-  await page.setViewportSize({ width: 390, height: 844 });
-  await page.goto("/#work");
-  const scroller = page.locator(".destination-scroller");
-  await expect(scroller).toHaveAttribute("data-enhanced", "true");
-  const contents = page.getByRole("navigation", { name: "Destination contents" });
-  await contents.getByRole("link", { name: "Washington", exact: true }).click();
-  await expect(page).toHaveURL(/#city-washington$/);
-  await expect.poll(() => page.locator("#city-washington").evaluate((element) => Math.abs(element.getBoundingClientRect().left))).toBeLessThan(2);
-  await page.getByRole("button", { name: "Previous destination", exact: true }).click();
-  await expect(page).not.toHaveURL(/#city-washington$/);
-  await page.goBack();
-  await expect(page).toHaveURL(/#city-washington$/);
-  await expect.poll(() => page.locator("#city-washington").evaluate((element) => Math.abs(element.getBoundingClientRect().left))).toBeLessThan(2);
 });
 
 test("keyboard-only browsing reaches a visible gallery frame", async ({ page }) => {
@@ -205,15 +91,6 @@ test("first keyboard interaction dismisses the optional intro", async ({ page })
   await expect.poll(() => page.evaluate(() => document.body.style.overflow)).not.toBe("hidden");
 });
 
-test("short landscape uses accessible normal flow", async ({ page }) => {
-  await page.setViewportSize({ width: 844, height: 390 });
-  await page.goto("/#city-washington");
-  await expect(page.locator(".pin-spacer")).toHaveCount(0);
-  await expect(page.locator(".destination-track")).toHaveCSS("display", "block");
-  await page.getByRole("link", { name: "Open Washington collection" }).click();
-  await expect(page).toHaveURL(/\/series\/washington$/);
-});
-
 test("homepage, About and modal pass automated accessibility checks", async ({ page }) => {
   for (const path of ["/", "/about", "/series/new-york"]) {
     await page.goto(path);
@@ -221,18 +98,6 @@ test("homepage, About and modal pass automated accessibility checks", async ({ p
     const result = await new AxeBuilder({ page }).withTags(["wcag2a", "wcag2aa", "wcag21aa"]).analyze();
     expect(result.violations).toEqual([]);
   }
-});
-
-test("dragging a map does not activate its link", async ({ page }) => {
-  await page.setViewportSize({ width: 390, height: 844 });
-  await page.goto("/#city-washington");
-  const link = page.getByRole("link", { name: "Open Washington collection" });
-  const box = (await link.boundingBox())!;
-  await page.mouse.move(box.x + 250, box.y + 300);
-  await page.mouse.down();
-  await page.mouse.move(box.x + 190, box.y + 300, { steps: 6 });
-  await page.mouse.up();
-  await expect(page).toHaveURL(/#city-washington$/);
 });
 
 test("denied storage never traps visitors behind the intro", async ({ page }) => {
@@ -295,22 +160,12 @@ test("late image decoding cannot overwrite a more recent lightbox selection", as
   }
 });
 
-test("map picture selects desktop and mobile derivatives", async ({ page }) => {
-  await page.setViewportSize({ width: 1440, height: 900 });
-  await page.goto("/#city-washington");
-  const image = page.locator("#city-washington img");
-  await expect.poll(() => image.evaluate((element) => (element as HTMLImageElement).currentSrc)).toContain("washington-desktop-");
-  await page.setViewportSize({ width: 390, height: 844 });
-  await expect.poll(() => image.evaluate((element) => (element as HTMLImageElement).currentSrc)).toContain("washington-mobile-");
-  await expect(page.locator("#city-washington img")).toHaveCount(1);
-});
-
 for (const width of [320, 390, 768, 1024, 1440, 1920]) {
   test(`responsive visual check at ${width}px`, async ({ page }, info) => {
     await page.setViewportSize({ width, height: width < 768 ? 844 : 1000 });
     await page.goto("/#city-washington");
-    await expect(page.locator("#city-washington .destination-title")).toBeVisible();
-    await expect.poll(() => page.locator("#city-washington img").evaluate((image) => (image as HTMLImageElement).complete)).toBe(true);
+    await expect(page.getByRole("dialog").getByRole("heading", { name: "Washington", exact: true })).toBeVisible();
+    await expect.poll(() => page.getByRole("dialog").locator(".book-map-image").evaluate((image) => (image as HTMLImageElement).complete)).toBe(true);
     await page.screenshot({ path: info.outputPath(`map-${width}.png`) });
     await page.goto("/series/washington");
     const title = page.locator("h1");

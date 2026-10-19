@@ -1,272 +1,202 @@
 "use client";
 
-import { useGSAP } from "@gsap/react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { ArrowLeft, ArrowRight, ArrowUpRight, X } from "lucide-react";
 import Link from "next/link";
-import { useRef, useState } from "react";
-import type { CSSProperties } from "react";
-import mapManifest from "@/data/map-derivatives.json";
-import { ArrowLeft, ArrowRight } from "lucide-react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import type { CSSProperties, MouseEvent } from "react";
 import { collections } from "@/data/collections";
-import type { Collection } from "@/data/collections";
-import { DestinationTitle } from "@/components/destination-title";
+import type { Collection } from "@/data/types";
+import { bookPresentation } from "@/lib/photobook-presentation";
+import type { ShelfRenderer } from "@/lib/bookshelf-renderer";
+import { PhotobookShelfScene } from "@/components/photobook-shelf-scene";
+import { PortfolioPhoto } from "@/components/portfolio-photo";
+import { CollectionMap } from "@/components/collection-map";
 
-gsap.registerPlugin(useGSAP, ScrollTrigger);
+const volumes = collections.map((collection) => {
+  const book = bookPresentation(collection);
+  return { title: collection.title, color: book.color, image: book.coverSrc, count: book.count };
+});
+const bounded = (index: number) => ((index % collections.length) + collections.length) % collections.length;
 
-type MapCandidate = { src: string; width: number; height: number };
-type MapVariant = { fallback: MapCandidate | null; candidates: MapCandidate[]; objectPosition: string; source: { path: string; kind: string } | null };
-const preparedMaps = mapManifest.collections as Record<string, { desktop: MapVariant; mobile: MapVariant }>;
-
-function mapSource(collection: Collection, device: "desktop" | "mobile") {
-  const poster = (device === "desktop" ? collection.mapPosterDesktop : collection.mapPosterMobile) ?? collection.mapPoster;
-  const prepared = preparedMaps[collection.slug]?.[device];
-  // A newly supplied source must never silently display an older derivative.
-  const matches = !poster || prepared?.source?.path === "public" + poster.src;
-  if (prepared?.fallback && matches) return {
-    ...prepared.fallback,
-    srcSet: prepared.candidates.map((candidate) => candidate.src + " " + candidate.width + "w").join(", "),
-    focalPosition: collection.mapPresentation?.[device]?.focalPosition ?? poster?.focalPosition ?? prepared.objectPosition,
-  };
-  return poster ? {
-    src: poster.src,
-    width: undefined,
-    height: undefined,
-    srcSet: poster.sources?.map((item) => item.src + " " + item.width + "w").join(", "),
-    focalPosition: collection.mapPresentation?.[device]?.focalPosition ?? poster.focalPosition ?? "50% 50%",
-  } : null;
-}
-
-function CollectionBackdrop({ collection, eager = false }: { collection: Collection; eager?: boolean }) {
-  const desktop = mapSource(collection, "desktop");
-  const mobile = mapSource(collection, "mobile") ?? desktop;
-  if (!mobile) return null;
-  const style = {
-    "--map-position-mobile": mobile.focalPosition,
-    "--map-position-desktop": desktop?.focalPosition ?? mobile.focalPosition,
-  } as CSSProperties;
-  return (
-    <div data-city-map className={"absolute inset-0 " + (collection.slug === "santa-cruz" ? "md:-bottom-[8%] md:-right-[18%] md:-top-[8%] md:left-[16%]" : "")} style={style}>
-      <picture>
-        {desktop && <source media="(min-width: 768px)" srcSet={desktop.srcSet ?? desktop.src} sizes="100vw" />}
-        {/* Prepared map derivatives are already optimized; only one responsive image is mounted. */}
-        <img src={mobile.src} srcSet={mobile.srcSet} sizes="100vw" width={mobile.width} height={mobile.height} alt="" className="city-map-image" loading={eager ? "eager" : "lazy"} decoding="async" />
-      </picture>
+function BookDetails({ collection }: { collection: Collection }) {
+  const book = bookPresentation(collection);
+  return <div className="book-detail-spread" style={{ "--book-color": book.color } as CSSProperties}>
+    <div className="book-detail-plate">
+      <p className="book-author font-mono-custom">Nagarjun Mallesh</p>
+      {book.cover ? <figure className="book-detail-photo"><PortfolioPhoto photo={book.cover} sizes="(min-width: 900px) 40vw, 85vw" loading="eager" />
+        {book.cover.caption && <figcaption>{book.cover.caption}</figcaption>}
+      </figure> : <div className="book-detail-preparing"><span className="font-display" aria-hidden="true">{collection.title}</span><p>Photographs are being prepared.</p></div>}
+      <p className="book-plate-footer font-mono-custom">A photographic collection</p>
     </div>
-  );
-}
-
-function CityPanel({
-  collection,
-  index,
-}: {
-  collection: Collection;
-  index: number;
-}) {
-  const href = `/series/${collection.slug}`;
-  const note = collection.indexNote ?? collection.note;
-  const gesture = useRef<{ x: number; y: number; moved: boolean } | null>(null);
-
-  return (
-    <article
-      id={`city-${collection.slug}`}
-      style={{ "--copy-scrim-mobile": collection.mapPresentation?.mobile?.scrim ?? 0.94, "--copy-scrim-desktop": collection.mapPresentation?.desktop?.scrim ?? 0.96 } as CSSProperties}
-      data-city-panel
-      className="relative h-full w-[100cqw] shrink-0 snap-start overflow-hidden bg-[var(--background)]"
-    >
-      <CollectionBackdrop collection={collection} eager={index === 0} />
-      <div className="city-map-scrim pointer-events-none absolute inset-0" />
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-[var(--background)] to-transparent" />
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[var(--background)] to-transparent" />
-
-      <Link href={href} aria-label={`Open ${collection.title} collection`} className="city-panel-link relative z-20 flex h-full items-center px-[clamp(1.4rem,4vw,5rem)] pb-16 pt-24"
-        onPointerDown={(event) => { gesture.current = { x: event.clientX, y: event.clientY, moved: false }; }}
-        onPointerMove={(event) => { if (gesture.current && Math.hypot(event.clientX - gesture.current.x, event.clientY - gesture.current.y) > 12) gesture.current.moved = true; }}
-        onPointerCancel={() => { if (gesture.current) gesture.current.moved = true; }}
-        onClick={(event) => { if (event.detail !== 0 && gesture.current?.moved) event.preventDefault(); gesture.current = null; }}>
-        <div data-city-copy className="city-copy pointer-events-none min-w-0 w-full max-w-xl">
-          <p className="font-mono-custom text-[10px] uppercase tracking-[0.18em] text-[var(--muted)] md:text-[11px]">
-            {String(index + 1).padStart(2, "0")} / {collection.location}
-          </p>
-          <div className="mt-5 block">
-            <DestinationTitle title={collection.title} />
-          </div>
-          {!note.startsWith("A field study from ") && <p className="mt-7 max-w-md text-base md:text-lg leading-[1.45] text-[var(--foreground)]">
-            {note}
-          </p>}
-          <span
-            className="editorial-link pointer-events-auto mt-8 font-mono-custom text-[10px] uppercase tracking-[0.18em] md:text-[11px]"
-          >
-            Open Book
-          </span>
-        </div>
-
+    <div className="book-detail-copy">
+      <h2 id={`book-title-${collection.slug}`} className="font-display">{collection.title}</h2>
+      <dl className="book-facts">
+        <div><dt>Place</dt><dd>{collection.location}</dd></div>
+        {collection.category && <div><dt>Subject</dt><dd>{collection.category}</dd></div>}
+        {book.year && <div><dt>Year</dt><dd>{book.year}</dd></div>}
+        <div><dt>Collection</dt><dd>{book.count}</dd></div>
+      </dl>
+      {!collection.note.startsWith("A field study from ") && <p className="book-detail-introduction">{collection.note}</p>}
+      {collection.experience && <div className="book-story-preview">
+        <h3 className="font-display">{collection.experience.title}</h3>
+        <p>{collection.experience.paragraphs[0]}</p>
+        <span className="book-story-continuation">The story continues inside the photobook.</span>
+      </div>}
+      {book.cover && <CollectionMap collection={collection} />}
+      <Link href={`/series/${collection.slug}`} className="book-open-link" aria-label={`Open ${collection.title} collection`}>
+        {collection.images.length ? "Open photobook" : "View collection"}<ArrowUpRight size={20} aria-hidden="true" />
       </Link>
-
-      {collection.introArtworkType !== "illustration" && (mapSource(collection, "desktop") || mapSource(collection, "mobile")) && <p className="font-mono-custom pointer-events-none absolute bottom-4 right-5 z-20 text-[10px] text-[var(--foreground)] bg-[var(--background)] px-2 py-1 md:bottom-5 md:right-7">
-        Map data (c) OpenStreetMap contributors
-      </p>}
-    </article>
-  );
+    </div>
+  </div>;
 }
 
 export function WorkIndex() {
-  const scope = useRef<HTMLElement>(null);
-  const pin = useRef<HTMLDivElement>(null);
-  const track = useRef<HTMLDivElement>(null);
-  const navigate = useRef<(index: number, push: boolean) => void>(() => {});
+  const section = useRef<HTMLElement>(null);
+  const scene = useRef<Pick<ShelfRenderer, "select" | "inspect">>(null);
+  const dialog = useRef<HTMLDialogElement>(null);
+  const opener = useRef<HTMLElement | null>(null);
+  const links = useRef<(HTMLAnchorElement | null)[]>([]);
   const [active, setActive] = useState(0);
+  const [detail, setDetail] = useState<number | null>(null);
+  const [enhanced, setEnhanced] = useState(false);
+  const [fallback, setFallback] = useState(false);
+  const current = collections[active];
+  const selectedBook = bookPresentation(current);
 
-  useGSAP(() => {
-    const section = scope.current;
-    const scroller = pin.current;
-    const rail = track.current;
-    if (!section || !scroller || !rail || !collections.length) return;
-    let alive = true;
-    const mm = gsap.matchMedia();
-    mm.add({
-      all: "all",
-      desktop: "(min-width: 768px) and (min-height: 640px)",
-      reduce: "(prefers-reduced-motion: reduce)",
-      short: "(max-height: 639px)",
-    }, (context) => {
-      const { desktop, reduce, short } = context.conditions ?? {};
-      const flow = Boolean(reduce || short);
-      const panels = Array.from(rail.querySelectorAll<HTMLElement>("[data-city-panel]"));
-      let disposed = false;
-      let navigating = false;
-      let ready = false;
-      let current = -1;
-      let unlockFrame = 0;
-      const setPosition = (index: number, updateUrl: boolean) => {
-        const bounded = Math.max(0, Math.min(collections.length - 1, index));
-        if (current === bounded) return;
-        current = bounded;
-        setActive(bounded);
-        if (ready && updateUrl && !navigating) {
-          history.replaceState(history.state, "", "#city-" + collections[bounded].slug);
-        }
-      };
-      let tween: gsap.core.Tween | undefined;
-      if (desktop && !flow) {
-        const distance = () => Math.max(0, rail.scrollWidth - scroller.clientWidth);
-        tween = gsap.to(rail, {
-          x: () => -distance(),
-          ease: "none",
-          scrollTrigger: {
-            trigger: scroller, start: "top top", end: () => "+=" + distance(),
-            pin: true, scrub: 0.85, invalidateOnRefresh: true,
-            onUpdate: (self) => {
-              if (self.isActive) setPosition(Math.round(self.progress * (panels.length - 1)), true);
-            },
-          },
-        });
+  const choose = useCallback((index: number) => {
+    const next = bounded(index);
+    setActive(next);
+    scene.current?.select(next);
+  }, []);
+
+  const open = useCallback((index: number) => {
+    const next = bounded(index);
+    const focused = document.activeElement;
+    opener.current = focused instanceof HTMLElement && focused !== document.body && section.current?.contains(focused) ? focused : links.current[next];
+    setActive(next);
+    setDetail(next);
+    scene.current?.select(next);
+    scene.current?.inspect(true);
+    history.pushState(history.state, "", `#city-${collections[next].slug}`);
+  }, []);
+
+  const close = useCallback(() => {
+    setDetail(null);
+    scene.current?.inspect(false);
+    history.replaceState(history.state, "", "#work");
+  }, []);
+
+  const ready = useCallback(() => setEnhanced(true), []);
+  const fail = useCallback(() => { setEnhanced(false); setFallback(true); }, []);
+  const select = useCallback((index: number) => setActive(index), []);
+
+  useEffect(() => {
+    if (enhanced) return;
+    const rail = section.current?.querySelector<HTMLElement>(".shelf-fallback");
+    const book = rail?.children[active] as HTMLElement | undefined;
+    if (rail && book) rail.scrollTo({ left: book.offsetLeft - (rail.clientWidth - book.clientWidth) / 2, behavior: "instant" });
+  }, [active, enhanced]);
+
+  useEffect(() => {
+    const restore = () => {
+      const slug = location.hash.replace("#city-", "");
+      const index = collections.findIndex((item) => item.slug === slug);
+      if (index >= 0) {
+        choose(index);
+        setDetail(index);
+        scene.current?.inspect(true);
+        section.current?.scrollIntoView({ block: "start", behavior: "instant" });
+        window.dispatchEvent(new CustomEvent("portfolio:navigate", { detail: { top: window.scrollY } }));
+      } else {
+        setDetail(null);
+        scene.current?.inspect(false);
       }
-      const scrollRoot = (top: number) => {
-        window.scrollTo({ top, behavior: "instant" });
-        window.dispatchEvent(new CustomEvent("portfolio:navigate", { detail: { top } }));
-        ScrollTrigger.update();
-      };
-      navigate.current = (index, push) => {
-        const target = Math.max(0, Math.min(panels.length - 1, index));
-        navigating = true;
-        if (push) history.pushState(history.state, "", "#city-" + collections[target].slug);
-        const trigger = tween?.scrollTrigger;
-        if (trigger) {
-          scrollRoot(trigger.start + target * scroller.clientWidth);
-          trigger.getTween()?.progress(1);
-        } else if (flow) {
-          const contentsHeight = scroller.querySelector(".destination-contents")?.getBoundingClientRect().height ?? 0;
-          scrollRoot(panels[target].getBoundingClientRect().top + window.scrollY - 64 - contentsHeight);
-        } else {
-          scroller.scrollTo({ left: target * scroller.clientWidth, behavior: "instant" });
-          scrollRoot(section.getBoundingClientRect().top + window.scrollY);
-        }
-        setPosition(target, false);
-        cancelAnimationFrame(unlockFrame);
-        unlockFrame = requestAnimationFrame(() => { navigating = false; });
-      };
-      const restore = () => {
-        const slug = location.hash.replace("#city-", "");
-        const target = collections.findIndex((collection) => collection.slug === slug);
-        if (target >= 0) navigate.current(target, false);
-        else if (location.hash === "#work") navigate.current(0, false);
-      };
-      const onIndexLink = (event: MouseEvent) => {
-        if (!ready || event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
-        const link = event.target instanceof Element ? event.target.closest<HTMLAnchorElement>("a[href='/#work']") : null;
-        if (!link || link.target === "_blank") return;
-        // Native hash scrolling can move the pinned rail independently in WebKit.
-        event.preventDefault();
-        navigate.current(0, true);
-      };
-      const onScroll = () => {
-        if (!desktop && !flow) {
-          const bounds = section.getBoundingClientRect();
-          setPosition(Math.round(scroller.scrollLeft / scroller.clientWidth), bounds.top < 160 && bounds.bottom > 160);
-        } else if (flow) {
-          const candidate = panels.findLastIndex((panel) => panel.getBoundingClientRect().top < window.innerHeight / 2);
-          if (candidate >= 0 && section.getBoundingClientRect().bottom > 160) setPosition(candidate, true);
-        }
-      };
-      const onFocus = (event: FocusEvent) => {
-        const panel = (event.target as HTMLElement).closest<HTMLElement>("[data-city-panel]");
-        if (panel) navigate.current(panels.indexOf(panel), false);
-      };
-      const setup = () => {
-        if (!alive || disposed) return;
-        ScrollTrigger.refresh();
-        restore();
-        ready = true;
-        scroller.dataset.enhanced = "true";
-      };
-      document.fonts.ready.then(setup);
-      scroller.addEventListener("scroll", onScroll, { passive: true });
-      window.addEventListener("scroll", onScroll, { passive: true });
-      window.addEventListener("popstate", restore);
-      window.addEventListener("hashchange", restore);
-      document.addEventListener("click", onIndexLink);
-      rail.addEventListener("focusin", onFocus);
-      return () => {
-        disposed = true;
-        cancelAnimationFrame(unlockFrame);
-        scroller.removeEventListener("scroll", onScroll);
-        window.removeEventListener("scroll", onScroll);
-        window.removeEventListener("popstate", restore);
-        window.removeEventListener("hashchange", restore);
-        document.removeEventListener("click", onIndexLink);
-        rail.removeEventListener("focusin", onFocus);
-        navigate.current = () => {};
-        delete scroller.dataset.enhanced;
-      };
-    });
-    return () => { alive = false; mm.revert(); };
-  }, { scope });
+    };
+    restore();
+    window.addEventListener("popstate", restore);
+    window.addEventListener("hashchange", restore);
+    return () => { window.removeEventListener("popstate", restore); window.removeEventListener("hashchange", restore); };
+  }, [choose]);
 
-  return (
-    <section id="work" ref={scope} className="work-index relative border-t hairline" aria-label="Destination books">
-      <div ref={pin} className="destination-scroller no-scrollbar">
-        <nav className="destination-contents" aria-label="Destination contents">
-          <div className="destination-links">
-            {collections.map((collection, index) => (
-              <Link key={collection.slug} href={"/series/" + collection.slug} aria-current={active === index ? "location" : undefined}
-                onClick={(event) => {
-                  if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
-                  if (!pin.current?.dataset.enhanced) return;
-                  event.preventDefault(); navigate.current(index, true);
-                }}>{collection.title}</Link>
-            ))}
-          </div>
-          <div className="destination-controls">
-            <span className="destination-position" aria-live="polite">{String(active + 1).padStart(2, "0")} / {String(collections.length).padStart(2, "0")}</span>
-            <button type="button" title="Previous destination" aria-label="Previous destination" disabled={active === 0} onClick={() => navigate.current(active - 1, true)}><ArrowLeft size={18} /></button>
-            <button type="button" title="Next destination" aria-label="Next destination" disabled={active === collections.length - 1} onClick={() => navigate.current(active + 1, true)}><ArrowRight size={18} /></button>
-          </div>
-        </nav>
-        <div ref={track} className="destination-track">
-          {collections.map((collection, index) => <CityPanel key={collection.slug} collection={collection} index={index} />)}
+  useEffect(() => {
+    const element = dialog.current;
+    if (detail === null || !element) return;
+    const previousOverflow = document.body.style.overflow;
+    element.showModal();
+    document.body.style.overflow = "hidden";
+    window.dispatchEvent(new Event("portfolio:scroll-lock"));
+    return () => {
+      element.close();
+      document.body.style.overflow = previousOverflow;
+      window.dispatchEvent(new Event("portfolio:scroll-unlock"));
+      opener.current?.focus({ preventScroll: true });
+    };
+  }, [detail]);
+
+  function onContents(event: MouseEvent<HTMLAnchorElement>, index: number) {
+    if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button !== 0) return;
+    event.preventDefault();
+    open(index);
+  }
+
+  return <section id="work" ref={section} className="photobook-library" aria-label="Destination books">
+    <header className="library-heading site-gutter">
+      <h2 className="font-display">Photobooks</h2>
+      <p>Places I’ve been. Moments I’ve kept.<br />Take a book from the shelf.</p>
+    </header>
+    <div className="photobook-shelf" data-enhanced={enhanced ? "true" : undefined} data-fallback={fallback ? "true" : undefined}>
+      <div className="photobook-shelf-stage">
+        {!fallback && <PhotobookShelfScene ref={scene} volumes={volumes} initialIndex={active} onSelect={select} onOpen={open} onReady={ready} onError={fail} />}
+        <div className="shelf-fallback no-scrollbar" aria-label="Photobook covers">
+          {collections.map((collection, index) => {
+            const book = bookPresentation(collection);
+            return <Link key={collection.slug} href={`/series/${collection.slug}`} className="shelf-fallback-book" style={{ "--book-color": book.color } as CSSProperties} onClick={(event) => onContents(event, index)}>
+              <span className="font-mono-custom">Nagarjun Mallesh</span>
+              <h3 className="font-display">{collection.title}</h3>
+              <span className="shelf-fallback-plate">{book.cover ? <picture><img src={book.coverSrc} width={book.cover.width} height={book.cover.height} alt="" loading="lazy" decoding="async" /></picture> : <span className="font-display">{collection.title}</span>}</span>
+              <span>{book.count}</span>
+            </Link>;
+          })}
         </div>
       </div>
-    </section>
-  );
+      <div className="shelf-selection site-gutter">
+        <div className="shelf-selection-copy" aria-live="polite" aria-atomic="true">
+          <h3 className="font-display">{current.title}</h3>
+          <p>{current.location} <span aria-hidden="true">·</span> {selectedBook.count}</p>
+        </div>
+        <button className="shelf-inspect" type="button" onClick={() => open(active)} aria-label={`Preview ${current.title} photobook`}>Take a closer look <ArrowUpRight size={18} aria-hidden="true" /></button>
+        <div className="shelf-controls" role="group" aria-label="Browse photobooks">
+          <span className="font-mono-custom">{String(active + 1).padStart(2, "0")} / {String(collections.length).padStart(2, "0")}</span>
+          <button type="button" aria-label="Previous photobook" onClick={() => choose(active - 1)}><ArrowLeft size={22} /></button>
+          <button type="button" aria-label="Next photobook" onClick={() => choose(active + 1)}><ArrowRight size={22} /></button>
+        </div>
+      </div>
+      <nav className="shelf-contents site-gutter" aria-label="Destination contents" onKeyDown={(event) => {
+        if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) return;
+        event.preventDefault();
+        const from = links.current.indexOf(document.activeElement as HTMLAnchorElement);
+        const next = event.key === "Home" ? 0 : event.key === "End" ? collections.length - 1 : bounded((from >= 0 ? from : active) + (event.key === "ArrowRight" ? 1 : -1));
+        choose(next);
+        links.current[next]?.focus();
+      }}>
+        {collections.map((collection, index) => <Link key={collection.slug} id={`city-${collection.slug}`} ref={(element) => { links.current[index] = element; }} href={`/series/${collection.slug}`} aria-current={active === index ? "location" : undefined} onFocus={() => choose(index)} onClick={(event) => onContents(event, index)}>{collection.title}</Link>)}
+      </nav>
+    </div>
+    {detail !== null && <dialog ref={dialog} className="book-detail-dialog" aria-labelledby={`book-title-${collections[detail].slug}`} data-lenis-prevent onCancel={(event) => { event.preventDefault(); close(); }} onClick={(event) => { if (event.target === event.currentTarget) close(); }} onKeyDown={(event) => {
+      if (event.key !== "Tab") return;
+      const controls = Array.from(event.currentTarget.querySelectorAll<HTMLElement>('a[href], button:not(:disabled)')).filter((element) => element.getClientRects().length > 0);
+      if (!controls.length) return;
+      // WebKit can omit links from native Tab order depending on the macOS
+      // keyboard preference. Move every step so the gallery action stays reachable.
+      event.preventDefault();
+      const index = controls.indexOf(document.activeElement as HTMLElement);
+      const next = event.shiftKey ? (index <= 0 ? controls.length - 1 : index - 1) : (index + 1) % controls.length;
+      controls[next].focus();
+    }}>
+      <div className="book-detail-shell">
+        <button className="book-detail-close" type="button" onClick={close} autoFocus><X size={18} aria-hidden="true" /><span>Return to shelf</span></button>
+        <BookDetails collection={collections[detail]} />
+      </div>
+    </dialog>}
+  </section>;
 }

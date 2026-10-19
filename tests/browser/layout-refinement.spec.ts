@@ -3,25 +3,20 @@ import type { Route } from "@playwright/test";
 
 const cities = ["maine", "new-york", "santa-cruz", "washington", "hampi"];
 
-test("wrapped mobile contents reserve space for every map and attribution", async ({ page }) => {
-  for (const viewport of [
-    { width: 320, height: 844 }, { width: 390, height: 844 }, { width: 609, height: 844 },
-    { width: 320, height: 640 }, { width: 390, height: 640 }, { width: 609, height: 640 },
-  ]) {
-    await page.setViewportSize(viewport);
+test("mobile detail cards retain each map and its attribution", async ({ page }) => {
+  for (const width of [320, 390, 609]) {
+    await page.setViewportSize({ width, height: 844 });
     for (const city of cities) {
       await page.goto(`/#city-${city}`);
-      await expect(page.locator(".destination-scroller")).toHaveAttribute("data-enhanced", "true");
-      const panel = page.locator(`#city-${city}`);
-      const credit = panel.locator(":scope > p");
-      const contents = (await page.locator(".destination-contents").boundingBox())!;
-      const panelBounds = (await panel.boundingBox())!;
-      const creditBounds = (await credit.boundingBox())!;
-      expect(panelBounds.y).toBeGreaterThanOrEqual(contents.y + contents.height - 1);
-      expect(creditBounds.y + creditBounds.height).toBeLessThanOrEqual(viewport.height);
-      const copy = (await panel.locator("[data-city-copy]").boundingBox())!;
-      expect(copy.y).toBeGreaterThanOrEqual(panelBounds.y);
-      expect(copy.y + copy.height).toBeLessThan(creditBounds.y);
+      const detail = page.getByRole("dialog");
+      await expect(detail).toBeVisible();
+      const map = detail.locator(".book-map");
+      await map.scrollIntoViewIfNeeded();
+      await expect(map.getByText("OpenStreetMap", { exact: false })).toBeVisible();
+      const bounds = (await map.boundingBox())!;
+      expect(bounds.x).toBeGreaterThanOrEqual(0);
+      expect(bounds.x + bounds.width).toBeLessThanOrEqual(width);
+      expect(await detail.evaluate(el => el.scrollWidth <= el.clientWidth)).toBe(true);
     }
   }
 });

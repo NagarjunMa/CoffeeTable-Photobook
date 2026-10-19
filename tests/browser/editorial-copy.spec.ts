@@ -16,7 +16,7 @@ for (const width of [320, 390, 1440]) {
     const home = await page.goto("/");
     const html = await home!.text();
     expect(html).toContain(tagline);
-    for (const city of notes) expect(html).toContain(city.indexNote);
+    for (const city of notes) expect(html).toContain(`/series/${city.slug}`);
     const line = page.getByText(tagline, { exact: true });
     await expect(line).toBeVisible();
     const titleBounds = (await page.locator("h1").boundingBox())!;
@@ -26,9 +26,10 @@ for (const width of [320, 390, 1440]) {
     await page.screenshot({ path: info.outputPath(`hero-copy-${width}.png`) });
     for (const city of notes) {
       await page.goto(`/#city-${city.slug}`);
-      await expect(page.locator(".destination-scroller")).toHaveAttribute("data-enhanced", "true");
-      const copy = page.locator(`#city-${city.slug}`).getByText(city.indexNote, { exact: true });
-      await expect(copy).toBeInViewport({ ratio: 1 });
+      await expect(page.getByRole("dialog")).toBeVisible();
+      const copy = page.getByRole("dialog").getByText(city.note, { exact: true });
+      await copy.scrollIntoViewIfNeeded();
+      await expect(copy).toBeVisible();
       await page.screenshot({ path: info.outputPath(`${city.slug}-copy-${width}.png`) });
       const response = await page.goto(`/series/${city.slug}`);
       expect(await response!.text()).toContain(city.note);

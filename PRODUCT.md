@@ -24,7 +24,11 @@ The responsive website is viewed on desktop and mobile. Google Drive is the priv
 
 ## Capabilities and Constraints
 
-- The collection index supports place maps and illustrated subject introductions.
+- The collection index presents individual photographic volumes on an interactive
+  shelf. Each opens a detail card with authored copy, available collection facts,
+  a map or illustration, and a link to its full book.
+- Real cover links remain usable without JavaScript or WebGL; keyboard, touch,
+  reduced-motion and history navigation are supported.
 - Individual collections open as vertical galleries with uncropped photographs.
 - A collection's photographs load behind a full-screen Thinking Orbs transition before its book is revealed; slow loads offer a way to continue.
 - A collection may include a photographer-authored personal account between its opening and gallery.
