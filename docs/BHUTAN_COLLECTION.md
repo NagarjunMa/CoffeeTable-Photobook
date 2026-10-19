@@ -1,8 +1,8 @@
 # Bhutan collection
 
-October 18, 2026. Standard-risk addition through the existing Drive, Cloudflare
-Images, editorial, and responsive-map workflows. The change remains local to the
-repository until separately published.
+October 18, 2026. The collection was added through the existing Drive,
+Cloudflare Images, editorial, and responsive-map workflows. Its personal story
+uses the established collection experience layout.
 
 ## Contract and implementation
 
@@ -17,9 +17,12 @@ repository until separately published.
   matching breakpoints. They include place labels and a small baked map credit,
   so the derivative manifest classifies them as annotated, transitional maps,
   rather than label-free artwork.
-- The brief introduction describes only subjects visible in the collection.
-  No first-person travel account or visit date was supplied, so neither is
-  invented.
+- The photographer's first-visit account now appears as a personal story before
+  the gallery. Its shorter introduction also appears on the collection opening
+  and destination index. No visit date was supplied, so none is invented.
+- "Pukhara" in the supplied account is interpreted as Punakha, the Bhutanese
+  destination. Unverified claims about a motorcycle ban, the king's security,
+  and an exact mobile-data price are not presented as facts.
 
 The Drive folder ID is stored in `src/data/generated/collections.json` and the
 selected stable photograph ID in `src/data/editorial.json`. Local map sources

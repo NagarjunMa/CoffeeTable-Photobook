@@ -16,8 +16,9 @@ The New York, Washington and Maine introductions now use the photographer's
 September 15 memories and are enabled as approved collection copy at his request.
 Santa Cruz uses his September 16 July-sunset story as approved copy. Hampi uses
 his supplied monochrome-photography story and early-2019 visit year. Its full
-story is in `note`; its concise map-card excerpt is in `indexNote`. Image review
-states are separate. There are 41 visually grounded image description/caption
+story is in `note`; its concise map-card excerpt is in `indexNote`. Bhutan uses
+his first-visit account in `experience` and a shorter introduction in `note`.
+Image review states are separate. There are 41 visually grounded image description/caption
 drafts, 60 blocked records, and one approved Bhutan cover description. Bhutan's
 20 other new photographs await full-resolution description review. Blocked
 records keep the generated photo visible; they do not remove photographs or

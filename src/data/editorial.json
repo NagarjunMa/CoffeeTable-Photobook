@@ -122,7 +122,18 @@
       "location": "Bhutan",
       "category": "Country",
       "year": null,
-      "note": "Mountain valleys, rivers, temples and cliffside monasteries: photographs of Bhutan's changing landscapes and architecture.",
+      "note": "On my first visit to Bhutan, its quiet streets, mountain landscapes and peaceful monasteries stayed with me. I photographed the journey on a newly bought OnePlus 7 Pro.",
+      "experience": {
+        "title": "My first glimpse of Bhutan",
+        "subtitle": "Paro, Thimphu and Punakha · photographed on a OnePlus 7 Pro",
+        "paragraphs": [
+          "Bhutan shares a border with India and is only a few hours by air from Kolkata, yet I felt I had arrived somewhere entirely different. I noticed it as soon as I landed: in the way people spoke, in the traditional clothes I saw around me, and in the pride they took in their culture.",
+          "The streets felt unusually quiet. I hardly heard a horn, and our guides were careful about littering or disturbing the places we visited. Learning that Bhutan is carbon-negative made that care for its surroundings feel even more remarkable. Mobile data felt expensive there too, another detail I still remember from the trip.",
+          "The landscape seemed to change around every bend. In Paro, Thimphu and Punakha, the towns, valleys and Himalayan mountains were beautiful in different ways. Tiger's Nest is the place everyone talks about, but I found just as much beauty in the quieter stops along the road.",
+          "The shrines and monasteries stayed with me most. I could sit inside one and lose track of time. There was a stillness that made me want to slow down, listen and simply be there. The kindness of the people I met and the local food made those days feel even warmer.",
+          "I had recently bought a OnePlus 7 Pro, the company's flagship phone at the time, and I made every photograph and video from this trip with it. I wanted to hold on to the mountain views, the streets and the peaceful moments inside the monasteries. Looking at these pictures now brings me back to the wonder of seeing Bhutan for the first time."
+        ]
+      },
       "coverIds": ["1xC3W8hW7kt-JxfklT6dE4dtZVyoK4NTQ"],
       "images": {
         "1bvSnMVcctHhJ2nEmW1QmMkago6fcdvo_": { "reviewStatus": "blocked", "reason": "New Bhutan import; full-resolution image description awaiting review." },
