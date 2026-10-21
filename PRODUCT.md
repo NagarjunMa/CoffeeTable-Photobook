@@ -25,12 +25,17 @@ The responsive website is viewed on desktop and mobile. Google Drive is the priv
 ## Capabilities and Constraints
 
 - The collection index presents individual photographic volumes on an interactive
-  shelf. Each opens a detail card with authored copy, available collection facts,
-  a map or illustration, and a link to its full book.
+  horizontal shelf. Drag, swipe, horizontal trackpad scroll, arrows and contents
+  links browse volumes. Each opens a hinged spread with title/photo on the left,
+  an authored experience on the right, and a link to its complete book. Available
+  collection facts and maps sit in a secondary expandable section.
 - Real cover links remain usable without JavaScript or WebGL; keyboard, touch,
   reduced-motion and history navigation are supported.
 - Individual collections open as vertical galleries with uncropped photographs.
-- A collection's photographs load behind a full-screen Thinking Orbs transition before its book is revealed; slow loads offer a way to continue.
+- A bookshelf preview waits behind Thinking Orbs until its rendered photographs
+  have loaded and decoded, then opens the book. Cancellation, retry and a slow
+  connection continue option keep it usable. Complete galleries retain their
+  own full-screen Thinking Orbs transition while photographs load.
 - A collection may include a photographer-authored personal account between its opening and gallery.
 - New collections may be published before their gallery photographs are ready, with an explicit preparation state.
 - Do not fabricate photographs, captions, locations, or field observations.

@@ -29,3 +29,22 @@ Firefox, and WebKit passed for blocked client scripts, reduced motion, and
 JavaScript arriving after the CSS fallback while photographs were pending.
 Normal delayed-image, slow-load, and no-JavaScript paths passed in Firefox;
 they also passed in Chromium and WebKit before the late-hydration correction.
+
+## Bookshelf preview transition
+
+The shelf's preview dialog now applies its own Thinking Orbs gate before its
+hinged opening. It observes the actual responsive photograph, animated cover
+and map images, including cached completion, and waits for `decode()` rather
+than merely a network load event. The opening timeline stays paused; the paper
+spread is hidden and inert until ready. An empty volume opens immediately.
+
+Return to shelf/Escape always cancels. A slow preview offers an explicit
+Continue to book after12s; an image failure offers Retry photographs or
+Continue to book. Retry remounts only the image requests, preserving the dialog
+and paused animation. Late completion from a dismissed/retried preview cannot
+change a new book. Reduced motion reveals the prepared spread without a hinge
+animation. The complete gallery retains its separate existing loading policy.
+
+Validation for this extension is recorded under “Preview photograph transition”
+in `PHOTOBOOK_BOOKSHELF.md`; older gallery results above retain their historical
+scope. No deployment is part of this local change.

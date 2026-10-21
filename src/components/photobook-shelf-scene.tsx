@@ -11,7 +11,7 @@ export function PhotobookShelfScene({ volumes, initialIndex, onSelect, onOpen, o
   onOpen: (index: number) => void;
   onReady: () => void;
   onError: () => void;
-  ref: Ref<Pick<ShelfRenderer, "select" | "inspect">>;
+  ref: Ref<Pick<ShelfRenderer, "select" | "inspect" | "bounds">>;
 }) {
   const canvas = useRef<HTMLCanvasElement>(null);
   const renderer = useRef<ShelfRenderer | null>(null);
@@ -20,6 +20,7 @@ export function PhotobookShelfScene({ volumes, initialIndex, onSelect, onOpen, o
   useImperativeHandle(ref, () => ({
     select(index) { startingIndex.current = index; renderer.current?.select(index); },
     inspect(open) { inspecting.current = open; renderer.current?.inspect(open); },
+    bounds(index) { return renderer.current?.bounds(index); },
   }), []);
 
   useEffect(() => {

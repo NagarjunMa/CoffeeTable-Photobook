@@ -8,9 +8,11 @@
 import * as THREE from "three";
 
 export type ShelfVolume = { title: string; color: string; image?: string; count: string };
+export type BookOrigin = { left: number; top: number; width: number; height: number };
 export type ShelfRenderer = {
   select: (index: number) => void;
   inspect: (open: boolean) => void;
+  bounds: (index: number) => BookOrigin | undefined;
   resize: () => void;
   dispose: () => void;
 };
@@ -18,7 +20,6 @@ export type ShelfRenderer = {
 type Rig = {
   root: THREE.Group;
   hinge: THREE.Group;
-  lastOffset: number;
 };
 
 const wrap = (value: number, length: number) => ((value % length) + length) % length;
@@ -50,11 +51,13 @@ export function createBookshelfRenderer(
   let settleUntil = 0;
   let target = initialIndex;
   let position = initialIndex;
+  let velocity = 0;
   let selected = initialIndex;
   let hovered = -1;
   let inspecting = false;
   let inspection = 0;
-  let drag: { id: number; x: number; y: number; start: number; moved: boolean } | null = null;
+  let drag: { id: number; x: number; y: number; start: number; moved: boolean; lastX: number; time: number; velocity: number } | null = null;
+  let wheelTimer: ReturnType<typeof setTimeout> | undefined;
   const pointer = new THREE.Vector2();
   const ray = new THREE.Raycaster();
 
@@ -157,7 +160,7 @@ export function createBookshelfRenderer(
     return texture;
   }
 
-  const width = 1.48, height = 2.04, depth = 0.18;
+  const width = 1.48, height = 2.04, depth = 0.18, spacing = 1.76;
   const rigs: Rig[] = volumes.map((volume, index) => {
     const root = new THREE.Group();
     const cloth = new THREE.MeshStandardMaterial({ color: volume.color, roughness: 0.87 });
@@ -189,15 +192,18 @@ export function createBookshelfRenderer(
         object.userData.bookIndex = index;
       }
     });
-    root.position.set((index - initialIndex) * 1.92, height / 2, 0);
+    root.position.set((index - initialIndex) * spacing, height / 2, 0);
     scene.add(root);
-    return { root, hinge, lastOffset: index - initialIndex };
+    return { root, hinge };
   });
 
   function select(index: number) {
-    let distance = index - wrap(Math.round(target), volumes.length);
+    clearTimeout(wheelTimer);
+    wheelTimer = undefined;
+    const base = Math.round(position);
+    let distance = index - wrap(base, volumes.length);
     distance -= Math.round(distance / volumes.length) * volumes.length;
-    target += distance;
+    target = base + distance;
     selected = wrap(index, volumes.length);
     callbacks.onSelect(selected);
     wake();
@@ -207,25 +213,48 @@ export function createBookshelfRenderer(
     const bounds = canvas.getBoundingClientRect();
     pointer.set((event.clientX - bounds.left) / bounds.width * 2 - 1, -(event.clientY - bounds.top) / bounds.height * 2 + 1);
     ray.setFromCamera(pointer, camera);
-    const hits = ray.intersectObjects(rigs.map((rig) => rig.root), true);
+    const hits = ray.intersectObjects(rigs.filter(rig => rig.root.visible).map((rig) => rig.root), true);
     return hits.length ? hits[0].object.userData.bookIndex as number : -1;
   }
 
   function onPointerDown(event: PointerEvent) {
-    if (event.button !== 0 || inspecting) return;
-    drag = { id: event.pointerId, x: event.clientX, y: event.clientY, start: target, moved: false };
+    if (event.button !== 0 || !event.isPrimary || inspecting) return;
+    clearTimeout(wheelTimer);
+    wheelTimer = undefined;
+    // Grab the presentation position, including during an unfinished settle.
+    target = position;
+    velocity = 0;
+    drag = { id: event.pointerId, x: event.clientX, y: event.clientY, start: position, moved: false, lastX: event.clientX, time: event.timeStamp, velocity: 0 };
+  }
+
+  function pixelsPerBook() {
+    const left = new THREE.Vector3(0, height / 2, 0).project(camera);
+    const right = new THREE.Vector3(spacing, height / 2, 0).project(camera);
+    return Math.max(1, (right.x - left.x) * canvas.clientWidth / 2);
   }
 
   function onPointerMove(event: PointerEvent) {
     if (drag && event.pointerId === drag.id) {
       const deltaX = event.clientX - drag.x;
       const deltaY = event.clientY - drag.y;
+      if (!drag.moved && Math.abs(deltaY) > 10 && Math.abs(deltaY) >= Math.abs(deltaX)) {
+        drag = null;
+        target = Math.round(position);
+        wake();
+        return;
+      }
       if (!drag.moved && Math.abs(deltaX) > 10 && Math.abs(deltaX) > Math.abs(deltaY)) {
         drag.moved = true;
         canvas.setPointerCapture(event.pointerId);
       }
       if (drag.moved) {
-        target = drag.start - deltaX / Math.min(canvas.clientWidth * 0.45, 245);
+        const elapsed = event.timeStamp - drag.time;
+        if (elapsed > 0) drag.velocity = -(event.clientX - drag.lastX) / pixelsPerBook() / (elapsed / 1000);
+        drag.lastX = event.clientX;
+        drag.time = event.timeStamp;
+        target = drag.start - deltaX / pixelsPerBook();
+        position = target;
+        canvas.style.cursor = "grabbing";
         wake();
       }
     } else {
@@ -241,18 +270,75 @@ export function createBookshelfRenderer(
     drag = null;
     if (canvas.hasPointerCapture(event.pointerId)) canvas.releasePointerCapture(event.pointerId);
     if (gesture.moved) {
-      target = Math.round(target);
+      velocity = event.type !== "pointerup" || event.timeStamp - gesture.time > 100 ? 0 : THREE.MathUtils.clamp(gesture.velocity, -10, 10);
+      target = Math.round(position + THREE.MathUtils.clamp(velocity * 0.18, -1.5, 1.5));
       selected = wrap(target, volumes.length);
       callbacks.onSelect(selected);
     }
     else if (event.type === "pointerup" && Math.hypot(event.clientX - gesture.x, event.clientY - gesture.y) < 10) {
       const index = hit(event);
       if (index >= 0) { select(index); callbacks.onOpen(index); }
+      else {
+        target = Math.round(position);
+        selected = wrap(target, volumes.length);
+        callbacks.onSelect(selected);
+      }
     }
+    else target = Math.round(position);
+    canvas.style.cursor = hovered >= 0 ? "pointer" : "grab";
     wake();
   }
 
-  function onPointerLeave() { hovered = -1; wake(); }
+  function onWheel(event: WheelEvent) {
+    // Native vertical scrolling remains available, including diagonal gestures.
+    if (inspecting || drag || Math.abs(event.deltaX) <= Math.abs(event.deltaY) || event.ctrlKey) return;
+    event.preventDefault();
+    const unit = event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? canvas.clientWidth : 1;
+    position += event.deltaX * unit / pixelsPerBook();
+    target = position;
+    velocity = 0;
+    selected = wrap(Math.round(position), volumes.length);
+    callbacks.onSelect(selected);
+    clearTimeout(wheelTimer);
+    wheelTimer = setTimeout(() => {
+      wheelTimer = undefined;
+      target = Math.round(position);
+      wake();
+    }, 120);
+    wake();
+  }
+
+  function bounds(index: number): BookOrigin | undefined {
+    const rig = rigs[index];
+    if (!rig?.root.visible) return;
+    rig.root.updateWorldMatrix(true, true);
+    const box = new THREE.Box3().setFromObject(rig.root);
+    const points = [
+      new THREE.Vector3(box.min.x, box.min.y, box.max.z),
+      new THREE.Vector3(box.min.x, box.max.y, box.max.z),
+      new THREE.Vector3(box.max.x, box.min.y, box.max.z),
+      new THREE.Vector3(box.max.x, box.max.y, box.max.z),
+    ].map(point => point.project(camera));
+    const rect = canvas.getBoundingClientRect();
+    const left = Math.min(...points.map(point => point.x));
+    const right = Math.max(...points.map(point => point.x));
+    const top = Math.max(...points.map(point => point.y));
+    const bottom = Math.min(...points.map(point => point.y));
+    return { left: rect.left + (left + 1) * rect.width / 2, top: rect.top + (1 - top) * rect.height / 2, width: (right - left) * rect.width / 2, height: (top - bottom) * rect.height / 2 };
+  }
+
+  function onPointerLeave() {
+    hovered = -1;
+    // Before the intent threshold we have no capture, so an outside release
+    // cannot reach us. Abandon that pending tap instead of keeping a ghost drag.
+    if (drag && !drag.moved) {
+      drag = null;
+      target = Math.round(position);
+      selected = wrap(target, volumes.length);
+      callbacks.onSelect(selected);
+    }
+    wake();
+  }
   function onContextLost(event: Event) { event.preventDefault(); callbacks.onError(); }
   function onMotion() { reduced = motion.matches; wake(); }
 
@@ -261,7 +347,16 @@ export function createBookshelfRenderer(
     if (disposed || !visible) return;
     const delta = Math.min((time - (lastTime || time - 16)) / 1000, 0.05);
     lastTime = time;
-    position = reduced ? target : THREE.MathUtils.damp(position, target, 9.5, delta);
+    if (reduced) { position = target; velocity = 0; }
+    else if (!drag && !wheelTimer) {
+      // Analytic critically damped spring; preserves velocity when retargeted.
+      const omega = 15;
+      const displacement = position - target;
+      const carry = velocity + omega * displacement;
+      const decay = Math.exp(-omega * delta);
+      position = target + (displacement + carry * delta) * decay;
+      velocity = (velocity - omega * carry * delta) * decay;
+    }
     const nearest = wrap(Math.round(position), volumes.length);
     // Animated interpolation must not replace a button/keyboard request with
     // an intermediate book. Only a live drag derives selection from position.
@@ -271,31 +366,26 @@ export function createBookshelfRenderer(
       let offset = index - position;
       offset -= Math.round(offset / volumes.length) * volumes.length;
       const distance = Math.abs(offset);
-      const focus = 1 - THREE.MathUtils.clamp(distance, 0, 1);
       const lift = index === selected ? inspection : 0;
       const speed = reduced ? 1000 : 12;
-      if (Math.abs(offset - rig.lastOffset) > volumes.length * 0.5) rig.root.position.x = offset * 1.92;
-      rig.lastOffset = offset;
-      rig.root.position.x = THREE.MathUtils.damp(rig.root.position.x, offset * 1.92, speed, delta);
-      rig.root.position.y = THREE.MathUtils.damp(rig.root.position.y, height / 2 + focus * 0.14 + lift * 0.2, speed, delta);
-      rig.root.position.z = THREE.MathUtils.damp(rig.root.position.z, focus * 0.32 - Math.min(distance, 3) * 0.12 + lift * 0.7, speed, delta);
-      rig.root.rotation.y = THREE.MathUtils.damp(rig.root.rotation.y, -offset * 0.17 - lift * 0.12, speed, delta);
-      rig.root.rotation.z = THREE.MathUtils.damp(rig.root.rotation.z, -offset * 0.018, speed, delta);
-      const scale = THREE.MathUtils.damp(rig.root.scale.x, 1 + focus * 0.075 + lift * 0.05, speed, delta);
-      rig.root.scale.setScalar(scale);
+      rig.root.position.x = offset * spacing;
+      rig.root.position.y = height / 2 + lift * 0.12;
+      rig.root.position.z = THREE.MathUtils.damp(rig.root.position.z, lift * 0.2 + (hovered === index ? 0.08 : 0), speed, delta);
+      rig.root.rotation.y = -0.08;
+      rig.root.rotation.z = 0;
       rig.hinge.rotation.y = THREE.MathUtils.damp(rig.hinge.rotation.y, !reduced && hovered === index ? -0.12 : 0, speed, delta);
       rig.root.visible = distance < 3.4;
     });
     renderer.render(scene, camera);
-    if (time < settleUntil || drag) requestFrame();
+    if (time < settleUntil || drag || wheelTimer || Math.abs(position - target) > 0.001 || Math.abs(velocity) > 0.001) requestFrame();
   }
 
   function resize() {
     const bounds = canvas.getBoundingClientRect();
     const aspect = Math.max(bounds.width, 1) / Math.max(bounds.height, 1);
     camera.aspect = aspect;
-    camera.position.set(0, 3.1, aspect < 1.2 ? 5.8 : 6.8);
-    camera.lookAt(0, 0.95, 0);
+    camera.position.set(0, 2.3, aspect < 1.2 ? 5.8 : 6.8);
+    camera.lookAt(0, 1, 0);
     camera.updateProjectionMatrix();
     renderer.setSize(bounds.width, bounds.height, false);
     wake();
@@ -305,7 +395,9 @@ export function createBookshelfRenderer(
   canvas.addEventListener("pointermove", onPointerMove);
   canvas.addEventListener("pointerup", onPointerEnd);
   canvas.addEventListener("pointercancel", onPointerEnd);
+  canvas.addEventListener("lostpointercapture", onPointerEnd);
   canvas.addEventListener("pointerleave", onPointerLeave);
+  canvas.addEventListener("wheel", onWheel, { passive: false });
   canvas.addEventListener("webglcontextlost", onContextLost);
   motion.addEventListener("change", onMotion);
   const observer = new IntersectionObserver(([entry]) => { visible = entry.isIntersecting; if (visible) wake(); });
@@ -313,18 +405,22 @@ export function createBookshelfRenderer(
   resize();
   return {
     select,
+    bounds,
     inspect(open) { inspecting = open; wake(); },
     resize,
     dispose() {
       disposed = true;
       cancelAnimationFrame(frameId);
+      clearTimeout(wheelTimer);
       observer.disconnect();
       motion.removeEventListener("change", onMotion);
       canvas.removeEventListener("pointerdown", onPointerDown);
       canvas.removeEventListener("pointermove", onPointerMove);
       canvas.removeEventListener("pointerup", onPointerEnd);
       canvas.removeEventListener("pointercancel", onPointerEnd);
+      canvas.removeEventListener("lostpointercapture", onPointerEnd);
       canvas.removeEventListener("pointerleave", onPointerLeave);
+      canvas.removeEventListener("wheel", onWheel);
       canvas.removeEventListener("webglcontextlost", onContextLost);
       images.forEach((image) => { image.onload = null; image.removeAttribute("src"); });
       resources.forEach((texture) => texture.dispose());

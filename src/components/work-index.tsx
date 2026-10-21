@@ -1,16 +1,14 @@
 "use client";
 
-import { ArrowLeft, ArrowRight, ArrowUpRight, X } from "lucide-react";
+import { ArrowLeft, ArrowRight, ArrowUpRight, MoveHorizontal } from "lucide-react";
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { CSSProperties, MouseEvent } from "react";
 import { collections } from "@/data/collections";
-import type { Collection } from "@/data/types";
 import { bookPresentation } from "@/lib/photobook-presentation";
-import type { ShelfRenderer } from "@/lib/bookshelf-renderer";
+import type { BookOrigin, ShelfRenderer } from "@/lib/bookshelf-renderer";
 import { PhotobookShelfScene } from "@/components/photobook-shelf-scene";
-import { PortfolioPhoto } from "@/components/portfolio-photo";
-import { CollectionMap } from "@/components/collection-map";
+import { BookDetailDialog } from "@/components/book-detail-dialog";
 
 const volumes = collections.map((collection) => {
   const book = bookPresentation(collection);
@@ -18,42 +16,10 @@ const volumes = collections.map((collection) => {
 });
 const bounded = (index: number) => ((index % collections.length) + collections.length) % collections.length;
 
-function BookDetails({ collection }: { collection: Collection }) {
-  const book = bookPresentation(collection);
-  return <div className="book-detail-spread" style={{ "--book-color": book.color } as CSSProperties}>
-    <div className="book-detail-plate">
-      <p className="book-author font-mono-custom">Nagarjun Mallesh</p>
-      {book.cover ? <figure className="book-detail-photo"><PortfolioPhoto photo={book.cover} sizes="(min-width: 900px) 40vw, 85vw" loading="eager" />
-        {book.cover.caption && <figcaption>{book.cover.caption}</figcaption>}
-      </figure> : <div className="book-detail-preparing"><span className="font-display" aria-hidden="true">{collection.title}</span><p>Photographs are being prepared.</p></div>}
-      <p className="book-plate-footer font-mono-custom">A photographic collection</p>
-    </div>
-    <div className="book-detail-copy">
-      <h2 id={`book-title-${collection.slug}`} className="font-display">{collection.title}</h2>
-      <dl className="book-facts">
-        <div><dt>Place</dt><dd>{collection.location}</dd></div>
-        {collection.category && <div><dt>Subject</dt><dd>{collection.category}</dd></div>}
-        {book.year && <div><dt>Year</dt><dd>{book.year}</dd></div>}
-        <div><dt>Collection</dt><dd>{book.count}</dd></div>
-      </dl>
-      {!collection.note.startsWith("A field study from ") && <p className="book-detail-introduction">{collection.note}</p>}
-      {collection.experience && <div className="book-story-preview">
-        <h3 className="font-display">{collection.experience.title}</h3>
-        <p>{collection.experience.paragraphs[0]}</p>
-        <span className="book-story-continuation">The story continues inside the photobook.</span>
-      </div>}
-      {book.cover && <CollectionMap collection={collection} />}
-      <Link href={`/series/${collection.slug}`} className="book-open-link" aria-label={`Open ${collection.title} collection`}>
-        {collection.images.length ? "Open photobook" : "View collection"}<ArrowUpRight size={20} aria-hidden="true" />
-      </Link>
-    </div>
-  </div>;
-}
-
 export function WorkIndex() {
   const section = useRef<HTMLElement>(null);
-  const scene = useRef<Pick<ShelfRenderer, "select" | "inspect">>(null);
-  const dialog = useRef<HTMLDialogElement>(null);
+  const scene = useRef<Pick<ShelfRenderer, "select" | "inspect" | "bounds">>(null);
+  const [origin, setOrigin] = useState<BookOrigin | undefined>(undefined);
   const opener = useRef<HTMLElement | null>(null);
   const links = useRef<(HTMLAnchorElement | null)[]>([]);
   const [active, setActive] = useState(0);
@@ -69,10 +35,16 @@ export function WorkIndex() {
     scene.current?.select(next);
   }, []);
 
-  const open = useCallback((index: number) => {
+  const open = useCallback((index: number, trigger?: HTMLElement) => {
     const next = bounded(index);
-    const focused = document.activeElement;
+    const focused = trigger ?? document.activeElement;
     opener.current = focused instanceof HTMLElement && focused !== document.body && section.current?.contains(focused) ? focused : links.current[next];
+    let source = scene.current?.bounds(next);
+    if (!source) {
+      const cover = section.current?.querySelectorAll<HTMLElement>(".shelf-fallback-book")[next];
+      if (cover && getComputedStyle(cover).visibility !== "hidden") source = cover.getBoundingClientRect();
+    }
+    setOrigin(source);
     setActive(next);
     setDetail(next);
     scene.current?.select(next);
@@ -99,6 +71,7 @@ export function WorkIndex() {
 
   useEffect(() => {
     const restore = () => {
+      setOrigin(undefined);
       const slug = location.hash.replace("#city-", "");
       const index = collections.findIndex((item) => item.slug === slug);
       if (index >= 0) {
@@ -118,25 +91,10 @@ export function WorkIndex() {
     return () => { window.removeEventListener("popstate", restore); window.removeEventListener("hashchange", restore); };
   }, [choose]);
 
-  useEffect(() => {
-    const element = dialog.current;
-    if (detail === null || !element) return;
-    const previousOverflow = document.body.style.overflow;
-    element.showModal();
-    document.body.style.overflow = "hidden";
-    window.dispatchEvent(new Event("portfolio:scroll-lock"));
-    return () => {
-      element.close();
-      document.body.style.overflow = previousOverflow;
-      window.dispatchEvent(new Event("portfolio:scroll-unlock"));
-      opener.current?.focus({ preventScroll: true });
-    };
-  }, [detail]);
-
   function onContents(event: MouseEvent<HTMLAnchorElement>, index: number) {
     if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button !== 0) return;
     event.preventDefault();
-    open(index);
+    open(index, event.currentTarget);
   }
 
   return <section id="work" ref={section} className="photobook-library" aria-label="Destination books">
@@ -145,7 +103,8 @@ export function WorkIndex() {
       <p>Places I’ve been. Moments I’ve kept.<br />Take a book from the shelf.</p>
     </header>
     <div className="photobook-shelf" data-enhanced={enhanced ? "true" : undefined} data-fallback={fallback ? "true" : undefined}>
-      <div className="photobook-shelf-stage">
+      <p className="shelf-gesture-hint font-mono-custom" id="shelf-gesture-hint"><MoveHorizontal size={18} aria-hidden="true" /><span>Drag or swipe to browse · Tap a book to open</span></p>
+      <div className="photobook-shelf-stage" role="group" aria-label="Interactive bookshelf" aria-describedby="shelf-gesture-hint">
         {!fallback && <PhotobookShelfScene ref={scene} volumes={volumes} initialIndex={active} onSelect={select} onOpen={open} onReady={ready} onError={fail} />}
         <div className="shelf-fallback no-scrollbar" aria-label="Photobook covers">
           {collections.map((collection, index) => {
@@ -164,7 +123,7 @@ export function WorkIndex() {
           <h3 className="font-display">{current.title}</h3>
           <p>{current.location} <span aria-hidden="true">·</span> {selectedBook.count}</p>
         </div>
-        <button className="shelf-inspect" type="button" onClick={() => open(active)} aria-label={`Preview ${current.title} photobook`}>Take a closer look <ArrowUpRight size={18} aria-hidden="true" /></button>
+        <button className="shelf-inspect" type="button" onClick={(event) => open(active, event.currentTarget)} aria-label={`Preview ${current.title} photobook`}>Take a closer look <ArrowUpRight size={18} aria-hidden="true" /></button>
         <div className="shelf-controls" role="group" aria-label="Browse photobooks">
           <span className="font-mono-custom">{String(active + 1).padStart(2, "0")} / {String(collections.length).padStart(2, "0")}</span>
           <button type="button" aria-label="Previous photobook" onClick={() => choose(active - 1)}><ArrowLeft size={22} /></button>
@@ -182,21 +141,6 @@ export function WorkIndex() {
         {collections.map((collection, index) => <Link key={collection.slug} id={`city-${collection.slug}`} ref={(element) => { links.current[index] = element; }} href={`/series/${collection.slug}`} aria-current={active === index ? "location" : undefined} onFocus={() => choose(index)} onClick={(event) => onContents(event, index)}>{collection.title}</Link>)}
       </nav>
     </div>
-    {detail !== null && <dialog ref={dialog} className="book-detail-dialog" aria-labelledby={`book-title-${collections[detail].slug}`} data-lenis-prevent onCancel={(event) => { event.preventDefault(); close(); }} onClick={(event) => { if (event.target === event.currentTarget) close(); }} onKeyDown={(event) => {
-      if (event.key !== "Tab") return;
-      const controls = Array.from(event.currentTarget.querySelectorAll<HTMLElement>('a[href], button:not(:disabled)')).filter((element) => element.getClientRects().length > 0);
-      if (!controls.length) return;
-      // WebKit can omit links from native Tab order depending on the macOS
-      // keyboard preference. Move every step so the gallery action stays reachable.
-      event.preventDefault();
-      const index = controls.indexOf(document.activeElement as HTMLElement);
-      const next = event.shiftKey ? (index <= 0 ? controls.length - 1 : index - 1) : (index + 1) % controls.length;
-      controls[next].focus();
-    }}>
-      <div className="book-detail-shell">
-        <button className="book-detail-close" type="button" onClick={close} autoFocus><X size={18} aria-hidden="true" /><span>Return to shelf</span></button>
-        <BookDetails collection={collections[detail]} />
-      </div>
-    </dialog>}
+    {detail !== null && <BookDetailDialog key={collections[detail].slug} collection={collections[detail]} origin={origin} opener={opener} onClose={close} />}
   </section>;
 }

@@ -1,5 +1,151 @@
 # Photobook bookshelf
 
+## Release validation — October 21, 2026
+
+The user authorized a direct push to main for the bookshelf refinement and
+preview Thinking Orbs transition. The release retains the published Bhutan
+story; a separate local deletion of that story is excluded and preserved.
+Marketing notes and local review screenshots are also excluded.
+
+Release snapshot checks: lint passed without warnings; webpack production build
+and TypeScript/static generation passed (12 routes); editorial15/15 and gallery
+6/6 checks passed. The production build with the retained Bhutan story passed
+21/21 selected browser checks across Chrome, Firefox and WebKit: all five
+preview loading/decode/error/cancel/slow paths and all eight volumes at390px and
+1440px. Prior broader review/validation below remains historical evidence.
+
+Publishing uses the existing Vercel Git integration after pushing main. No
+Drive sync, dependency changes, collection data edits or manual deployment is
+part of this release. Deployment status is verified after the push.
+
+## Preview photograph transition — October 20, 2026
+
+Standard tier, compact extension within the existing book dialog. Apply the
+production engineering loop to this bounded loading behavior. Preserve all
+previous bookshelf work, unrelated local editorial copy, and gallery loading.
+
+The user wants Thinking Orbs while a book's photographs prepare, then an
+uninterrupted opening. The dialog owns a loading gate for its actual rendered
+images (responsive preview, animated cover, and secondary map). It waits for
+load and decode; no speculative full-gallery preload or duplicate Image object.
+GSAP keeps the opening paused until this gate releases. Cancellation must work
+throughout. Cached/empty books have no artificial minimum waiting time. A slow
+load offers a deliberate continue after12s; failed images offer retry/continue.
+
+| ID | Acceptance | Check / wrong behavior rejected |
+| --- | --- | --- |
+| L1 | Orb is visible, book content hidden and inert while the selected photograph is delayed; opening starts only once decoded. | Hold responsive image route, assert loading/inert state, release, assert visible decoded image and hinged opening; rejects an orb laid over an already playing opening. |
+| L2 | Escape/return cancels loading, restores focus/scroll, and late completion does not reopen the book. | Cancel held request then release and open a different collection. |
+| L3 | Slow/error requests cannot trap the reader; retry remounts image requests; explicit continue remains usable. | Failed route then retry success; accelerated timeout with pending images then continue; rejects infinite spinner or silent placeholder reveal. |
+| L4 | Empty/cached collections, keyboard trapping and reduced motion still work. | Existing focused bookshelf cases and reduced-motion delayed-image case in three engines. |
+
+Planned validation: red/green loading browser case, lint/build, focused new
+loading suite and existing bookshelf cases. Self-review is proportional to this
+local Standard change; no shared image-delivery or gallery policy is altered.
+Current source: `book-detail-dialog.tsx` owns load/decode state and paused
+animation; preview CSS owns the light-paper orb and hidden/inert spread;
+`book-preview-loading.spec.ts` exercises delayed transfer/decode, cancellation,
+retry and slow continue. No delivery API or shared photo component changed.
+
+L1 reproduced red against the preceding build: no `.book-preparing-screen`
+existed. New Chrome loading cases5/5 pass. Lint and webpack production build
+with TypeScript/static generation pass. The selected cross-browser loading,
+all-volume, history/focus, motion and fallback run passed35/36; its remaining
+WebKit cancellation case exposed a real opener-focus issue: Safari pointer
+activation need not focus a button, so `document.activeElement` identified the
+previous title link instead of the clicked preview button. `WorkIndex.open`
+now accepts the explicit trigger from button/contents events; renderer opens
+retain their accessible contents-link fallback. Affected focus paths passed12/12 across Chrome, Firefox and WebKit on
+the corrected production build (cancellation/late completion, hinged opening,
+keyboard/history and no-WebGL fallback). Together with the35 unaffected passing
+checks, this resolves the only observed failure; no final full-suite run is
+claimed. Current build/lint/diff checks pass. Changes are verified locally and
+not published. Physical devices and screen-reader sessions were not run.
+Self-review traced cached completion, responsive source changes, cancellation
+before reveal, retry remounts, late promises, media changes and listener/timer
+cleanup. Unlike the complete gallery's settle-on-load policy, this local preview
+waits for decode and allows a deliberate retry before revealing. This policy
+difference stays within the preview rather than changing shared image delivery.
+
+## Active refinement — October 20, 2026
+
+Implement and review, Significant tier; full record retained because gesture
+physics, WebGL-to-DOM geometry and modal lifecycle change together. Base:
+`8e60622`. Preserve the unrelated local Bhutan editorial edit and local folders.
+No publishing is part of this request.
+
+The user wants ordered books along one horizontal shelf, direct browsing without
+relying on arrows, and a physical opening into a spread: title and photograph
+left, first-person experience right, then a link to the complete photobook.
+GSAP owns the reversible DOM opening timeline; Three owns shelf geometry,
+pointer tracking and spring settling. React owns selection/history. Existing
+authored prose, image delivery, gallery routes and progressive fallback remain.
+
+| ID | Refinement acceptance | Evaluation / wrong implementation rejected |
+| --- | --- | --- |
+| R1 | Straight ordered shelf; pointer/touch drag follows input, projects release velocity and snaps; horizontal trackpad scroll browses while vertical scroll remains available. | Real Chrome pointer/wheel tests, vertical wheel scroll check; rejects arrow-only browsing, drag opening a book and cancelled gestures opening a book. |
+| R2 | Any visible book opens in one click; keyboard and real collection links still work. | Off-center raycast test, existing keyboard/fallback/history cases. |
+| R3 | Opening hinges around the spine, anchored to the selected book; close reverses and accepts Escape during opening. | Inspect timeline transforms mid-opening; immediate Escape plus repeated opening/closing; rejects a flat popup fade or orphaned scroll lock. |
+| R4 | Title and complete photograph on left, authored experience first on right, complete-book link; maps/facts are secondary expandable content. | Desktop geometry and authored paragraph checks; mobile no-overflow/axe; rejects title on right and metadata preceding the experience. |
+| R5 | Reduced motion skips spatial animation; small screens, deep links, no WebGL/JS, focus restoration and image error controls remain usable. | Existing focused browser suite plus motion-toggle and keyboard checks. |
+
+Planned verification: lint, production build, focused bookshelf and affected
+editorial/layout browser tests, fresh-context read-only engineering review.
+`prompt-motion` was not found in installed skill roots or the local skill
+collection; available GSAP React/core/timeline and Apple design guidance used.
+
+Execution context: `work-index.tsx` owns shelf selection and routes;
+`photobook-shelf-scene.tsx` owns lazy renderer lifecycle;
+`bookshelf-renderer.ts` owns picking/movement/source bounds; new
+`book-detail-dialog.tsx` owns presentation, scoped GSAP opening/reversal and modal
+lifecycle. The build adds no dependencies. Complete: affected regression run and fresh review are green. Lint and
+production webpack/type generation pass. Changes remain local on
+`codex/bookshelf-direct-interaction`; this refinement has not been published.
+
+### Current review evidence
+
+Fresh-context read-only reviewer `/root/bookshelf_motion_review`, host model
+identifier unavailable beyond GPT-6, reviewed source/callers and ran independent
+Chromium probes against development port3101. Isolation was instructions-only;
+reviewer reported no repository mutation. Two rounds, no recursive delegation.
+
+- R-M1 / P2, confirmed, underlying pre-existing missing outside-release cleanup:
+  press near canvas edge, leave before drag threshold, release outside, return;
+  shelf treated hover as a drag and ignored wheel input. Repository regression
+  reproduced red (cursor remained `grabbing`). Clear pending gesture on leave;
+  handle lost pointer capture as cancellation. Reviewer independently confirmed
+  outside-release, captured outside-release and lost-capture cases green, with
+  no unintended dialog/page errors. Resolved on renderer SHA256
+  `601e6dd01844ff6a6c4bbac6166946aeca87e1788e05f455a050419a67c7216b`.
+- No other material findings in inspected source. Not a whole-repository audit.
+- The new left-title/story regression failed against base as intended. Initial
+  Chrome15/16 run caught fractional wheel state surviving title selection;
+  choosing a title now clears wheel settling and targets an integer volume.
+  Before the R-M1 correction, cross-browser bookshelf run:42 passed,6 deliberate
+  graphics skips. Final corrected snapshot:112 passed,8 deliberate graphics
+  skips across Chromium/Firefox/WebKit in the affected five-file browser run
+  (8.1 minutes). Physical WebGL pointer/trackpad cases run in Chrome; the other
+  engines cover DOM, history, keyboard, motion, maps and fallback behavior.
+- Current command set: `npm run lint`,
+  `NEXT_DIST_DIR=.next-test npm run build`, and
+  `PLAYWRIGHT_CHANNEL=chrome npx playwright test tests/browser/bookshelf.spec.ts tests/browser/editorial-copy.spec.ts tests/browser/layout-refinement.spec.ts tests/browser/hampi.spec.ts tests/browser/photobooks-navigation.spec.ts --trace off --reporter=list`.
+  Native tests start an isolated production server on3100; development preview
+  remains on3101. Lint passed with no warnings; webpack production build and
+  TypeScript/static generation passed (12 routes). Desktop screenshot confirms aligned books and a two-page
+  spread; 390px screenshot confirms readable stacked pages and the full-book
+  action. Geometry/keyboard/reduced-motion checks cover narrower and short
+  landscape viewports. No frame-rate claim is made.
+- Actual changes: the shelf renderer and scene interface, shelf index and new
+  focused dialog component, shared bookshelf CSS, affected browser tests, and
+  product/design/feature documentation. No collection data, image-delivery,
+  gallery source or dependencies changed. Existing unrelated local editorial
+  edits are excluded from this task.
+- Physical touch devices, screen readers and GPU/FPS profiling are not tested.
+  Automated photo routes use controlled fixtures; grey plates in screenshots
+  indicate missing optional local photo fixtures, not a production fallback.
+- Local skill search found no `prompt-motion`. No installed skill or external
+  reference was modified to fill this gap.
+
 October 18, 2026. Implement and review; significant risk because the home-page
 navigation model changes and a new WebGL lifecycle crosses the React boundary.
 Full feature record; scope is the destination index, not the hero or galleries.

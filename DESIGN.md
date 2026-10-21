@@ -197,7 +197,7 @@ Depth follows the material: a faint ruled paper background, textured dark galler
 
 **The Object Depth Rule.** Use depth to describe a photograph, frame, or bound volume; do not turn structural navigation into a field of elevated cards.
 
-The shelf's carousel settles with damped motion. Hover opens a cover slightly; inspection lifts the selected book. The dialog enters over 420ms with `cubic-bezier(0.16, 1, 0.3, 1)`. Reduced motion removes the dialog entrance and cover hover and resolves selection directly; the fallback also loses its perspective transform. The existing gallery reveals spreads once on entry and skips that reveal for reduced motion.
+The horizontal shelf follows a drag directly and settles with a critically damped spring that preserves release velocity. A horizontal trackpad gesture browses volumes without consuming vertical page scrolling. Hover opens a cover slightly. A scoped GSAP timeline lifts a book from its visible shelf position and hinges its cover over 760ms to reveal the spread; closing reverses the same path and can interrupt an opening. Reduced motion skips the spatial opening and cover hover and resolves selection directly; the fallback also loses its perspective transform. The existing gallery reveals spreads once on entry and skips that reveal for reduced motion.
 
 ## Shapes
 
@@ -224,13 +224,15 @@ The inherited header is a 64px-high strip with the mono initials, Photobooks, Ab
 
 ### Photobook shelf
 
-A wrapped carousel centers one clothbound volume while neighboring books signal browsing. Each cover uses the collection's title, binding color, photographer imprint, photograph count or preparation state, and an actual cover photo when available. Touch and pointer dragging share selection with the DOM caption and controls. Vertical scrolling stays available. The scene loads near the viewport, rests when motion settles, and sleeps offscreen.
+An ordered horizontal row centers one clothbound volume while neighboring books signal browsing. A visible drag/swipe hint explains direct manipulation; arrows remain an alternative. Each cover uses the collection's title, binding color, photographer imprint, photograph count or preparation state, and an actual cover photo when available. Touch and pointer dragging share selection with the DOM caption and controls. Vertical scrolling stays available. The scene loads near the viewport, rests when motion settles, and sleeps offscreen.
 
 Real CSS book links support the same collection routes before enhancement and when WebGL fails. The rendered canvas is decorative to assistive technology; the accompanying controls and contents provide its accessible interaction.
 
 ### Individual detail spread
 
-Each collection opens a separate native dialog: photograph or explicit preparation state on the left, collection title and available factual information on the right. The content includes authored introduction or story preview when available, the existing map or illustration, and a link to the full collection. An empty volume says that photographs are being prepared. Available dates and captions come from collection data.
+Each collection opens a separate native dialog: title, photograph and place on the left, authored experience opening on the right. Without a personal account, the existing collection introduction supplies the preview. A clear complete-photobook link follows the prose. Available factual information and the existing map or illustration remain in a secondary expandable section, preserving attribution. An empty volume says that photographs are being prepared. Available dates and captions come from collection data.
+
+A light-paper Thinking Orbs screen holds the opening until the preview photographs have loaded and decoded. The spread stays hidden and inert while preparing; return remains available, failed images offer retry, and slow connections offer a deliberate continue. Empty books open immediately.
 
 The spread scrolls on narrow or short viewports. Closing or pressing Escape restores the opener's focus and page scrolling; the collection hash supports direct linking and history. Photographs use contain fitting. Existing map assets retain responsive selection and OpenStreetMap attribution; illustrations do not receive map attribution.
 

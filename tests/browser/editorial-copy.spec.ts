@@ -27,6 +27,7 @@ for (const width of [320, 390, 1440]) {
     for (const city of notes) {
       await page.goto(`/#city-${city.slug}`);
       await expect(page.getByRole("dialog")).toBeVisible();
+      await page.getByRole("dialog").getByText("Location & collection details", { exact: true }).click();
       const copy = page.getByRole("dialog").getByText(city.note, { exact: true });
       await copy.scrollIntoViewIfNeeded();
       await expect(copy).toBeVisible();

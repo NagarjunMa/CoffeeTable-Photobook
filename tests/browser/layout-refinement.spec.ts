@@ -10,6 +10,7 @@ test("mobile detail cards retain each map and its attribution", async ({ page })
       await page.goto(`/#city-${city}`);
       const detail = page.getByRole("dialog");
       await expect(detail).toBeVisible();
+      await detail.getByText("Location & collection details", { exact: true }).click();
       const map = detail.locator(".book-map");
       await map.scrollIntoViewIfNeeded();
       await expect(map.getByText("OpenStreetMap", { exact: false })).toBeVisible();

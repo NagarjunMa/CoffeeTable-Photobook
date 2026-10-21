@@ -6,6 +6,7 @@ for (const width of [390, 1440]) {
     await page.goto("/#city-hampi");
     await expect(page.getByRole("dialog")).toBeVisible();
     const panel = page.getByRole("dialog");
+    await panel.getByText("Location & collection details", { exact: true }).click();
     const map = panel.locator(".book-map-image");
     await expect.poll(() => map.evaluate((image) => (image as HTMLImageElement).naturalWidth)).toBeGreaterThan(0);
     await expect.poll(() => map.evaluate((image) => (image as HTMLImageElement).currentSrc))

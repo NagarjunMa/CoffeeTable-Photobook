@@ -27,9 +27,10 @@ mobile map-height correction, stable photograph loading, aligned collection
 previews and tighter gallery transitions, with cross-browser regression evidence.
 
 The typography-only opening leads to a [ThreeUI-inspired photobook shelf](docs/PHOTOBOOK_BOOKSHELF.md).
-Each volume opens its own detail card with the photographer's introduction,
-available metadata, a map or illustration, and a link to the complete book.
-Touch dragging, arrow controls, keyboard contents and history-aware anchors keep
+Each volume opens with a hinged cover into a spread: title and photograph on
+the left, the photographer's experience on the right, and a complete-book link.
+Maps and metadata remain in an expandable details section. Direct dragging,
+swiping, horizontal trackpad scrolling, arrow controls and keyboard contents keep
 collections reachable. Real cover links remain available without JavaScript or
 WebGL. Collections retain their dark exhibition wall, equal-height desktop
 rows, uniform mats, and uncropped photographs. The native modal lightbox traps
