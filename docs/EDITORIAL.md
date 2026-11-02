@@ -19,10 +19,15 @@ his supplied monochrome-photography story and early-2019 visit year. Its full
 story is in `note`; its concise map-card excerpt is in `indexNote`. Bhutan uses
 his first-visit account in `experience` and a shorter introduction in `note`.
 Image review states are separate. There are 41 visually grounded image description/caption
-drafts, 60 blocked records, and one approved Bhutan cover description. Bhutan's
-20 other new photographs await full-resolution description review. Blocked
-records keep the generated photo visible; they do not remove photographs or
+drafts, 109 blocked records, and one approved Bhutan cover description. Bhutan's
+20 other new photographs and Ranganathittu's 49 photographs await full-resolution
+description review. Blocked records keep the generated photo visible; they do not remove photographs or
 invent descriptions.
+
+Ranganathittu's approved introduction and `experience` now use the photographer's
+childhood boat ride, first camera in twelfth grade, and later two-hour birding
+trip with his parents. The crocodile tales remain childhood hearsay; the closing
+comparison with mammal photography is explicitly his personal experience.
 
 By default only `approved` overrides apply. Collection copy/cover/spread approval
 and individual image approval are independent. Set
@@ -113,5 +118,7 @@ the placeholder IDs with exact existing IDs and author verified copy.
    remains the fallback until those selections are made.
 4. Approve actual dates/categories and the revised About story. The father and
    Badami origin remain; no commercial offerings or new contact details were added.
-5. Rebuild without the draft flag and confirm the approved-only result before any
+5. Review the 49 Ranganathittu photographs and replace their blocked records
+   with visually verified descriptions before approving image copy.
+6. Rebuild without the draft flag and confirm the approved-only result before any
    separately authorized publication.
