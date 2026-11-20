@@ -78,9 +78,9 @@ test("delayed gallery images preserve frame geometry and replace their placehold
     expect(imageBefore.height).toBeGreaterThan(150);
     release();
     await expect(page.locator(".collection-loading-screen")).toBeHidden();
-    expect(await page.locator(".exhibition-photo").evaluateAll((images) =>
-      images.every((image) => (image as HTMLImageElement).complete && (image as HTMLImageElement).naturalWidth > 0),
-    )).toBe(true);
+    // Gallery images are intentionally lazy: prepare this frame without waiting for the book.
+    await frame.scrollIntoViewIfNeeded();
+    await expect(frame.locator("img")).toHaveAttribute("data-photo-state", "loaded");
     await expect(frame.locator(".photo-loading")).toBeHidden();
     const after = (await frame.boundingBox())!;
     expect(Math.abs(before.width - after.width)).toBeLessThan(2);
@@ -114,6 +114,9 @@ test("photobooks remain visible when JavaScript is unavailable", async ({ browse
     await page.goto("/series/tigers", { waitUntil: "domcontentloaded" });
     await expect(page.locator(".collection-loading-screen")).toBeHidden();
     await expect(page.locator(".collection-opening h1")).toBeVisible();
+    await expect(page.locator(".exhibition-frame-group").first()).toHaveCSS("opacity", "1");
+    await expect(page.locator(".exhibition-frame-group").first()).toHaveCSS("transform", "none");
+    await expect(page.locator(".exhibition-photo").first()).toHaveAttribute("loading", "lazy");
   } finally {
     await context.close();
   }

@@ -5,6 +5,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ThinkingOrb } from "thinking-orbs";
 import { PortfolioPhoto } from "@/components/portfolio-photo";
+import { GalleryFrame } from "@/components/gallery-frame";
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { CSSProperties } from "react";
@@ -122,36 +123,25 @@ export function CollectionGallery({ collection }: { collection: Collection }) {
   const note = collection.note.startsWith("A field study from ") ? "" : collection.note;
 
   useEffect(() => {
-    const pictures = [...(scope.current?.querySelectorAll<HTMLImageElement>("img") ?? [])];
-    if (pictures.length === 0) return;
-
-    let settled = 0;
-    const cleanups = pictures.map((picture) => {
-      let done = false;
-      const settle = () => {
-        if (done) return;
-        done = true;
-        settled += 1;
-        if (settled === pictures.length) setLoadingPhase("ready");
-      };
-
-      picture.addEventListener("load", settle);
-      picture.addEventListener("error", settle);
-      // A cached image may finish before hydration attaches these listeners.
-      if (picture.complete) settle();
-      return () => {
-        picture.removeEventListener("load", settle);
-        picture.removeEventListener("error", settle);
-      };
-    });
-
+    const picture = scope.current?.querySelector<HTMLImageElement>(".collection-preview img");
+    if (!picture) return;
+    let active = true;
+    const settle = async () => {
+      if (picture.naturalWidth > 0) await picture.decode().catch(() => {});
+      if (active) setLoadingPhase("ready");
+    };
+    picture.addEventListener("load", settle);
+    picture.addEventListener("error", settle);
+    // A cached cover may finish before hydration attaches these listeners.
+    if (picture.complete) void settle();
     const timeout = window.setTimeout(() => setLoadingPhase((phase) =>
       phase === "loading" ? "slow" : phase,
     ), 12_000);
-
     return () => {
+      active = false;
       window.clearTimeout(timeout);
-      cleanups.forEach((cleanup) => cleanup());
+      picture.removeEventListener("load", settle);
+      picture.removeEventListener("error", settle);
     };
   }, [collection.slug]);
 
@@ -348,23 +338,15 @@ export function CollectionGallery({ collection }: { collection: Collection }) {
             </header>
 
             {collection.images.length === 0 && <p className="text-[var(--gallery-secondary)]">This volume is being prepared.</p>}
-            <div className="space-y-[clamp(2.5rem,5vw,5.5rem)]">
+            <div className="space-y-[clamp(0.75rem,1.5vw,1.5rem)]">
             {exhibitionRows.map((row) => (
               <div
                 key={row[0].photo.id}
-                data-book-spread
                 className="exhibition-row items-start"
                 style={exhibitionRowStyle(row)}
               >
                 {row.map(({ photo, index }) => (
-                  <figure
-                    key={photo.id}
-                    className="exhibition-item group relative min-h-0 min-w-0"
-                    style={exhibitionItemStyle(photo)}
-                  >
-                    <div
-                      className="exhibition-frame-group mx-auto max-w-full"
-                    >
+                  <GalleryFrame key={photo.id} index={index} style={exhibitionItemStyle(photo)}>
                       <div
                         className="exhibition-frame flex w-full cursor-zoom-in items-center justify-center border-0"
                       >
@@ -378,18 +360,17 @@ export function CollectionGallery({ collection }: { collection: Collection }) {
                                 : "100vw"
                           }
                           className="exhibition-photo h-auto max-h-[78svh] w-auto max-w-full select-none object-contain transition-[filter,transform] duration-500 ease-out group-hover:scale-[1.003] group-hover:brightness-[1.025]"
-                          loading="eager"
-                          fetchPriority={index < 2 ? "auto" : "low"}
+                          loading="lazy"
+                          fetchPriority="low"
                         />
                         <button type="button" className="photo-open" data-open-photo aria-label={`Open ${photo.alt} full screen`} onClick={(event) => openLightbox(index, event.currentTarget)} />
                       </div>
-                      <figcaption className="mt-4 flex items-start justify-between gap-4 border-t border-white/12 pt-2 text-white/70">
+                      <figcaption className="mt-2 flex items-start justify-between gap-4 border-t border-white/12 pt-2 text-white/70">
                         <span className="font-display text-[12px] leading-4">
                           {photo.caption ?? `Frame ${String(index + 1).padStart(2, "0")}`}
                         </span>
                       </figcaption>
-                    </div>
-                  </figure>
+                  </GalleryFrame>
                 ))}
               </div>
             ))}

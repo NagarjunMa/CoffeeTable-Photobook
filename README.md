@@ -137,6 +137,8 @@ out of client code and avoiding expired URLs in static pages.
 - `tests/`: publisher, editorial, map and browser regressions.
 - [Implementation plan](PORTFOLIO_IMPLEMENTATION_PLAN.md): design direction and history.
 - [Map assets](docs/MAP_ASSETS.md): required replacement masters and measured derivative sizes.
+- [Gallery loading and scroll reveal](docs/GALLERY_LOADING.md): cover preparation,
+  lazy photographs, scoped GSAP entrances, and loading/accessibility recovery checks.
 
 ## Browser Validation
 

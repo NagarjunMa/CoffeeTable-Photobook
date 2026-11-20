@@ -212,7 +212,7 @@ body:not(.collection-is-loading) .collection-loading-screen { animation: reveal-
 
 .exhibition-row {
   --frame-mat: clamp(0.65rem, 1.25vw, 1.25rem);
-  --row-gap: clamp(2rem, 4vw, 4.5rem);
+  --row-gap: clamp(0.75rem, 1.5vw, 1.5rem);
 
   container-type: inline-size;
   display: grid;
@@ -222,6 +222,19 @@ body:not(.collection-is-loading) .collection-loading-screen { animation: reveal-
 
 .exhibition-item {
   width: 100%;
+}
+
+.gallery-frame-wait {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  color: var(--gallery-secondary);
+  font-size: 12px;
+  pointer-events: none;
 }
 
 .exhibition-photo { width: 100%; }
