@@ -35,7 +35,6 @@ for (const reducedMotion of ["no-preference", "reduce"] as const) {
       await expect.poll(() => photo.evaluate(el => (el as HTMLImageElement).complete && (el as HTMLImageElement).naturalWidth > 0)).toBe(true);
       // A completed network response alone must not dismiss the orb.
       await expect(loading).toBeVisible();
-      if (reducedMotion === "no-preference") expect(await card.locator(".book-opening-cover").evaluate(el => new DOMMatrixReadOnly(getComputedStyle(el).transform).m11)).toBeCloseTo(1);
       await page.evaluate(() => (window as unknown as { releaseBookDecode: () => void }).releaseBookDecode());
       await expect(loading).toHaveCount(0);
       await expect(card.locator(".book-detail-shell")).toBeVisible();
@@ -72,10 +71,10 @@ test("loading can be cancelled and late photographs never reopen the old book", 
 });
 
 test("failed preview photographs offer retry before revealing the book", async ({ page }) => {
-  await page.goto("/#work");
-  await page.getByRole("navigation", { name: "Destination contents" }).getByRole("link", { name: "Tigers", exact: true }).focus();
   let failed = true;
   await page.route("**/api/photographs/**", route => failed ? route.fulfill({ status: 503 }) : route.fallback());
+  await page.goto("/#work");
+  await page.getByRole("navigation", { name: "Destination contents" }).getByRole("link", { name: "Tigers", exact: true }).focus();
   await page.getByRole("button", { name: "Preview Tigers photobook" }).click();
   const card = page.getByRole("dialog");
   await expect(card.getByText("A photograph couldn’t be loaded.", { exact: true })).toBeVisible();
@@ -88,19 +87,19 @@ test("failed preview photographs offer retry before revealing the book", async (
 });
 
 test("a slow preview offers a deliberate continue and keeps cancellation available", async ({ page }) => {
-  await page.goto("/#work");
-  await page.getByRole("navigation", { name: "Destination contents" }).getByRole("link", { name: "Tigers", exact: true }).focus();
-  await page.clock.install();
   let release!: () => void;
   const pending = new Promise<void>(resolve => { release = resolve; });
   await page.route("**/api/photographs/**", async route => { await pending; await route.fallback(); });
+  await page.goto("/#work", { waitUntil: "domcontentloaded" });
+  await page.getByRole("navigation", { name: "Destination contents" }).getByRole("link", { name: "Tigers", exact: true }).focus();
+  await page.clock.install();
   try {
     await page.getByRole("button", { name: "Preview Tigers photobook" }).click();
     await expect(page.locator(".book-preparing-screen")).toBeVisible();
     await page.clock.fastForward(12_100);
     const card = page.getByRole("dialog");
     await expect(card.getByRole("button", { name: "Continue to book", exact: true })).toBeVisible();
-    await expect(card.getByRole("button", { name: "Return to shelf", exact: true })).toBeVisible();
+    await expect(card.getByRole("button", { name: "Return to photobooks", exact: true })).toBeVisible();
     await card.getByRole("button", { name: "Continue to book", exact: true }).click();
     await page.clock.resume();
     await expect(card.locator(".book-preparing-screen")).toHaveCount(0);

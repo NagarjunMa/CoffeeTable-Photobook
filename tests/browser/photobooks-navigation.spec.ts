@@ -1,7 +1,7 @@
 import { test, expect } from "./fixtures";
 
 for (const width of [320, 1440]) {
-  test(`Photobooks returns to the shelf at ${width}px`, async ({ page }) => {
+  test(`Photobooks returns to the carousel at ${width}px`, async ({ page }) => {
     await page.setViewportSize({ width, height: 900 });
     for (const route of ["/about", "/series/hampi", "/#city-hampi"]) {
       await page.goto(route);
@@ -13,7 +13,7 @@ for (const width of [320, 1440]) {
       await expect(link).toHaveAttribute("href", "/#work");
       await link.click();
       await expect(page.locator(".library-heading")).toBeInViewport();
-      await expect(page.locator(".shelf-selection h3")).toHaveText("Hampi");
+      await expect(page.locator(".photobook-selection h3")).toHaveText("Hampi");
       await expect(page.getByRole("navigation", { name: "Main navigation" })).toBeInViewport();
     }
   });
