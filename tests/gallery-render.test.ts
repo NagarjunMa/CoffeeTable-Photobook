@@ -66,6 +66,8 @@ test("a single photograph renders one gallery frame with intrinsic uncropped dim
   assert.match(html, /width="800" height="1200"/);
   assert.match(html, /aspect-ratio:800 \/ 1200/);
   assert.match(html, /class="photo-loading" hidden=""/);
+  assert.match(html.slice(0, html.indexOf("</article>")), /loading="eager"/);
+  assert.match(html.slice(html.indexOf("</article>")), /loading="lazy"/);
   assert.doesNotMatch(html, /<dialog/);
 });
 

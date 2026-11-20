@@ -30,6 +30,8 @@ test("tablet preview is fully inside its viewport", async ({ page }) => {
 });
 
 test("gallery frame mats and row heights remain uniform", async ({ page }) => {
+  // Measure the settled composition rather than an in-progress entrance tilt.
+  await page.emulateMedia({ reducedMotion: "reduce" });
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto("/series/new-york");
   const rows = await page.locator(".exhibition-row").evaluateAll((elements) => elements.map((row) => [...row.querySelectorAll(".exhibition-frame")].map((frame) => ({ height: frame.getBoundingClientRect().height, mat: getComputedStyle(frame).paddingTop }))));
