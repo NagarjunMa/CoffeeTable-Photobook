@@ -24,18 +24,18 @@ The responsive website is viewed on desktop and mobile. Google Drive is the priv
 
 ## Capabilities and Constraints
 
-- The collection index presents individual photographic volumes on an interactive
-  horizontal shelf. Drag, swipe, horizontal trackpad scroll, arrows and contents
-  links browse volumes. Each opens a hinged spread with title/photo on the left,
-  an authored experience on the right, and a link to its complete book. Available
-  collection facts and maps sit in a secondary expandable section.
-- Real cover links remain usable without JavaScript or WebGL; keyboard, touch,
+- The collection index is a centered, looping photo carousel adapted from Skiper
+  UI 54. Drag, swipe, horizontal trackpad gestures, arrows and destination links
+  browse collections. A photograph or preview action opens a photo-and-story
+  dialog before the complete photobook. Available facts and maps remain in a
+  secondary expandable section.
+- Real collection links remain usable without JavaScript; keyboard, touch,
   reduced-motion and history navigation are supported.
 - Individual collections open as vertical galleries with uncropped photographs.
-- A bookshelf preview waits behind Thinking Orbs until its rendered photographs
-  have loaded and decoded, then opens the book. Cancellation, retry and a slow
-  connection continue option keep it usable. Complete galleries retain their
-  own full-screen Thinking Orbs transition while photographs load.
+- A preview waits behind Thinking Orbs until its photographs have loaded and
+  decoded, then reveals the photo and authored opening. Cancellation, retry and
+  a slow-connection continue option keep it usable. Complete galleries retain
+  their own full-screen Thinking Orbs transition while photographs load.
 - A collection may include a photographer-authored personal account between its opening and gallery.
 - New collections may be published before their gallery photographs are ready, with an explicit preparation state.
 - Do not fabricate photographs, captions, locations, or field observations.

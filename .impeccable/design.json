@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-19T03:57:16.991729+00:00",
+  "generatedAt": "2026-11-20T04:42:28.040798+00:00",
   "title": "Design System: Nagarjun Mallesh Photography",
   "extensions": {
     "colorMeta": {
@@ -168,156 +168,6 @@
           "oklch(84% 0.01728 84.59)",
           "oklch(95% 0.01728 84.59)"
         ]
-      },
-      "shelf-wood": {
-        "role": "neutral",
-        "displayName": "Shelf Wood",
-        "canonical": "#78634d",
-        "tonalRamp": [
-          "oklch(15% 0.04264 67.96)",
-          "oklch(26% 0.04264 67.96)",
-          "oklch(38% 0.04264 67.96)",
-          "oklch(49% 0.04264 67.96)",
-          "oklch(61% 0.04264 67.96)",
-          "oklch(72% 0.04264 67.96)",
-          "oklch(84% 0.04264 67.96)",
-          "oklch(95% 0.04264 67.96)"
-        ]
-      },
-      "binding-hampi": {
-        "role": "secondary",
-        "displayName": "Binding Hampi",
-        "canonical": "#9b542c",
-        "tonalRamp": [
-          "oklch(15% 0.10849 48.19)",
-          "oklch(26% 0.10849 48.19)",
-          "oklch(38% 0.10849 48.19)",
-          "oklch(49% 0.10849 48.19)",
-          "oklch(61% 0.10849 48.19)",
-          "oklch(72% 0.10849 48.19)",
-          "oklch(84% 0.10849 48.19)",
-          "oklch(95% 0.10849 48.19)"
-        ]
-      },
-      "binding-maine": {
-        "role": "secondary",
-        "displayName": "Binding Maine",
-        "canonical": "#314d43",
-        "tonalRamp": [
-          "oklch(15% 0.03799 169.92)",
-          "oklch(26% 0.03799 169.92)",
-          "oklch(38% 0.03799 169.92)",
-          "oklch(49% 0.03799 169.92)",
-          "oklch(61% 0.03799 169.92)",
-          "oklch(72% 0.03799 169.92)",
-          "oklch(84% 0.03799 169.92)",
-          "oklch(95% 0.03799 169.92)"
-        ]
-      },
-      "binding-new-york": {
-        "role": "secondary",
-        "displayName": "Binding New York",
-        "canonical": "#283c53",
-        "tonalRamp": [
-          "oklch(15% 0.04789 252.59)",
-          "oklch(26% 0.04789 252.59)",
-          "oklch(38% 0.04789 252.59)",
-          "oklch(49% 0.04789 252.59)",
-          "oklch(61% 0.04789 252.59)",
-          "oklch(72% 0.04789 252.59)",
-          "oklch(84% 0.04789 252.59)",
-          "oklch(95% 0.04789 252.59)"
-        ]
-      },
-      "binding-santa-cruz": {
-        "role": "secondary",
-        "displayName": "Binding Santa Cruz",
-        "canonical": "#a34336",
-        "tonalRamp": [
-          "oklch(15% 0.13017 30.00)",
-          "oklch(26% 0.13017 30.00)",
-          "oklch(38% 0.13017 30.00)",
-          "oklch(49% 0.13017 30.00)",
-          "oklch(61% 0.13017 30.00)",
-          "oklch(72% 0.13017 30.00)",
-          "oklch(84% 0.13017 30.00)",
-          "oklch(95% 0.13017 30.00)"
-        ]
-      },
-      "binding-washington": {
-        "role": "secondary",
-        "displayName": "Binding Washington",
-        "canonical": "#55435d",
-        "tonalRamp": [
-          "oklch(15% 0.04817 315.29)",
-          "oklch(26% 0.04817 315.29)",
-          "oklch(38% 0.04817 315.29)",
-          "oklch(49% 0.04817 315.29)",
-          "oklch(61% 0.04817 315.29)",
-          "oklch(72% 0.04817 315.29)",
-          "oklch(84% 0.04817 315.29)",
-          "oklch(95% 0.04817 315.29)"
-        ]
-      },
-      "binding-tigers": {
-        "role": "secondary",
-        "displayName": "Binding Tigers",
-        "canonical": "#666039",
-        "tonalRamp": [
-          "oklch(15% 0.05725 100.63)",
-          "oklch(26% 0.05725 100.63)",
-          "oklch(38% 0.05725 100.63)",
-          "oklch(49% 0.05725 100.63)",
-          "oklch(61% 0.05725 100.63)",
-          "oklch(72% 0.05725 100.63)",
-          "oklch(84% 0.05725 100.63)",
-          "oklch(95% 0.05725 100.63)"
-        ]
-      },
-      "binding-bhutan": {
-        "role": "secondary",
-        "displayName": "Binding Bhutan",
-        "canonical": "#7d3036",
-        "tonalRamp": [
-          "oklch(15% 0.10709 18.30)",
-          "oklch(26% 0.10709 18.30)",
-          "oklch(38% 0.10709 18.30)",
-          "oklch(49% 0.10709 18.30)",
-          "oklch(61% 0.10709 18.30)",
-          "oklch(72% 0.10709 18.30)",
-          "oklch(84% 0.10709 18.30)",
-          "oklch(95% 0.10709 18.30)"
-        ]
-      },
-      "binding-ranganathittu": {
-        "role": "secondary",
-        "displayName": "Binding Ranganathittu",
-        "canonical": "#31656b",
-        "tonalRamp": [
-          "oklch(15% 0.05624 205.35)",
-          "oklch(26% 0.05624 205.35)",
-          "oklch(38% 0.05624 205.35)",
-          "oklch(49% 0.05624 205.35)",
-          "oklch(61% 0.05624 205.35)",
-          "oklch(72% 0.05624 205.35)",
-          "oklch(84% 0.05624 205.35)",
-          "oklch(95% 0.05624 205.35)"
-        ]
-      },
-      "binding-default": {
-        "role": "secondary",
-        "displayName": "Binding Default",
-        "canonical": "#405649",
-        "tonalRamp": [
-          "oklch(15% 0.03447 158.63)",
-          "oklch(26% 0.03447 158.63)",
-          "oklch(38% 0.03447 158.63)",
-          "oklch(49% 0.03447 158.63)",
-          "oklch(61% 0.03447 158.63)",
-          "oklch(72% 0.03447 158.63)",
-          "oklch(84% 0.03447 158.63)",
-          "oklch(95% 0.03447 158.63)"
-        ]
       }
     },
     "typographyMeta": {
@@ -327,7 +177,7 @@
       },
       "headline": {
         "displayName": "Headline",
-        "purpose": "Library section heading."
+        "purpose": "Photobooks section heading."
       },
       "detail-title": {
         "displayName": "Detail Title",
@@ -335,7 +185,7 @@
       },
       "title": {
         "displayName": "Title",
-        "purpose": "Current selected volume caption."
+        "purpose": "Current selected collection caption; fixed mobile endpoint is documented in DESIGN.md."
       },
       "body": {
         "displayName": "Body",
@@ -364,7 +214,7 @@
       {
         "name": "inspected-volume",
         "value": "0 22px 64px rgb(0 0 0 / 0.35)",
-        "purpose": "the paper spread lifted over the dimmed shelf."
+        "purpose": "The paper preview lifted over the dimmed page."
       },
       {
         "name": "page-fold",
@@ -372,9 +222,14 @@
         "purpose": "subtle shading along the left leaf's inner edge."
       },
       {
-        "name": "fallback-binding",
-        "value": "inset 10px 0 14px rgb(0 0 0 / 0.2), 10px 16px 25px rgb(37 33 29 / 0.18)",
-        "purpose": "a book spine and soft cast shadow when WebGL is unavailable."
+        "name": "preview-story-inner",
+        "value": "inset 20px 0 28px -24px rgb(60 40 20 / 0.25)",
+        "purpose": "Inner shading on the desktop story panel."
+      },
+      {
+        "name": "preview-story-inner-mobile",
+        "value": "inset 0 16px 20px -20px rgb(60 40 20 / 0.3)",
+        "purpose": "Top shading on the stacked mobile story panel."
       }
     ],
     "motion": [
@@ -384,24 +239,34 @@
         "purpose": "Inherited text-link underline reveal."
       },
       {
-        "name": "shelf-control",
+        "name": "carousel-control",
         "value": "background 180ms ease, color 180ms ease",
         "purpose": "Circular arrow control hover inversion."
       },
       {
-        "name": "shelf-canvas",
-        "value": "opacity 400ms ease-out",
-        "purpose": "Reveal the enhanced shelf when ready."
+        "name": "carousel-image-mask",
+        "value": "800ms expo.out; inset(13% 0% 13% 0% round 16px) → inset(0% 0% 0% 0% round 16px)",
+        "purpose": "GSAP selection mask only; Embla owns track transforms. Overwrite auto; zero duration for reduced motion."
       },
       {
-        "name": "book-inspection",
-        "value": "420ms cubic-bezier(0.16, 1, 0.3, 1)",
-        "purpose": "Paper spread entrance; removed for reduced motion."
+        "name": "carousel-selection-caption",
+        "value": "550ms expo.out; y: 14px → 0; autoAlpha: 0 → 1; stagger: 50ms",
+        "purpose": "Scoped selected collection caption transition; skipped for reduced motion."
       },
       {
-        "name": "shelf-damping",
-        "value": "9.5",
-        "purpose": "Renderer carousel damping coefficient; not a CSS duration."
+        "name": "preview-shell",
+        "value": "550ms expo.out; y: 24px → 0; scale: 0.98 → 1; autoAlpha: 0 → 1",
+        "purpose": "Begins after image load/decode readiness. Reversible timeline closes at 1.5× speed; settles immediately for reduced motion."
+      },
+      {
+        "name": "preview-photo-mask",
+        "value": "700ms expo.out; delay: 80ms; inset(0% 100% 0% 0%) → inset(0% 0% 0% 0%)",
+        "purpose": "Photograph panel mask in the shared preview timeline."
+      },
+      {
+        "name": "preview-story",
+        "value": "500ms expo.out; delay: 200ms; y: 14px → 0; autoAlpha: 0 → 1; stagger: 80ms",
+        "purpose": "Story child entrance in the shared preview timeline."
       }
     ],
     "breakpoints": [
@@ -429,35 +294,43 @@
   },
   "components": [
     {
-      "name": "Shelf Arrow",
-      "kind": "button",
-      "refersTo": "shelf-control",
-      "description": "Circular navigation beside the selected volume.",
-      "html": "<button class=\"ds-shelf-control\" type=\"button\" aria-label=\"Next photobook\"><svg width=\"22\" height=\"22\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M5 12h14m-7-7 7 7-7 7\"/></svg></button>",
-      "css": ".ds-shelf-control{display:grid;place-items:center;width:48px;height:48px;border:1px solid var(--line);background:transparent;color:var(--foreground);border-radius:50%;cursor:pointer;transition:background 180ms ease,color 180ms ease}.ds-shelf-control:hover{background:var(--foreground);color:var(--background)}.ds-shelf-control:focus-visible{outline:2px solid currentColor;outline-offset:5px;}@media(max-width:767px){.ds-shelf-control{width:44px;height:44px}}@media(prefers-reduced-motion:reduce){.ds-shelf-control{transition:none}}"
+      "name": "Photobook Carousel Window",
+      "kind": "custom",
+      "refersTo": "carousel-image-window",
+      "description": "Paper-matted selected photograph with a 16px mask radius; inactive windows have a 13% vertical inset. The snippet shows the selected endpoint without a framework runtime.",
+      "html": "<article class=\"ds-carousel-card\"><div class=\"ds-carousel-window\"><div class=\"ds-carousel-mat\">Photograph</div></div><a class=\"ds-carousel-link\" href=\"#collection\" aria-label=\"Preview collection photobook\"><span class=\"ds-carousel-open\"><svg width=\"23\" height=\"23\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M7 17 17 7M7 7h10v10\"/></svg></span></a><div class=\"ds-carousel-caption\"><span>Collection</span><span>Photographs</span></div></article>",
+      "css": ".ds-carousel-card{position:relative;width:min(43vw,580px);color:var(--foreground)}.ds-carousel-window{height:clamp(300px,32vw,430px);border-radius:16px;overflow:hidden;clip-path:inset(0% 0% 0% 0% round 16px)}.ds-carousel-mat{display:grid;place-items:center;height:100%;box-sizing:border-box;padding:12px;background:var(--paper);color:var(--muted);font-family:var(--font-sans),Arial,sans-serif}.ds-carousel-link{position:absolute;inset:0;border-radius:16px;color:inherit}.ds-carousel-link:focus-visible{outline:2px solid var(--accent);outline-offset:-3px}.ds-carousel-open{position:absolute;right:22px;bottom:72px;display:grid;place-items:center;width:48px;height:48px;border-radius:50%;background:var(--background);color:var(--foreground)}.ds-carousel-link:hover .ds-carousel-open{background:var(--foreground);color:var(--background)}@media(max-width:767px){.ds-carousel-card{width:82vw}.ds-carousel-window{height:clamp(260px,78vw,430px)}.ds-carousel-mat{padding:8px}.ds-carousel-open{right:16px;bottom:68px;width:44px;height:44px}}.ds-carousel-caption{display:flex;justify-content:space-between;align-items:baseline;gap:16px;min-height:56px;padding:18px 4px 0;visibility:hidden}"
     },
     {
-      "name": "Inspect Volume",
+      "name": "Carousel Arrow",
       "kind": "button",
-      "refersTo": "shelf-inspect",
-      "description": "Underlined invitation to inspect the selected book.",
-      "html": "<button class=\"ds-inspect\" type=\"button\">Take a closer look <svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M7 17 17 7M7 7h10v10\"/></svg></button>",
-      "css": ".ds-inspect{display:inline-flex;align-items:center;justify-content:center;gap:16px;min-height:48px;padding:8px 0;border:0;border-bottom:1px solid var(--foreground);background:transparent;color:var(--foreground);font-family:var(--font-sans),Arial,sans-serif;font-size:15px;cursor:pointer}.ds-inspect:focus-visible{outline:2px solid currentColor;outline-offset:5px;}"
+      "refersTo": "carousel-control",
+      "description": "Circular navigation beside the selected collection.",
+      "html": "<button class=\"ds-carousel-control\" type=\"button\" aria-label=\"Next photobook\"><svg width=\"22\" height=\"22\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M5 12h14m-7-7 7 7-7 7\"/></svg></button>",
+      "css": ".ds-carousel-control{display:grid;place-items:center;width:52px;height:52px;border:1px solid var(--line);background:transparent;color:var(--foreground);border-radius:50%;cursor:pointer;transition:background 180ms ease,color 180ms ease}.ds-carousel-control:hover{background:var(--foreground);color:var(--background)}.ds-carousel-control:focus-visible{outline:2px solid currentColor;outline-offset:5px;}@media(max-width:767px){.ds-carousel-control{width:44px;height:44px}}@media(prefers-reduced-motion:reduce){.ds-carousel-control{transition:none}}.ds-carousel-control:active{transform:scale(.96)}"
+    },
+    {
+      "name": "Preview Collection",
+      "kind": "button",
+      "refersTo": "carousel-inspect",
+      "description": "Underlined invitation to open the selected photo-and-story preview.",
+      "html": "<button class=\"ds-inspect\" type=\"button\">A little closer <svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M7 17 17 7M7 7h10v10\"/></svg></button>",
+      "css": ".ds-inspect{display:inline-flex;align-items:center;justify-content:space-between;gap:40px;min-height:48px;padding:12px 0;border:0;border-bottom:1px solid var(--foreground);background:transparent;color:var(--foreground);font-family:var(--font-sans),Arial,sans-serif;font-size:15px;cursor:pointer}.ds-inspect:focus-visible{outline:2px solid currentColor;outline-offset:5px;}.ds-inspect:hover{color:var(--accent)}.ds-inspect:active{transform:scale(.96)}"
     },
     {
       "name": "Open Photobook",
       "kind": "button",
       "refersTo": "book-open-link",
-      "description": "Full-width route from an inspection card into the collection.",
-      "html": "<a class=\"ds-open\" href=\"#collection\">Open photobook <svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M7 17 17 7M7 7h10v10\"/></svg></a>",
+      "description": "Full-width route from the photo-and-story preview into the complete collection.",
+      "html": "<a class=\"ds-open\" href=\"#collection\">Open complete photobook <svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M7 17 17 7M7 7h10v10\"/></svg></a>",
       "css": ".ds-open{display:inline-flex;align-items:center;justify-content:space-between;gap:20px;padding:14px 0;border-block:1px solid var(--foreground);min-height:48px;width:100%;text-decoration:none;font-family:var(--font-sans),Arial,sans-serif;color:var(--foreground);font-size:15px}.ds-open:hover{color:var(--accent)}.ds-open:focus-visible{outline:2px solid currentColor;outline-offset:5px;}"
     },
     {
-      "name": "Close Inspection",
+      "name": "Return from Preview",
       "kind": "button",
       "refersTo": "detail-close",
-      "description": "Paper-backed close control above the inspected volume.",
-      "html": "<button class=\"ds-close\" type=\"button\">Close <svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" aria-hidden=\"true\"><path d=\"m6 6 12 12M18 6 6 18\"/></svg></button>",
+      "description": "Paper-backed return control above the preview.",
+      "html": "<button class=\"ds-close\" type=\"button\">Return to photobooks <svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" aria-hidden=\"true\"><path d=\"m6 6 12 12M18 6 6 18\"/></svg></button>",
       "css": ".ds-close{display:flex;align-items:center;gap:10px;min-height:44px;padding:8px 14px;border:0;background:var(--paper);color:var(--foreground);font-family:var(--font-sans),Arial,sans-serif;font-size:14px;cursor:pointer}.ds-close:focus-visible{outline:2px solid currentColor;outline-offset:5px;}"
     },
     {
@@ -468,12 +341,12 @@
       "css": ".ds-nav{display:flex;align-items:center;gap:20px;background:var(--background);color:var(--foreground);font-family:var(--font-mono),\"Courier New\",monospace;font-size:12px;text-transform:uppercase}.ds-nav a{position:relative;display:inline-flex;align-items:center;min-height:44px;padding-inline:8px;color:inherit;text-decoration:none}.ds-nav a::after{position:absolute;right:0;bottom:-0.18rem;left:0;height:1px;content:\"\";background:currentColor;opacity:.35;transform:scaleX(0);transform-origin:right;transition:transform 360ms ease}.ds-nav a:hover::after{transform:scaleX(1);transform-origin:left}.ds-nav a:focus-visible{outline:2px solid currentColor;outline-offset:5px;}@media(max-width:639px){.ds-nav{gap:4px}}@media(prefers-reduced-motion:reduce){.ds-nav a::after{transition:none}}"
     },
     {
-      "name": "Individual Paper Spread",
+      "name": "Photo-and-story Preview",
       "kind": "card",
       "refersTo": "detail-spread",
-      "description": "Two paper leaves with a warmer plate page and collection-colored binding edges.",
-      "html": "<article class=\"ds-spread\"><div class=\"ds-plate\"><p class=\"ds-imprint\">Nagarjun Mallesh</p><p class=\"ds-plate-title\">A photographic collection</p></div><div class=\"ds-copy\"><h2>Photobooks</h2><p>Places I’ve been. Moments I’ve kept.</p></div></article>",
-      "css": ".ds-spread{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);background:var(--paper);color:var(--foreground);box-shadow:0 22px 64px rgb(0 0 0 / .35);border-block:6px solid #314d43;font-family:var(--font-sans),Arial,sans-serif;}.ds-plate{display:flex;flex-direction:column;justify-content:space-between;min-width:0;gap:36px;padding:32px;background:#eee8dc;box-shadow:inset -20px 0 28px -24px rgb(60 40 20 / .35)}.ds-imprint{margin:0;text-align:center;font-family:var(--font-mono),\"Courier New\",monospace;font-size:11px}.ds-plate-title{font-family:var(--font-display),Georgia,serif;font-size:26px;line-height:1.15;text-align:center}.ds-copy{padding:36px clamp(24px,3.5vw,48px) 32px;min-width:0}.ds-copy h2{margin:0 0 24px;font-family:var(--font-display),Georgia,serif;font-size:clamp(40px,4.8vw,68px);font-weight:400;line-height:1;overflow-wrap:anywhere;text-wrap:balance}.ds-copy p{font-size:16px;line-height:1.65}@media(max-width:767px){.ds-spread{grid-template-columns:minmax(0,1fr)}.ds-plate{padding:24px;gap:20px}.ds-copy{padding:28px 24px}}"
+      "description": "Rounded paper dialog with a warmer photograph panel beside the authored story; stacked on mobile.",
+      "html": "<article class=\"ds-spread\"><div class=\"ds-plate\"><p class=\"ds-imprint\">Nagarjun Mallesh</p><h2 class=\"ds-plate-title\">A photographic collection</h2><div class=\"ds-preview-photo-space\">Photograph</div></div><div class=\"ds-copy\"><h3>About this collection</h3><p>Places I’ve been. Moments I’ve kept.</p></div></article>",
+      "css": ".ds-spread{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);background:var(--paper);color:var(--foreground);box-shadow:0 22px 64px rgb(0 0 0 / .35);border-radius:16px;overflow:hidden;font-family:var(--font-sans),Arial,sans-serif}.ds-plate{display:flex;flex-direction:column;justify-content:space-between;min-width:0;gap:24px;padding:32px;background:#eee8dc;box-shadow:inset -20px 0 28px -24px rgb(60 40 20 / .35)}.ds-imprint{margin:0;text-align:center;font-family:var(--font-mono),\"Courier New\",monospace;font-size:11px}.ds-plate-title{margin:0 0 10px;font-family:var(--font-display),Georgia,serif;font-size:clamp(40px,4.8vw,68px);line-height:1;font-weight:400;text-align:center;overflow-wrap:anywhere;text-wrap:balance}.ds-preview-photo-space{display:grid;place-items:center;min-height:120px;color:var(--muted);font-size:12px}.ds-copy{display:flex;flex-direction:column;justify-content:center;gap:32px;padding:48px clamp(24px,3.5vw,48px) 32px;min-width:0;box-shadow:inset 20px 0 28px -24px rgb(60 40 20 / .25)}.ds-copy h3{margin:0 0 12px;font-family:var(--font-display),Georgia,serif;font-size:clamp(30px,3.5vw,44px);font-weight:400;line-height:1.15}.ds-copy p{font-family:var(--font-display),Georgia,serif;font-size:clamp(20px,2vw,26px);line-height:1.55;margin:0}@media(max-width:767px){.ds-spread{grid-template-columns:minmax(0,1fr)}.ds-plate{padding:24px;gap:20px}.ds-copy{padding:28px 24px;gap:28px;box-shadow:inset 0 16px 20px -20px rgb(60 40 20 / .3)}}"
     },
     {
       "name": "Gallery Mat",
@@ -485,20 +358,15 @@
   ],
   "narrative": {
     "northStar": "The Photographic Volume",
-    "overview": "The portfolio presents travel and wildlife photographs as authored collections with the gravitas of coffee-table books. Warm paper and dark brown ink frame the public index; a dark exhibition wall holds the complete photographic galleries. Large, expressive serif titles establish authorship while quiet sans-serif copy and monospaced navigation support reading.\n\nThe photobook shelf extends this inherited identity with cloth bindings, photographic cover plates, page edges, warm wood, and individual paper spreads. This tactile vocabulary belongs to books and their inspection cards; it does not require every interface surface to become three-dimensional. The hero and galleries retain their existing visual roles.",
+    "overview": "The portfolio presents travel and wildlife photographs as authored collections with the gravitas of coffee-table books. Warm paper and dark brown ink frame the public index; a dark exhibition wall holds the complete photographic galleries. Large, expressive serif titles establish authorship while quiet sans-serif copy and monospaced navigation support reading.\n\nThe photobook index extends this inherited identity with a centered photographic carousel and an individual photo-and-story preview. A selected photograph expands from the clipped neighboring windows; paper mats and the existing serif hierarchy connect the interaction to the rest of the portfolio. This component replacement leaves the hero and galleries in their established visual world.",
     "keyCharacteristics": [
       "Photography keeps its complete composition, with room around the image.",
       "Oversized serif titles sit beside restrained utility text.",
-      "Paper, cloth, mats, and wood provide material depth.",
-      "Each collection has a distinct binding within one coherent library.",
+      "Paper, mats, and photographic frames provide material depth.",
+      "Each collection leads with its own photograph and authored opening.",
       "Responsive layouts preserve readable content and usable navigation."
     ],
     "rules": [
-      {
-        "name": "The Material Color Rule",
-        "body": "Binding colors identify volumes; they do not replace the portfolio's shared paper-and-ink navigation palette.",
-        "section": "colors"
-      },
       {
         "name": "The Editorial Hierarchy Rule",
         "body": "Let serif scale carry the title hierarchy; reserve the mono face for navigation and useful book information.",
@@ -517,8 +385,7 @@
     ],
     "dos": [
       "**Do** retain the shared warm paper, dark ink, serif titles, and mono navigation when extending the library.",
-      "**Do** fit photographs completely inside cover plates, detail pages, gallery frames, and lightboxes.",
-      "**Do** keep binding colors consistent for each collection across rendered books, fallback books, and inspection cards.",
+      "**Do** fit selected carousel photographs completely inside their mats, and preserve complete compositions in detail pages, gallery frames, and lightboxes.",
       "**Do** preserve visible focus, usable touch targets, real collection links, and reduced-motion behavior.",
       "**Do** use actual photographs, authored text, available metadata, and the existing approved maps or illustrations.",
       "**Do** distinguish a volume in preparation from a published photographic gallery."
@@ -526,8 +393,8 @@
     "donts": [
       "**Don't** fabricate photographs, locations, dates, field observations, or personal accounts to fill a layout.",
       "**Don't** replace complete image compositions with cropped thumbnails.",
-      "**Don't** spread the library's three-dimensional book treatment into every navigation or content surface.",
-      "**Don't** make a decorative canvas the only way to discover or open a collection."
+      "**Don't** generalize the carousel and preview’s rounded mask treatment to the square gallery mats.",
+      "**Don't** make carousel enhancement the only way to discover or open a collection."
     ]
   }
 }

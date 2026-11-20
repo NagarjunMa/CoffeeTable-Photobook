@@ -8,16 +8,14 @@ import { useEffect, useRef, useState } from "react";
 import { ThinkingOrb } from "thinking-orbs";
 import type { CSSProperties, RefObject } from "react";
 import type { Collection } from "@/data/types";
-import type { BookOrigin } from "@/lib/bookshelf-renderer";
 import { bookPresentation } from "@/lib/photobook-presentation";
 import { CollectionMap } from "@/components/collection-map";
 import { PortfolioPhoto } from "@/components/portfolio-photo";
 
 gsap.registerPlugin(useGSAP);
 
-export function BookDetailDialog({ collection, origin, opener, onClose }: {
+export function BookDetailDialog({ collection, opener, onClose }: {
   collection: Collection;
-  origin?: BookOrigin;
   opener: RefObject<HTMLElement | null>;
   onClose: () => void;
 }) {
@@ -39,30 +37,20 @@ export function BookDetailDialog({ collection, origin, opener, onClose }: {
     document.body.style.overflow = "hidden";
     window.dispatchEvent(new Event("portfolio:scroll-lock"));
     const shell = element.querySelector<HTMLElement>(".book-detail-shell")!;
-    const spread = element.querySelector<HTMLElement>(".book-detail-spread")!;
     const plate = element.querySelector<HTMLElement>(".book-detail-plate")!;
-    const cover = element.querySelector<HTMLElement>(".book-opening-cover")!;
     const copy = element.querySelector<HTMLElement>(".book-detail-copy")!;
-    const rect = spread.getBoundingClientRect();
-    const desktop = matchMedia("(min-width: 768px)").matches;
-    const anchored = origin && origin.top < innerHeight && origin.top + origin.height > 0 && origin.left < innerWidth && origin.left + origin.width > 0;
-    // The closed cover occupies the right leaf. Keep its visual centre attached
-    // to the selected physical book before the hinge reveals the two pages.
-    const pivot = desktop ? 0.75 : 0.5;
     const timeline = gsap.timeline({ paused: true, onReverseComplete: onClose });
     animation.current = timeline;
     if (!motion.matches) {
-      timeline.fromTo(shell, {
-        x: anchored ? origin.left + origin.width / 2 - (rect.left + rect.width * pivot) : 0,
-        y: anchored ? origin.top + origin.height / 2 - (rect.top + rect.height / 2) : 12,
-        scale: anchored ? Math.min(0.8, origin.width / (rect.width * (desktop ? 0.5 : 1))) : 0.96,
-        transformOrigin: `${pivot * 100}% 50%`, opacity: 0,
-      }, { x: 0, y: 0, scale: 1, opacity: 1, duration: 0.42, ease: "power3.out" }, 0)
-        .fromTo(cover, { rotationY: 0 }, { rotationY: -180, duration: 0.64, ease: "power2.inOut" }, 0.12)
-        .fromTo(plate, { rotationY: desktop ? 82 : 0, opacity: 0 }, { rotationY: 0, opacity: 1, duration: 0.56, ease: "power2.out" }, 0.18)
-        .fromTo(copy, { opacity: 0 }, { opacity: 1, duration: 0.26 }, 0.36);
-    } else {
-      gsap.set(cover, { rotationY: -180 });
+      timeline.fromTo(shell, { y: 24, scale: 0.98, autoAlpha: 0 }, {
+        y: 0, scale: 1, autoAlpha: 1, duration: 0.55, ease: "expo.out",
+      }, 0)
+        .fromTo(plate, { clipPath: "inset(0% 100% 0% 0%)" }, {
+          clipPath: "inset(0% 0% 0% 0%)", duration: 0.7, ease: "expo.out",
+        }, 0.08)
+        .fromTo(copy.children, { y: 14, autoAlpha: 0 }, {
+          y: 0, autoAlpha: 1, stagger: 0.08, duration: 0.5, ease: "expo.out",
+        }, 0.2);
     }
     const onMotion = () => {
       if (!motion.matches) return;
@@ -161,11 +149,11 @@ export function BookDetailDialog({ collection, origin, opener, onClose }: {
       <div className="book-preparing-actions">
         {phase === "failed" && <button type="button" onClick={() => { setPhase("loading"); setAttempt(value => value + 1); }}>Retry photographs</button>}
         {(phase === "slow" || phase === "failed") && <button type="button" onClick={() => setPhase("ready")}>Continue to book</button>}
-        <button type="button" onClick={requestClose} autoFocus>Return to shelf</button>
+        <button type="button" onClick={requestClose} autoFocus>Return to photobooks</button>
       </div>
     </div>}
     <div className="book-detail-shell" inert={preparing} aria-hidden={preparing ? "true" : undefined} style={{ "--book-color": book.color } as CSSProperties}>
-      <button className="book-detail-close" type="button" onClick={requestClose} autoFocus={!preparing}><X size={18} aria-hidden="true" /><span>Return to shelf</span></button>
+      <button className="book-detail-close" type="button" onClick={requestClose} autoFocus={!preparing}><X size={18} aria-hidden="true" /><span>Return to photobooks</span></button>
       <div className="book-detail-spread">
         <div className="book-detail-plate">
           <p className="book-author font-mono-custom">Nagarjun Mallesh</p>
@@ -177,7 +165,6 @@ export function BookDetailDialog({ collection, origin, opener, onClose }: {
         </div>
         <div className="book-detail-copy">
           <div className="book-story-preview">
-            <p className="book-journal-label font-mono-custom">{personal ? "From my journal" : "Inside this photobook"}</p>
             <h3 className="font-display">{personal?.title ?? "About this collection"}</h3>
             <p>{introduction}</p>
           </div>
@@ -196,11 +183,6 @@ export function BookDetailDialog({ collection, origin, opener, onClose }: {
               {book.cover && <CollectionMap key={attempt} collection={collection} />}
             </details>
           </div>
-        </div>
-        <div className="book-opening-cover" aria-hidden="true">
-          <span className="font-mono-custom">Nagarjun Mallesh</span><span className="font-display">{collection.title}</span>
-          {book.cover && <picture key={attempt}><img src={book.coverSrc} width={book.cover.width} height={book.cover.height} alt="" /></picture>}
-          <span className="font-mono-custom">A photographic collection</span>
         </div>
       </div>
     </div>
