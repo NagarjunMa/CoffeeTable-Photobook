@@ -19,7 +19,13 @@ export function DestinationTitle({ title, as: Tag = "h3" }: { title: string; as?
       const longest = Math.max(...title.split(/\s+/).map((word) => context.measureText(word).width));
       if (longest > element.clientWidth) element.style.fontSize = `${size * element.clientWidth / longest * 0.98}px`;
     };
-    const observer = new ResizeObserver(fit);
+    let fittedWidth = -1;
+    const observer = new ResizeObserver(([entry]) => {
+      // Fitting changes the heading's height; only a new width needs another fit.
+      if (entry.contentRect.width === fittedWidth) return;
+      fittedWidth = entry.contentRect.width;
+      fit();
+    });
     observer.observe(element.parentElement ?? element);
     document.fonts.ready.then(fit);
     fit();

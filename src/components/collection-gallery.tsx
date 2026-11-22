@@ -1,8 +1,5 @@
 "use client";
 
-import { useGSAP } from "@gsap/react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ThinkingOrb } from "thinking-orbs";
 import { PortfolioPhoto } from "@/components/portfolio-photo";
 import { GalleryFrame } from "@/components/gallery-frame";
@@ -11,13 +8,13 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import type { CSSProperties } from "react";
 import { PhotoLightbox } from "@/components/photo-lightbox";
 import { DestinationTitle } from "@/components/destination-title";
+import { ArrowLeft, ArrowDown, ArrowUpRight } from "lucide-react";
 import { collections } from "@/data/collections";
 import type {
   Collection,
   PortfolioImage,
 } from "@/data/collections";
 
-gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 export type LightboxOrigin = {
   left: number;
@@ -121,6 +118,11 @@ export function CollectionGallery({ collection }: { collection: Collection }) {
     : buildExhibitionRows(collection.images);
   const category = collection.year === "Field Notes" ? collection.category : collection.year ?? collection.category;
   const note = collection.note.startsWith("A field study from ") ? "" : collection.note;
+  const experience = collection.experience ?? (note ? {
+    title: `Notes from ${collection.title}`,
+    subtitle: undefined,
+    paragraphs: [note],
+  } : undefined);
 
   useEffect(() => {
     const picture = scope.current?.querySelector<HTMLImageElement>(".collection-preview img");
@@ -197,36 +199,6 @@ export function CollectionGallery({ collection }: { collection: Collection }) {
     });
   }, [collection.images.length]);
 
-  useGSAP(
-    () => {
-      const reduceMotion = window.matchMedia(
-        "(prefers-reduced-motion: reduce)",
-      ).matches;
-
-      gsap.set("[data-book-spread]", { autoAlpha: 1, y: 0 });
-
-      if (reduceMotion) {
-        return;
-      }
-
-      gsap.utils
-        .toArray<HTMLElement>("[data-book-spread]")
-        .forEach((spread) => {
-          gsap.from(spread, {
-            y: 34,
-            duration: 0.85,
-            ease: "power3.out",
-            scrollTrigger: {
-              trigger: spread,
-              start: "top 88%",
-              once: true,
-            },
-          });
-        });
-    },
-    { scope },
-  );
-
   const activePhoto =
     activeIndex === null ? null : collection.images[activeIndex];
 
@@ -234,8 +206,8 @@ export function CollectionGallery({ collection }: { collection: Collection }) {
     <>
       {loadingPhase !== "ready" && (
         <div ref={loadingScreen} className="collection-loading-screen" role="status" aria-live="polite">
-          <ThinkingOrb state="searching" size={64} theme="dark" aria-hidden="true" />
-          <p className="font-mono-custom text-xs uppercase tracking-[0.16em]">
+          <ThinkingOrb state="searching" size={64} theme="light" aria-hidden="true" />
+          <p className="collection-loading-label">
             {loadingPhase === "slow" ? "Photographs are taking longer than expected" : "Preparing photographs"}
           </p>
           {loadingPhase === "slow" && (
@@ -246,164 +218,73 @@ export function CollectionGallery({ collection }: { collection: Collection }) {
         </div>
       )}
       <noscript><style>{".collection-loading-screen { display: none; }"}</style></noscript>
-      <section
-        ref={scope}
-        className="city-book-texture relative text-[var(--gallery-ink)]"
-      >
-        <article
-          data-book-spread
-          className="collection-opening site-gutter"
-        >
-          <div className="collection-index">
-            <a
-              href={`/#city-${collection.slug}`}
-              className="editorial-link font-mono-custom text-[13px] uppercase text-[var(--gallery-secondary)]"
-            >
-              Index
-            </a>
-          </div>
-
-          <div className="min-w-0 max-w-4xl self-center">
-            <p className="font-mono-custom mb-4 text-[10px] uppercase tracking-[0.18em] text-white/45 md:text-[11px]">
-              {[collection.location, category].filter(Boolean).join(" / ")}
-            </p>
-            <DestinationTitle title={collection.title} as="h1" />
-            {note && <p className="mt-8 max-w-2xl text-balance text-lg leading-relaxed text-[var(--gallery-secondary)] md:text-xl">{note}</p>}
-          </div>
-
-          {previewImage ? (
-            <figure className="collection-preview" style={{ "--preview-ratio": photoRatio(previewImage) } as CSSProperties}>
-              <div
-                className="collection-preview-stage group"
-              >
-                <PortfolioPhoto
-                  photo={previewImage}
-                  sizes="(min-width: 1280px) 42vw, (min-width: 768px) 45vw, 92vw"
-                  className="collection-preview-photo shadow-[0_1.4rem_4rem_rgb(0_0_0_/_0.4)] transition-transform duration-500 ease-out group-hover:scale-[1.01]"
-                  loading="eager"
-                  fetchPriority="high"
-                />
-                <button type="button" className="photo-open" data-open-photo aria-label={`Open ${previewImage.alt} full screen`} onClick={(event) => openLightbox(previewIndex, event.currentTarget)} />
+      <section ref={scope} className="photobook-journal">
+        <article className="hero collection-opening" data-enter aria-labelledby={`title-${collection.slug}`}>
+          <div className="wrap">
+            <div className="collection-topline">
+              <a href={`/#city-${collection.slug}`} className="collection-index editorial-link"><ArrowLeft size={16} aria-hidden="true" /> All photobooks</a>
+              <p>Volume {String(currentCollectionIndex + 1).padStart(2, "0")} / {String(collections.length).padStart(2, "0")}</p>
+            </div>
+            <div className="collection-opening-spread">
+              <div className="collection-opening-copy">
+                <p className="section-label">{[collection.location, category].filter(Boolean).join(" · ")}</p>
+                <div id={`title-${collection.slug}`}><DestinationTitle title={collection.title} as="h1" /></div>
+                {note && <p className="collection-introduction">{note}</p>}
+                <p className="collection-count">{collection.images.length} photographs by Nagarjun Mallesh</p>
+                <div className="collection-actions btn-row">
+                  <a className="btn btn--primary" href={`#gallery-${collection.slug}`}>See photographs <ArrowDown className="m-arrow" size={18} aria-hidden="true" /></a>
+                  {experience && <a className="link" aria-label="Read the story" href={`#experience-${collection.slug}`}>Read the story</a>}
+                </div>
               </div>
-              <figcaption className="font-mono-custom uppercase">
-                Preview / {String(collection.images.length).padStart(2, "0")} frames
-              </figcaption>
-            </figure>
-          ) : null}
+              {previewImage && <figure className="collection-preview" style={{ "--preview-ratio": photoRatio(previewImage) } as CSSProperties}>
+                <div className="collection-preview-stage group">
+                  <PortfolioPhoto photo={previewImage} sizes="(min-width: 1024px) 50vw, 90vw" className="collection-preview-photo" loading="eager" fetchPriority="high" />
+                  <button type="button" className="photo-open" data-open-photo aria-label={`Open ${previewImage.alt} full screen`} onClick={event => openLightbox(previewIndex, event.currentTarget)} />
+                </div>
+              </figure>}
+            </div>
+          </div>
         </article>
 
-        {collection.experience && (
-          <section
-            data-book-spread
-            className="personal-story site-gutter border-t border-white/10"
-            aria-labelledby={`experience-${collection.slug}`}
-          >
-            <div className="personal-story-spread">
-              <header className="personal-story-heading">
-                <h2
-                id={`experience-${collection.slug}`}
-                className="font-display"
-              >
-                {collection.experience.title}
-                </h2>
-                {collection.experience.subtitle && <p>{collection.experience.subtitle}</p>}
-              </header>
-              <div className="personal-story-columns font-display">
-                {collection.experience.paragraphs.map((paragraph, index) => (
-                  <p
-                    key={index}
-                  >
-                    {paragraph}
-                  </p>
-                ))}
-              </div>
-            </div>
-          </section>
-        )}
-
-        <div className="border-t border-white/10 px-[clamp(1rem,4vw,5rem)] py-12 md:py-16 text-[var(--gallery-ink)]">
-          <div className="mx-auto max-w-[96rem]">
-            <header className="mb-12 md:mb-16 grid gap-5 border-b border-white/15 pb-6 md:grid-cols-[1fr_auto] md:items-end">
-              <div>
-                <p className="font-mono-custom text-[9px] uppercase tracking-[0.16em] text-white/45">
-                  {[collection.location, category].filter(Boolean).join(" / ")}
-                </p>
-                <h2 className="font-display mt-4 text-5xl md:text-7xl font-medium leading-none">
-                  Gallery
-                </h2>
-              </div>
-              <p className="font-mono-custom text-[9px] uppercase tracking-[0.16em] text-white/45">
-                {String(collection.images.length).padStart(2, "0")} photographs
-              </p>
+        {experience && <section className="personal-story" aria-labelledby={`experience-${collection.slug}`}>
+          <div className="wrap personal-story-spread">
+            <header className="personal-story-heading">
+              <p className="section-label">The experience</p>
+              <h2 id={`experience-${collection.slug}`}>{experience.title}</h2>
+              {experience.subtitle && <p>{experience.subtitle}</p>}
             </header>
-
-            {collection.images.length === 0 && <p className="text-[var(--gallery-secondary)]">This volume is being prepared.</p>}
-            <div className="space-y-[clamp(0.75rem,1.5vw,1.5rem)]">
-            {exhibitionRows.map((row) => (
-              <div
-                key={row[0].photo.id}
-                className="exhibition-row items-start"
-                style={exhibitionRowStyle(row)}
-              >
-                {row.map(({ photo, index }) => (
-                  <GalleryFrame key={photo.id} index={index} style={exhibitionItemStyle(photo)}>
-                      <div
-                        className="exhibition-frame flex w-full cursor-zoom-in items-center justify-center border-0"
-                      >
-                        <PortfolioPhoto
-                          photo={photo}
-                          sizes={
-                            row.length === 3
-                              ? "(min-width: 768px) 34vw, 100vw"
-                              : row.length === 2
-                                ? "(min-width: 768px) 60vw, 100vw"
-                                : "100vw"
-                          }
-                          className="exhibition-photo h-auto max-h-[78svh] w-auto max-w-full select-none object-contain transition-[filter,transform] duration-500 ease-out group-hover:scale-[1.003] group-hover:brightness-[1.025]"
-                          loading="lazy"
-                          fetchPriority="low"
-                        />
-                        <button type="button" className="photo-open" data-open-photo aria-label={`Open ${photo.alt} full screen`} onClick={(event) => openLightbox(index, event.currentTarget)} />
-                      </div>
-                      <figcaption className="mt-2 flex items-start justify-between gap-4 border-t border-white/12 pt-2 text-white/70">
-                        <span className="font-display text-[12px] leading-4">
-                          {photo.caption ?? `Frame ${String(index + 1).padStart(2, "0")}`}
-                        </span>
-                      </figcaption>
-                  </GalleryFrame>
-                ))}
-              </div>
-            ))}
+            <div className="personal-story-columns">
+              {experience.paragraphs.map((paragraph, index) => <p key={index}>{paragraph}</p>)}
             </div>
           </div>
-        </div>
+        </section>}
 
-        <footer className="site-gutter grid items-end gap-14 border-t border-white/10 py-16 md:grid-cols-2 md:py-24">
-          <div>
-            <p className="font-mono-custom text-[10px] uppercase tracking-[0.18em] text-white/40">
-              End of volume
-            </p>
-            <a
-              href={`/#city-${collection.slug}`}
-              className="editorial-link mt-5 font-display text-4xl md:text-6xl leading-none"
-            >
-              City Index
-            </a>
-          </div>
-
-          {nextCollection ? (
-            <div className="md:text-right">
-              <p className="font-mono-custom text-[10px] uppercase tracking-[0.18em] text-white/40">
-                Next volume
-              </p>
-              <Link
-                href={`/series/${nextCollection.slug}`}
-                className="editorial-link mt-5 font-display text-4xl md:text-6xl leading-none break-words"
-              >
-                {nextCollection.title}
-              </Link>
+        <section className="collection-gallery" aria-labelledby={`gallery-${collection.slug}`}>
+          <div className="wrap">
+            <header className="gallery-heading">
+              <h2 id={`gallery-${collection.slug}`}>Gallery</h2>
+              <p>{collection.images.length} photographs <span aria-hidden="true">·</span> Select a photograph to view full screen</p>
+            </header>
+            {collection.images.length === 0 && <p>This volume is being prepared.</p>}
+            <div className="gallery-spreads">
+              {exhibitionRows.map(row => <div key={row[0].photo.id} className="exhibition-row items-start" style={exhibitionRowStyle(row)}>
+                {row.map(({ photo, index }) => <GalleryFrame key={photo.id} index={index} style={exhibitionItemStyle(photo)}>
+                  <div className="exhibition-frame flex w-full cursor-zoom-in items-center justify-center border-0" data-moment={index === 0 ? "picture-develops" : undefined} data-moment-opts={index === 0 ? '{"look":"film"}' : undefined}>
+                    <PortfolioPhoto photo={photo} sizes={row.length === 3 ? "(min-width: 768px) 34vw, 100vw" : row.length === 2 ? "(min-width: 768px) 60vw, 100vw" : "100vw"}
+                      className="exhibition-photo h-auto max-h-[78svh] w-auto max-w-full select-none object-contain"
+                      loading="lazy" fetchPriority="low" />
+                    <button type="button" className="photo-open" data-open-photo aria-label={`Open ${photo.alt} full screen`} onClick={event => openLightbox(index, event.currentTarget)} />
+                  </div>
+                </GalleryFrame>)}
+              </div>)}
             </div>
-          ) : null}
+          </div>
+        </section>
+        <footer className="collection-end">
+          <div className="wrap">
+            <div><p className="section-label">End of {collection.title}</p><a href={`/#city-${collection.slug}`} className="editorial-link">All photobooks <ArrowUpRight size={20} aria-hidden="true" /></a></div>
+            {nextCollection && <div><p className="section-label">Next photobook</p><Link href={`/series/${nextCollection.slug}`} className="editorial-link">{nextCollection.title} <ArrowUpRight size={20} aria-hidden="true" /></Link></div>}
+          </div>
         </footer>
       </section>
 

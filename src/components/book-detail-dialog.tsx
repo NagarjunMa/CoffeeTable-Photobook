@@ -159,7 +159,7 @@ export function BookDetailDialog({ collection, opener, onClose }: {
           <p className="book-author font-mono-custom">Nagarjun Mallesh</p>
           <div className="book-title-block"><h2 id={`book-title-${collection.slug}`} className="font-display">{collection.title}</h2><p>{collection.location}{book.year && ` · ${book.year}`}</p></div>
           {book.cover ? <figure className="book-detail-photo"><PortfolioPhoto key={attempt} photo={book.cover} sizes="(min-width: 900px) 40vw, 85vw" loading="eager" />
-            {book.cover.caption && <figcaption>{book.cover.caption}</figcaption>}
+
           </figure> : <div className="book-detail-preparing"><p>Photographs are being prepared.</p></div>}
           <p className="book-plate-footer font-mono-custom">{book.count}</p>
         </div>
@@ -169,7 +169,7 @@ export function BookDetailDialog({ collection, opener, onClose }: {
             <p>{introduction}</p>
           </div>
           <div className="book-detail-actions">
-            {personal && <p className="book-story-continuation">The photographs. The places. The story behind them.</p>}
+            {personal && <p className="book-story-continuation">The complete story continues in the photobook.</p>}
             <Link href={`/series/${collection.slug}`} className="book-open-link" aria-label={`Open ${collection.title} collection`}>
               {collection.images.length ? "Open complete photobook" : "View collection"}<ArrowUpRight size={20} aria-hidden="true" />
             </Link>

@@ -72,18 +72,19 @@ export function WorkIndex() {
   }
 
   return <section id="work" ref={section} className="photobook-library" aria-label="Destination books">
-    <header className="library-heading site-gutter">
+    <div className="wrap library-content">
+    <header className="library-heading">
       <h2 className="font-display">Photobooks<span aria-hidden="true">.</span></h2>
-      <p>Places I’ve been. Moments I’ve kept.<br /><em>Pick a place. Get a little lost.</em></p>
+      <p>Eight collections from my travels and time in the wild.</p>
     </header>
     <Skiper54 items={volumes} selectedIndex={active} onSelect={choose} onOpen={open} />
-    <div className="photobook-selection site-gutter">
+    <div className="photobook-selection">
       <div className="photobook-selection-copy" aria-live="polite" aria-atomic="true">
         <h3 className="font-display">{current.title}</h3>
         <p>{current.location} <span aria-hidden="true">/</span> {selectedBook.count}</p>
       </div>
       <button className="photobook-inspect" type="button" onClick={event => open(active, event.currentTarget)} aria-label={`Preview ${current.title} photobook`}>
-        A little closer <ArrowUpRight size={20} aria-hidden="true" />
+        Preview photobook <ArrowUpRight size={20} aria-hidden="true" />
       </button>
       <div className="photobook-controls" role="group" aria-label="Browse photobooks">
         <span className="font-mono-custom photobook-position">{String(active + 1).padStart(2, "0")} <span>/ {String(collections.length).padStart(2, "0")}</span></span>
@@ -91,8 +92,8 @@ export function WorkIndex() {
         <button type="button" aria-label="Next photobook" onClick={() => setActive(index => bounded(index + 1))}><ArrowRight size={22} aria-hidden="true" /></button>
       </div>
     </div>
-    <div className="photobook-index-footer site-gutter">
-      <p className="photobook-gesture-hint"><MoveHorizontal size={16} aria-hidden="true" />Drag to wander. Click to stay.</p>
+    <div className="photobook-index-footer">
+      <p className="photobook-gesture-hint"><MoveHorizontal size={16} aria-hidden="true" />Drag to browse. Select a book to open.</p>
       <nav className="photobook-contents" aria-label="Destination contents" onKeyDown={event => {
         if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) return;
         event.preventDefault();
@@ -105,6 +106,7 @@ export function WorkIndex() {
       </nav>
     </div>
     <a className="carousel-credit" href="https://skiper-ui.com/v1/skiper54" target="_blank" rel="noreferrer">Carousel inspired by Skiper UI <ArrowUpRight size={12} aria-hidden="true" /></a>
+    </div>
     {detail !== null && <BookDetailDialog key={collections[detail].slug} collection={collections[detail]} opener={opener} onClose={close} />}
   </section>;
 }
