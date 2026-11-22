@@ -8,12 +8,13 @@ for (const width of [390, 1440, 1920]) {
     const story = page.locator(".personal-story");
     await story.scrollIntoViewIfNeeded();
     await expect(story.getByRole("heading", { name: "My first forest" })).toBeVisible();
-    await expect(story.locator(".personal-story-heading > p")).toContainText("Kanha, 2004");
+    await expect(story.locator(".personal-story-heading > p:last-child")).toContainText("Kanha, 2004");
     await expect(story.locator(".personal-story-columns p")).toHaveCount(7);
-    await expect(story.locator(".personal-story-columns")).toHaveCSS("column-count", width >= 900 ? "2" : "auto");
+    await expect(story.locator(".personal-story-columns")).toHaveCSS("column-count", width >= 768 ? "2" : "1");
     const bounds = await story.boundingBox();
     expect(bounds).not.toBeNull();
-    if (width >= 1440) expect(bounds!.height).toBeLessThanOrEqual(936);
+    // Full authored stories grow naturally instead of squeezing into a fixed-height spread.
+    expect(bounds!.height).toBeGreaterThan(300);
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
     await story.screenshot({ path: test.info().outputPath(`story-${width}.png`) });
   });

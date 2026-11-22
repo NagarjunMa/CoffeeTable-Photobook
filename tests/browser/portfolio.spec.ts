@@ -42,7 +42,10 @@ test("gallery frame mats and row heights remain uniform", async ({ page }) => {
 });
 
 test("gallery meets automated accessibility checks", async ({ page }) => {
+  // Audit the settled interface; translucent entrance frames are checked separately.
+  await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/series/washington");
+  await expect(page.locator(".collection-loading-screen")).toBeHidden();
   const results = await new AxeBuilder({ page }).withTags(["wcag2a", "wcag2aa", "wcag21aa"]).analyze();
   expect(results.violations).toEqual([]);
 });
@@ -66,7 +69,7 @@ test("intro cannot obscure server content when JavaScript is disabled", async ({
   const context = await browser.newContext({ javaScriptEnabled: false });
   const page = await context.newPage();
   await page.goto("http://127.0.0.1:3100/");
-  await expect(page.getByRole("heading", { name: "Nagarjun Mallesh" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Travel & wildlife photographs." })).toBeVisible();
   await expect(page.locator('[aria-hidden="true"].fixed')).not.toBeVisible();
   await context.close();
 });
@@ -84,11 +87,12 @@ test("keyboard-only browsing reaches a visible gallery frame", async ({ page }) 
   await expect(page.getByRole("dialog")).toBeVisible();
 });
 
-test("first keyboard interaction dismisses the optional intro", async ({ page }) => {
+test("first keyboard interaction reaches the skip link without an intro gate", async ({ page }) => {
   await page.addInitScript(() => sessionStorage.removeItem("nm-portfolio-intro-played"));
   await page.goto("/");
-  await expect(page.locator('[aria-hidden="true"].fixed')).toBeVisible();
+  await expect(page.locator('[aria-hidden="true"].fixed')).toHaveCount(0);
   await page.keyboard.press("Tab");
+  await expect(page.getByRole("link", { name: "Skip to content" })).toBeFocused();
   await expect(page.locator('[aria-hidden="true"].fixed')).not.toBeVisible();
   await expect.poll(() => page.evaluate(() => document.body.style.overflow)).not.toBe("hidden");
 });

@@ -30,12 +30,12 @@ export function GalleryFrame({ children, style, index }: {
       let entered = false;
       let request = 0;
       const tween = gsap.fromTo(group, {
-        opacity: 0, y: Math.min(72, innerHeight * 0.08), scale: 0.97,
-        rotationX: 7, rotationZ: index % 2 ? 0.8 : -0.8,
+        opacity: 0, y: 24, scale: 0.99,
+        rotationX: 0, rotationZ: 0,
         transformPerspective: 1200, transformOrigin: "50% 70%",
       }, {
         opacity: 1, y: 0, scale: 1, rotationX: 0, rotationZ: 0,
-        duration: 0.95, ease: "power3.out", paused: true,
+        duration: 0.7, ease: "power3.out", paused: true,
         clearProps: "transform,transformOrigin,opacity,willChange",
       });
       group.style.pointerEvents = "none";
@@ -97,7 +97,7 @@ export function GalleryFrame({ children, style, index }: {
 
   return <figure ref={scope} className="exhibition-item group relative min-h-0 min-w-0" style={style}>
     {waiting && <span className="gallery-frame-wait" aria-hidden="true">
-      <ThinkingOrb state="searching" size={32} theme="dark" />
+      <ThinkingOrb state="searching" size={32} theme="light" />
       <span>Preparing photograph</span>
     </span>}
     <div className="exhibition-frame-group mx-auto max-w-full">{children}</div>

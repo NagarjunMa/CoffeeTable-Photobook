@@ -48,7 +48,8 @@ test("Bhutan uses the selected cover while retaining its full synced gallery", (
   assert.equal(bhutan.mapPosterDesktop?.src, "/map-posters/bhutan-desktop.png");
   assert.equal(bhutan.mapPosterMobile?.src, "/map-posters/bhutan-mobile.png");
   const html = render(bhutan);
-  assert.match(html, /Cliffside monastery/);
+  assert.match(html, /alt="A white and red monastery/);
+  assert.doesNotMatch(html, /<figcaption/);
   assert.match(html, /21 photographs/);
 });
 
@@ -58,6 +59,24 @@ test("an empty book renders navigation and a clear empty state without image con
   assert.doesNotMatch(html, /My first forest|personal-story/);
   assert.match(html, /href="\/#city-test-book"/);
   assert.doesNotMatch(html, /data-open-photo|<dialog|<img/);
+});
+
+test("a collection with only an authored note gives that note a reading section", () => {
+  const note = "An early-fall weekend by the coast, with fog on the forest roads.";
+  const html = render({ ...base, note, images: [photo], coverImages: [photo] });
+  const story = html.slice(html.indexOf('class="personal-story"'), html.indexOf('class="collection-gallery"'));
+  assert.match(story, /Notes from Test book/);
+  assert.ok(story.includes(note));
+  assert.doesNotMatch(story, /My first visit/);
+});
+
+test("a full introduction survives a distinct index blurb and separate personal experience", () => {
+  const note = "The complete introduction belongs in the photobook opening.";
+  const html = render({ ...base, note, indexNote: "A short index blurb.", experience: {
+    title: "A first visit", paragraphs: ["My separate account of the visit."],
+  }, images: [photo], coverImages: [photo] });
+  assert.ok(html.slice(0, html.indexOf("</article>")).includes(note));
+  assert.match(html, /My separate account of the visit/);
 });
 
 test("a single photograph renders one gallery frame with intrinsic uncropped dimensions", () => {

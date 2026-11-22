@@ -47,19 +47,20 @@ export function Skiper54({ items, selectedIndex, onSelect, onOpen }: {
     }
   }, [api, selectedIndex]);
 
-  useGSAP((_, contextSafe) => {
-    if (!api || !contextSafe) return;
+  useGSAP(() => {
+    if (!api) return;
     const panels = gsap.utils.toArray<HTMLElement>(".skiper-image-window", scope.current);
     const media = gsap.matchMedia();
     media.add({ reduce: "(prefers-reduced-motion: reduce)", animate: "(prefers-reduced-motion: no-preference)" }, context => {
       const reduce = Boolean(context.conditions?.reduce);
-      const paint = contextSafe(() => {
+      // Embla callbacks belong to this media context, never its parent context.
+      const paint = () => { context.add(() => {
         const selected = api.selectedScrollSnap();
         gsap.to(panels, {
           clipPath: index => index === selected ? "inset(0% 0% 0% 0% round 16px)" : "inset(13% 0% 13% 0% round 16px)",
           duration: reduce ? 0 : 0.8, ease: "expo.out", overwrite: "auto",
         });
-      });
+      }); };
       paint();
       api.on("select", paint);
       api.on("reInit", paint);
@@ -99,7 +100,7 @@ export function Skiper54({ items, selectedIndex, onSelect, onOpen }: {
       scope.current?.querySelectorAll<HTMLAnchorElement>(".photobook-card-link")[next]?.focus({ preventScroll: true });
     }}>
       <div className="photobook-carousel-track">
-        {items.map(({ collection, cover, count }, index) => <article className="photobook-card" key={collection.slug} data-selected={index === selectedIndex ? "true" : undefined} role="group" aria-roledescription="slide" aria-label={`${index + 1} of ${items.length}: ${collection.title}`}>
+        {items.map(({ collection, cover }, index) => <article className="photobook-card" key={collection.slug} data-selected={index === selectedIndex ? "true" : undefined} role="group" aria-roledescription="slide" aria-label={`${index + 1} of ${items.length}: ${collection.title}`}>
           <div className="skiper-image-window">
             <div className="photobook-image-mat">
               {cover ? <PortfolioPhoto photo={cover} sizes="(min-width: 1440px) 560px, (min-width: 768px) 42vw, 82vw" loading="eager" /> : <div className="photobook-empty"><p className="font-display">{collection.title}</p><span>Photographs in preparation</span></div>}
@@ -112,7 +113,6 @@ export function Skiper54({ items, selectedIndex, onSelect, onOpen }: {
           }}>
             <span className="photobook-card-open"><ArrowUpRight size={23} aria-hidden="true" /></span>
           </Link>
-          <div className="photobook-card-caption" aria-hidden="true"><span>{collection.title}</span><span>{count}</span></div>
         </article>)}
       </div>
     </div>
